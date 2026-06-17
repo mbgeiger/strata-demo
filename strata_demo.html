@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strata — Intelligence Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.383.0/umd/lucide.min.js"></script>
+<style>
+:root{
+--navy:#0D1117; --navy-2:#161B22; --navy-3:#1C2333;
+--purple:#7C6FE0; --purple-l:#A599F0; --purple-d:#5A4FBF; --purple-glow:rgba(124,111,224,0.3);
+--cyan:#22D3EE; --cyan-d:#0891B2; --cyan-glow:rgba(34,211,238,0.2);
+--red:#F87171; --red-d:#DC2626; --red-bg:rgba(248,113,113,0.1); --red-border:rgba(248,113,113,0.3);
+--amber:#FBBF24; --amber-d:#D97706; --amber-bg:rgba(251,191,36,0.1); --amber-border:rgba(251,191,36,0.3);
+--green:#34D399; --green-d:#059669; --green-bg:rgba(52,211,153,0.1); --green-border:rgba(52,211,153,0.3);
+--blue:#60A5FA; --blue-bg:rgba(96,165,250,0.1); --blue-border:rgba(96,165,250,0.3);
+--border:#30363D; --border-2:#484F58;
+--text:#E6EDF3; --text-2:#8B949E; --text-3:#6E7681;
+--surf:#161B22; --surf-2:#1C2333; --surf-3:#21262D;
+--f:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+--fm:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:var(--f);background:var(--navy);color:var(--text);font-size:14px;line-height:1.5;overflow:hidden}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+button,input{font-family:var(--f)}
+
+/* ===== APP SHELL ===== */
+.app{display:flex;height:100vh;width:100vw}
+.sidebar{width:224px;flex-shrink:0;background:var(--navy-2);border-right:1px solid var(--border);display:flex;flex-direction:column;height:100vh}
+.main-wrap{flex:1;display:flex;flex-direction:column;min-width:0;height:100vh}
+.content{flex:1;overflow-y:auto;padding:24px;background:var(--navy)}
+
+/* ===== SIDEBAR ===== */
+.logo-row{display:flex;align-items:center;gap:10px;padding:18px 16px 14px}
+.logo-svg{width:34px;height:34px;flex-shrink:0}
+.logo-txt{font-size:19px;font-weight:800;background:linear-gradient(90deg,#fff,var(--purple-l));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.logo-tag{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--text-3);font-weight:600;margin-top:3px}
+
+.ind-switch{padding:0 12px 12px;display:flex;flex-direction:column;gap:6px;border-bottom:1px solid var(--border);margin-bottom:10px}
+.ind-btn{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:9px;border:1px solid var(--border);background:var(--surf-2);color:var(--text-2);font-size:12px;font-weight:600;cursor:pointer;text-align:left;transition:.15s;width:100%}
+.ind-btn:hover{border-color:var(--border-2);color:var(--text)}
+.ind-btn.active{color:var(--text);border-color:transparent;background:
+linear-gradient(var(--surf-2),var(--surf-2)) padding-box,
+linear-gradient(90deg,var(--purple),var(--cyan)) border-box;
+box-shadow:0 0 0 1px transparent}
+.ind-btn.active{background:linear-gradient(90deg,rgba(124,111,224,.18),rgba(34,211,238,.12));border-color:var(--purple)}
+.ind-emoji{font-size:15px}
+
+.nav{flex:1;overflow-y:auto;padding:4px 12px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:8px 9px;border-radius:9px;color:var(--text-2);cursor:pointer;font-size:13px;font-weight:500;margin-bottom:3px;transition:.13s;position:relative}
+.nav-item:hover{background:var(--surf-2);color:var(--text)}
+.nav-item.active{background:var(--surf-3);color:var(--text);font-weight:600}
+.nav-ic{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-ic i{width:15px;height:15px}
+.ni-purple{background:rgba(124,111,224,.15);color:var(--purple-l)}
+.ni-red{background:var(--red-bg);color:var(--red)}
+.ni-green{background:var(--green-bg);color:var(--green)}
+.ni-cyan{background:var(--cyan-glow);color:var(--cyan)}
+.ni-amber{background:var(--amber-bg);color:var(--amber)}
+.ni-blue{background:var(--blue-bg);color:var(--blue)}
+.nav-badge{position:absolute;right:8px;background:var(--red-d);color:#fff;font-size:10px;font-weight:700;min-width:17px;height:17px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 5px}
+
+.side-foot{padding:12px;border-top:1px solid var(--border)}
+.live-pill{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:9px;background:var(--green-bg);border:1px solid var(--green-border);font-size:11px;font-weight:600;color:var(--green)}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 2s infinite}
+.ver{font-size:9px;color:var(--text-3);text-align:center;margin-top:8px;font-family:var(--fm)}
+
+/* ===== TOPBAR ===== */
+.topbar{height:60px;flex-shrink:0;border-bottom:1px solid var(--border);background:var(--navy-2);display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+.tb-left{display:flex;align-items:center;gap:12px}
+.tb-emoji{font-size:22px}
+.tb-title{font-size:16px;font-weight:700;line-height:1.1}
+.tb-sub{font-size:11px;color:var(--text-2);margin-top:2px}
+.tb-right{display:flex;align-items:center;gap:14px}
+.role-pill{display:flex;align-items:center;gap:7px;background:var(--surf-2);border:1px solid var(--border);border-radius:20px;padding:5px 6px}
+.role-pill .rp-label{font-size:10px;color:var(--text-3);padding-left:6px;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.role-btn{font-size:11px;font-weight:600;padding:4px 9px;border-radius:14px;border:none;background:transparent;color:var(--text-2);cursor:pointer;transition:.13s}
+.role-btn:hover{color:var(--text)}
+.role-btn.active{background:linear-gradient(90deg,var(--purple),var(--cyan));color:#fff}
+.bell{position:relative;cursor:pointer;color:var(--text-2);width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:var(--surf-2);border:1px solid var(--border)}
+.bell:hover{color:var(--text)}
+.bell i{width:17px;height:17px}
+.bell-dot{position:absolute;top:7px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--red);border:1.5px solid var(--navy-2)}
+.avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff}
+
+/* ===== VIEWS / PAGES ===== */
+.industry-view{display:none}
+.industry-view.active{display:block}
+.page{display:none;animation:fade .25s ease}
+.page.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ===== GRID ===== */
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+@media(max-width:1100px){.grid-4{grid-template-columns:repeat(2,1fr)}.grid-2{grid-template-columns:1fr}}
+
+/* ===== METRIC CARD ===== */
+.mc{background:var(--surf);border:1px solid var(--border);border-radius:13px;padding:16px;position:relative}
+.mc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
+.mc-ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.mc-ic i{width:18px;height:18px}
+.mc-trend{font-size:10px;font-weight:700;padding:3px 8px;border-radius:12px}
+.mc-label{font-size:11px;color:var(--text-2);font-weight:500;margin-bottom:4px}
+.mc-val{font-size:26px;font-weight:800;letter-spacing:-.5px}
+.mc-red .mc-ic{background:var(--red-bg);color:var(--red)} .mc-red .mc-trend{background:var(--red-bg);color:var(--red)}
+.mc-green .mc-ic{background:var(--green-bg);color:var(--green)} .mc-green .mc-trend{background:var(--green-bg);color:var(--green)}
+.mc-amber .mc-ic{background:var(--amber-bg);color:var(--amber)} .mc-amber .mc-trend{background:var(--amber-bg);color:var(--amber)}
+.mc-purple .mc-ic{background:rgba(124,111,224,.15);color:var(--purple-l)} .mc-purple .mc-trend{background:rgba(124,111,224,.15);color:var(--purple-l)}
+.mc-cyan .mc-ic{background:var(--cyan-glow);color:var(--cyan)} .mc-cyan .mc-trend{background:var(--cyan-glow);color:var(--cyan)}
+.mc-blue .mc-ic{background:var(--blue-bg);color:var(--blue)} .mc-blue .mc-trend{background:var(--blue-bg);color:var(--blue)}
+
+/* ===== CARD ===== */
+.card{background:var(--surf);border:1px solid var(--border);border-radius:13px;padding:17px;margin-bottom:18px}
+.ct{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.ct-left{display:flex;align-items:center;gap:10px}
+.ct-ic{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:var(--surf-3)}
+.ct-ic i{width:16px;height:16px}
+.ct-title{font-size:14px;font-weight:700}
+
+/* ===== BADGE ===== */
+.b{font-size:10px;font-weight:700;padding:3px 9px;border-radius:12px;display:inline-flex;align-items:center;gap:4px}
+.b-red{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border)}
+.b-amber{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border)}
+.b-green{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+.b-purple{background:rgba(124,111,224,.15);color:var(--purple-l);border:1px solid var(--purple-glow)}
+.b-cyan{background:var(--cyan-glow);color:var(--cyan);border:1px solid rgba(34,211,238,.3)}
+.b-blue{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border)}
+
+/* ===== ROW ===== */
+.row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border)}
+.row:last-child{border-bottom:none}
+.ri{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700;font-size:12px}
+.ri i{width:15px;height:15px}
+.ri-red{background:var(--red-bg);color:var(--red)}
+.ri-amb{background:var(--amber-bg);color:var(--amber)}
+.ri-grn{background:var(--green-bg);color:var(--green)}
+.ri-pur{background:rgba(124,111,224,.15);color:var(--purple-l)}
+.ri-blue{background:var(--blue-bg);color:var(--blue)}
+.row-info{flex:1;min-width:0}
+.row-title{font-size:13px;font-weight:600}
+.row-sub{font-size:11px;color:var(--text-2);margin-top:1px}
+.bar{flex:1;max-width:120px;height:6px;background:var(--surf-3);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px}
+.bf-red{background:linear-gradient(90deg,var(--red-d),var(--red))}
+.bf-amb{background:linear-gradient(90deg,var(--amber-d),var(--amber))}
+.bf-grn{background:linear-gradient(90deg,var(--green-d),var(--green))}
+.bf-pur{background:linear-gradient(90deg,var(--purple-d),var(--purple))}
+.bf-blue{background:linear-gradient(90deg,#2563EB,var(--blue))}
+.row-pct{font-size:13px;font-weight:700;min-width:42px;text-align:right;font-family:var(--fm)}
+
+/* ===== ALERT BANNER ===== */
+.alert{display:flex;gap:14px;align-items:flex-start;border-left:3px solid var(--red);background:linear-gradient(90deg,var(--red-bg),rgba(248,113,113,.02));border:1px solid var(--red-border);border-left:3px solid var(--red);border-radius:11px;padding:15px 17px;margin-bottom:18px}
+.alert-ic{width:38px;height:38px;border-radius:10px;background:var(--red-bg);color:var(--red);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.alert-ic i{width:20px;height:20px}
+.alert-body{flex:1}
+.alert-title{font-size:14px;font-weight:700;color:var(--red);margin-bottom:3px}
+.alert-sub{font-size:12px;color:var(--text-2);line-height:1.45}
+.alert-btns{display:flex;gap:8px;margin-top:11px}
+.btn{font-size:12px;font-weight:600;padding:7px 13px;border-radius:8px;border:1px solid var(--border);background:var(--surf-3);color:var(--text);cursor:pointer;transition:.13s}
+.btn:hover{border-color:var(--border-2)}
+.btn-primary{background:linear-gradient(90deg,var(--purple),var(--cyan));border:none;color:#fff}
+.btn-primary:hover{box-shadow:0 0 14px var(--purple-glow)}
+.btn-sm{font-size:11px;padding:5px 10px}
+
+/* ===== SECTION HEADER ===== */
+.sh{position:relative;background:var(--surf);border:1px solid var(--border);border-radius:13px;padding:20px 22px;margin-bottom:18px;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.sh::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.sh-red::before{background:linear-gradient(90deg,var(--red-d),var(--red))}
+.sh-blue::before{background:linear-gradient(90deg,#2563EB,var(--blue))}
+.sh-green::before{background:linear-gradient(90deg,var(--green-d),var(--green))}
+.sh-purple::before{background:linear-gradient(90deg,var(--purple-d),var(--purple))}
+.sh-l{display:flex;align-items:center;gap:16px}
+.sh-emoji{font-size:34px}
+.sh-title{font-size:18px;font-weight:800}
+.sh-desc{font-size:12px;color:var(--text-2);margin-top:4px;max-width:560px}
+.sh-kpi{text-align:right;flex-shrink:0}
+.sh-kpi-num{font-size:30px;font-weight:800;letter-spacing:-1px}
+.sh-kpi-lbl{font-size:11px;color:var(--text-2)}
+
+/* ===== COMPLIANCE BAR ROW ===== */
+.cbar{display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid var(--border)}
+.cbar:last-child{border-bottom:none}
+.cbar-label{min-width:160px;font-size:13px;font-weight:600}
+.cbar-label small{display:block;font-size:11px;color:var(--text-2);font-weight:400;margin-top:2px}
+.cbar-track{flex:1;height:8px;background:var(--surf-3);border-radius:5px;overflow:hidden}
+.cbar-pct{font-size:13px;font-weight:700;min-width:44px;text-align:right;font-family:var(--fm)}
+
+/* ===== COVERAGE ROW ===== */
+.cov{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border)}
+.cov:last-child{border-bottom:none}
+.cov-info{flex:1;min-width:0}
+.cov-name{font-size:13px;font-weight:600}
+.cov-sub{font-size:11px;color:var(--text-2);margin-top:1px}
+.cov-bar{width:110px;height:7px;background:var(--surf-3);border-radius:5px;overflow:hidden;flex-shrink:0}
+
+/* ===== QUALITY HERO ===== */
+.qhero{background:var(--surf);border:1px solid var(--border);border-radius:13px;padding:22px;margin-bottom:18px;display:flex;align-items:center;gap:30px;flex-wrap:wrap}
+.qh-score{text-align:center}
+.qh-num{font-size:56px;font-weight:800;color:var(--red);line-height:1;letter-spacing:-2px}
+.qh-lbl{font-size:11px;color:var(--text-2);margin-top:4px}
+.qh-stats{display:flex;gap:0;flex:1}
+.qh-stat{flex:1;text-align:center;padding:0 16px;border-right:1px solid var(--border)}
+.qh-stat:last-child{border-right:none}
+.qh-stat-num{font-size:22px;font-weight:800}
+.qh-stat-lbl{font-size:10px;color:var(--text-2);margin-top:3px}
+
+/* ===== SIGNAL CARD ===== */
+.sig-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.sig-card{background:var(--surf);border:1px solid var(--border);border-left:3px solid var(--border-2);border-radius:11px;padding:15px}
+.sig-card.live{border-left-color:var(--green)}
+.sig-card.warn{border-left-color:var(--amber)}
+.sig-card.off{border-left-color:var(--text-3);opacity:.7}
+.sig-name{font-size:14px;font-weight:700}
+.sig-type{font-size:11px;color:var(--text-2);margin-top:2px}
+.sig-val{font-size:12px;color:var(--text);margin-top:8px;font-family:var(--fm)}
+.sig-status{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:11px;font-weight:600}
+.sig-sdot{width:7px;height:7px;border-radius:50%}
+.live .sig-sdot{background:var(--green);box-shadow:0 0 7px var(--green);animation:pulse 2s infinite}
+.live .sig-status{color:var(--green)}
+.warn .sig-sdot{background:var(--amber);box-shadow:0 0 7px var(--amber)}
+.warn .sig-status{color:var(--amber)}
+.off .sig-sdot{background:var(--text-3)}
+.off .sig-status{color:var(--text-3)}
+
+/* ===== TOOL CHIPS ===== */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;padding:5px 11px;border-radius:14px;border:1px solid var(--border)}
+.chip-dot{width:6px;height:6px;border-radius:50%}
+.chip-live{background:var(--green-bg);color:var(--green);border-color:var(--green-border)}
+.chip-live .chip-dot{background:var(--green);box-shadow:0 0 6px var(--green)}
+.chip-warn{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-border)}
+.chip-warn .chip-dot{background:var(--amber)}
+
+/* ===== FLOW NODES ===== */
+.flow{display:flex;align-items:flex-start;gap:4px;flex-wrap:wrap;padding:8px 0}
+.flow-node{text-align:center}
+.fn-box{padding:12px 16px;border-radius:10px;font-size:12px;font-weight:700;min-width:78px;border:1px solid}
+.fn-ok{background:var(--green-bg);border-color:var(--green-border);color:var(--green)}
+.fn-crit{background:var(--red-bg);border-color:var(--red-border);color:var(--red);animation:pulseRed 1.6s infinite}
+.fn-dim{background:var(--surf-3);border-color:var(--border);color:var(--text-2)}
+.fn-pct{font-size:12px;font-weight:700;margin-top:6px;font-family:var(--fm)}
+.fn-arrow{color:var(--text-3);align-self:center;padding:0 2px;font-size:18px;margin-top:14px}
+.flow-note{margin-top:14px;font-size:12px;color:var(--red);font-weight:600;display:flex;align-items:center;gap:7px}
+
+/* ===== ERROR FEED ===== */
+.efeed-row{display:flex;align-items:center;gap:13px;padding:11px 0;border-bottom:1px solid var(--border)}
+.efeed-row:last-child{border-bottom:none}
+.ef-time{font-size:11px;color:var(--text-3);font-family:var(--fm);min-width:38px}
+.ef-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.ef-red{background:var(--red);box-shadow:0 0 8px var(--red)}
+.ef-amb{background:var(--amber);box-shadow:0 0 8px var(--amber)}
+.ef-grn{background:var(--green);box-shadow:0 0 8px var(--green)}
+.ef-info{flex:1;min-width:0}
+.ef-title{font-size:13px;font-weight:600}
+.ef-meta{font-size:11px;color:var(--text-2);font-family:var(--fm);margin-top:1px}
+
+/* numbered risk rows */
+.rnum{width:26px;height:26px;border-radius:50%;background:var(--surf-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;color:var(--text-2)}
+
+/* report row */
+.rep-row{display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid var(--border)}
+.rep-row:last-child{border-bottom:none}
+.rep-ic{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rep-ic i{width:18px;height:18px}
+
+.chart-wrap{height:230px;position:relative}
+
+/* ===== AI CHAT ===== */
+.ai-toggle{position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--cyan));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 6px 22px var(--purple-glow);z-index:200;transition:.2s}
+.ai-toggle:hover{transform:scale(1.07);box-shadow:0 6px 30px var(--purple-glow)}
+.ai-toggle i{width:24px;height:24px}
+.ai-panel{position:fixed;bottom:90px;right:24px;width:360px;height:500px;background:var(--navy-2);border:1px solid var(--border);border-radius:16px;z-index:201;display:flex;flex-direction:column;overflow:hidden;transform-origin:bottom right;transform:scale(.85);opacity:0;pointer-events:none;transition:transform .22s cubic-bezier(.2,.9,.3,1.2),opacity .2s;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.ai-panel.open{transform:scale(1);opacity:1;pointer-events:auto}
+.ai-head{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border);background:var(--surf)}
+.ai-head-ic{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--purple),var(--cyan));display:flex;align-items:center;justify-content:center;color:#fff}
+.ai-head-ic i{width:17px;height:17px}
+.ai-head-info{flex:1}
+.ai-head-title{font-size:13px;font-weight:700}
+.ai-head-status{font-size:10px;color:var(--green);display:flex;align-items:center;gap:5px;margin-top:1px}
+.ai-x{cursor:pointer;color:var(--text-2);background:none;border:none;display:flex}
+.ai-x:hover{color:var(--text)}
+.ai-x i{width:18px;height:18px}
+.ai-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px}
+.ai-msg{display:flex;gap:8px;max-width:90%}
+.ai-msg.user{align-self:flex-end;flex-direction:row-reverse}
+.ai-av{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff}
+.ai-msg.ai .ai-av{background:linear-gradient(135deg,var(--purple),var(--cyan))}
+.ai-msg.user .ai-av{background:var(--surf-3);color:var(--text-2)}
+.ai-bubble{padding:10px 13px;border-radius:13px;font-size:12.5px;line-height:1.5;white-space:pre-wrap}
+.ai-msg.ai .ai-bubble{background:var(--surf-2);border:1px solid var(--border);border-top-left-radius:4px}
+.ai-msg.user .ai-bubble{background:linear-gradient(135deg,var(--purple),var(--cyan));color:#fff;border-top-right-radius:4px}
+.ai-bubble code{font-family:var(--fm);font-size:11px;background:rgba(255,255,255,.08);padding:1px 5px;border-radius:4px}
+.ai-bubble b{font-weight:700}
+.typing{display:flex;gap:4px;padding:12px 14px;background:var(--surf-2);border:1px solid var(--border);border-radius:13px;border-top-left-radius:4px;width:fit-content}
+.typing span{width:7px;height:7px;border-radius:50%;background:var(--text-2);animation:typing 1.3s infinite}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+.ai-chips{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 10px}
+.ai-chip{font-size:11px;font-weight:600;padding:6px 10px;border-radius:13px;background:var(--surf-2);border:1px solid var(--border);color:var(--text-2);cursor:pointer;transition:.13s}
+.ai-chip:hover{border-color:var(--purple);color:var(--text)}
+.ai-input-row{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--border)}
+.ai-input{flex:1;background:var(--surf-2);border:1px solid var(--border);border-radius:9px;padding:9px 12px;color:var(--text);font-size:12.5px;outline:none}
+.ai-input:focus{border-color:var(--purple)}
+.ai-send{width:38px;border:none;border-radius:9px;background:linear-gradient(135deg,var(--purple),var(--cyan));color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.ai-send i{width:17px;height:17px}
+
+/* ===== TOAST ===== */
+.toast-wrap{position:fixed;bottom:24px;right:96px;z-index:300;display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.toast{background:var(--surf-2);border:1px solid var(--border-2);border-left:3px solid var(--purple);border-radius:10px;padding:11px 16px;font-size:12.5px;font-weight:500;color:var(--text);box-shadow:0 8px 28px rgba(0,0,0,.4);animation:toastIn .3s ease;max-width:340px}
+@keyframes toastIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+
+/* ===== SIGNAL HEADER ===== */
+.sig-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+
+/* ===== WIZARD MODAL ===== */
+.wiz-overlay{position:fixed;inset:0;background:rgba(5,8,14,.72);backdrop-filter:blur(3px);z-index:400;display:none;align-items:center;justify-content:center;padding:24px}
+.wiz-overlay.open{display:flex;animation:fade .2s ease}
+.wiz{width:560px;max-width:100%;max-height:90vh;background:var(--navy-2);border:1px solid var(--border);border-radius:16px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.6);animation:wizIn .25s cubic-bezier(.2,.9,.3,1.1)}
+@keyframes wizIn{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
+.wiz-head{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--border);background:var(--surf)}
+.wiz-head-ic{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--purple),var(--cyan));display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
+.wiz-head-ic i{width:18px;height:18px}
+.wiz-head-info{flex:1}
+.wiz-head-title{font-size:15px;font-weight:700}
+.wiz-head-sub{font-size:11px;color:var(--text-2);margin-top:1px}
+.wiz-x{cursor:pointer;color:var(--text-2);background:none;border:none;display:flex}
+.wiz-x:hover{color:var(--text)}
+.wiz-x i{width:20px;height:20px}
+
+.wiz-steps{display:flex;align-items:center;gap:6px;padding:14px 20px;border-bottom:1px solid var(--border)}
+.wiz-step{display:flex;align-items:center;gap:7px;flex-shrink:0}
+.wiz-step-dot{width:24px;height:24px;border-radius:50%;background:var(--surf-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text-3);transition:.2s}
+.wiz-step-dot i{width:13px;height:13px}
+.wiz-step-lbl{font-size:11px;font-weight:600;color:var(--text-3);transition:.2s}
+.wiz-step.active .wiz-step-dot{background:linear-gradient(135deg,var(--purple),var(--cyan));border-color:transparent;color:#fff}
+.wiz-step.active .wiz-step-lbl{color:var(--text)}
+.wiz-step.done .wiz-step-dot{background:var(--green-bg);border-color:var(--green-border);color:var(--green)}
+.wiz-step.done .wiz-step-lbl{color:var(--text-2)}
+.wiz-step-line{flex:1;height:1px;background:var(--border);min-width:10px}
+
+.wiz-body{padding:20px;overflow-y:auto;flex:1}
+.wiz-section-title{font-size:13px;font-weight:700;margin-bottom:4px}
+.wiz-section-desc{font-size:12px;color:var(--text-2);margin-bottom:16px}
+
+.wiz-src-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.wiz-src{display:flex;align-items:center;gap:11px;padding:13px;border:1px solid var(--border);border-radius:11px;background:var(--surf);cursor:pointer;transition:.13s}
+.wiz-src:hover{border-color:var(--border-2)}
+.wiz-src.sel{border-color:var(--purple);background:linear-gradient(90deg,rgba(124,111,224,.14),rgba(34,211,238,.08))}
+.wiz-src-ic{width:34px;height:34px;border-radius:9px;background:var(--surf-3);display:flex;align-items:center;justify-content:center;color:var(--purple-l);flex-shrink:0}
+.wiz-src-ic i{width:17px;height:17px}
+.wiz-src-info{min-width:0}
+.wiz-src-name{font-size:13px;font-weight:600}
+.wiz-src-type{font-size:11px;color:var(--text-2);margin-top:1px}
+.wiz-src-check{margin-left:auto;color:var(--purple-l);display:none}
+.wiz-src.sel .wiz-src-check{display:flex}
+.wiz-src-check i{width:18px;height:18px}
+
+.wiz-field{margin-bottom:14px}
+.wiz-label{font-size:12px;font-weight:600;margin-bottom:6px;display:block}
+.wiz-input,.wiz-select{width:100%;background:var(--surf-2);border:1px solid var(--border);border-radius:9px;padding:10px 12px;color:var(--text);font-size:13px;font-family:var(--f);outline:none}
+.wiz-input:focus,.wiz-select:focus{border-color:var(--purple)}
+.wiz-input::placeholder{color:var(--text-3)}
+.wiz-hint{font-size:11px;color:var(--text-3);margin-top:5px}
+
+.wiz-check-row{display:flex;align-items:flex-start;gap:11px;padding:11px;border:1px solid var(--border);border-radius:10px;margin-bottom:8px;cursor:pointer;transition:.13s}
+.wiz-check-row:hover{border-color:var(--border-2)}
+.wiz-check-row.on{border-color:var(--purple);background:rgba(124,111,224,.07)}
+.wiz-cb{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--border-2);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;color:#fff;transition:.13s}
+.wiz-check-row.on .wiz-cb{background:linear-gradient(135deg,var(--purple),var(--cyan));border-color:transparent}
+.wiz-cb i{width:12px;height:12px;opacity:0}
+.wiz-check-row.on .wiz-cb i{opacity:1}
+.wiz-check-info{flex:1}
+.wiz-check-name{font-size:13px;font-weight:600}
+.wiz-check-desc{font-size:11px;color:var(--text-2);margin-top:1px}
+
+.wiz-review{background:var(--surf);border:1px solid var(--border);border-radius:11px;padding:4px 16px;margin-bottom:14px}
+.wiz-rev-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);font-size:13px}
+.wiz-rev-row:last-child{border-bottom:none}
+.wiz-rev-k{color:var(--text-2)}
+.wiz-rev-v{font-weight:600;text-align:right;font-family:var(--fm);font-size:12px}
+
+.wiz-success{text-align:center;padding:26px 10px}
+.wiz-succ-ic{width:64px;height:64px;border-radius:50%;background:var(--green-bg);border:1px solid var(--green-border);display:flex;align-items:center;justify-content:center;color:var(--green);margin:0 auto 16px;animation:pulseRed 1.6s 1}
+.wiz-succ-ic i{width:32px;height:32px}
+.wiz-succ-title{font-size:17px;font-weight:800;margin-bottom:6px}
+.wiz-succ-sub{font-size:12.5px;color:var(--text-2);max-width:360px;margin:0 auto}
+
+.wiz-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 20px;border-top:1px solid var(--border);background:var(--surf)}
+.wiz-foot-spacer{flex:1}
+
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes pulseRed{0%,100%{box-shadow:0 0 0 0 rgba(248,113,113,.4)}50%{box-shadow:0 0 0 6px rgba(248,113,113,0)}}
+@keyframes typing{0%,60%,100%{opacity:.25}30%{opacity:1}}
+
+.sub-label{font-size:12px;color:var(--text-2);font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <div class="logo-row">
+      <svg class="logo-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="lg" x1="0" y1="0" x2="40" y2="40">
+            <stop offset="0" stop-color="#7C6FE0"/><stop offset="1" stop-color="#22D3EE"/>
+          </linearGradient>
+        </defs>
+        <ellipse cx="20" cy="20" rx="17" ry="11" stroke="url(#lg)" stroke-width="2.2" fill="none"/>
+        <circle cx="20" cy="20" r="5.5" fill="url(#lg)"/>
+        <circle cx="20" cy="20" r="2.2" fill="#0D1117"/>
+        <line x1="20" y1="2" x2="20" y2="7" stroke="url(#lg)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="20" y1="33" x2="20" y2="38" stroke="url(#lg)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="34" y1="9" x2="31" y2="12" stroke="url(#lg)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="6" y1="9" x2="9" y2="12" stroke="url(#lg)" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <div class="logo-txt">Strata</div>
+        <div class="logo-tag">Intelligence Platform</div>
+      </div>
+    </div>
+
+    <div class="ind-switch">
+      <button class="ind-btn active" data-ind="sw" onclick="switchIndustry('sw',this)"><span class="ind-emoji">💻</span> Software / QE</button>
+      <button class="ind-btn" data-ind="fin" onclick="switchIndustry('fin',this)"><span class="ind-emoji">🏦</span> Financial Services</button>
+      <button class="ind-btn" data-ind="hc" onclick="switchIndustry('hc',this)"><span class="ind-emoji">🏥</span> Healthcare</button>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-item active" data-page="overview" onclick="navTo('overview',this)"><span class="nav-ic ni-purple"><i data-lucide="layout-dashboard"></i></span> Overview</div>
+      <div class="nav-item" data-page="risks" onclick="navTo('risks',this)"><span class="nav-ic ni-red"><i data-lucide="triangle-alert"></i></span> Risk Intelligence</div>
+      <div class="nav-item" data-page="compliance" onclick="navTo('compliance',this)"><span class="nav-ic ni-green"><i data-lucide="shield-check"></i></span> Compliance &amp; Gaps</div>
+      <div class="nav-item" data-page="live" onclick="navTo('live',this)"><span class="nav-ic ni-cyan"><i data-lucide="activity"></i></span> Live Monitoring<span class="nav-badge" id="nav-alert-badge">3</span></div>
+      <div class="nav-item" data-page="signals" onclick="navTo('signals',this)"><span class="nav-ic ni-amber"><i data-lucide="radar"></i></span> Signal Sources</div>
+      <div class="nav-item" data-page="reports" onclick="navTo('reports',this)"><span class="nav-ic ni-blue"><i data-lucide="file-text"></i></span> Audit Reports</div>
+    </nav>
+
+    <div class="side-foot">
+      <div class="live-pill"><span class="live-dot"></span> <span id="foot-live">12 integrations live</span></div>
+      <div class="ver">v3.2.0 · build 4821</div>
+    </div>
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <div class="main-wrap">
+    <header class="topbar">
+      <div class="tb-left">
+        <span class="tb-emoji" id="tb-emoji">📊</span>
+        <div>
+          <div class="tb-title" id="tb-title">Overview</div>
+          <div class="tb-sub" id="tb-sub">Software / QE · Last sync 12s ago</div>
+        </div>
+      </div>
+      <div class="tb-right">
+        <div class="role-pill">
+          <span class="rp-label">Role</span>
+          <div id="role-sw" style="display:flex;gap:2px"></div>
+        </div>
+        <div class="bell"><i data-lucide="bell"></i><span class="bell-dot"></span></div>
+        <div class="avatar" id="avatar">QM</div>
+      </div>
+    </header>
+
+    <main class="content" id="content">
+      <!-- ============================================================= -->
+      <!-- ===================== SOFTWARE / QE ========================= -->
+      <!-- ============================================================= -->
+      <div class="industry-view active" id="ind-sw">
+
+        <!-- ---- SW OVERVIEW ---- -->
+        <div class="page active" id="sw-overview">
+          <div class="alert">
+            <div class="alert-ic"><i data-lucide="triangle-alert"></i></div>
+            <div class="alert-body">
+              <div class="alert-title">Checkout payment step — error rate spike</div>
+              <div class="alert-sub">Error rate: <b>0.8% → 6.2%</b> in last 11 min. Correlated with PR #1482. No test covers this path. <b>847 users affected.</b></div>
+              <div class="alert-btns">
+                <button class="btn btn-primary" onclick="toast('🧪 Generating tests for checkout payment path…')">Generate tests now</button>
+                <button class="btn" onclick="toast('📊 Assessing blast radius across 6 downstream services…')">Assess blast radius</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-4">
+            <div class="mc mc-purple"><div class="mc-top"><div class="mc-ic"><i data-lucide="shield"></i></div><span class="mc-trend">↓ 4%</span></div><div class="mc-label">Overall coverage</div><div class="mc-val">58%</div></div>
+            <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="check-check"></i></div><span class="mc-trend">+23</span></div><div class="mc-label">Automated tests</div><div class="mc-val">1,847</div></div>
+            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="bug"></i></div><span class="mc-trend">+3</span></div><div class="mc-label">Escaped defects</div><div class="mc-val">11</div></div>
+            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="clock"></i></div><span class="mc-trend">stale</span></div><div class="mc-label">Stale tests</div><div class="mc-val">214</div></div>
+          </div>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="target"></i></span><span class="ct-title">Risk-ranked flows</span></div><span class="b b-red">Live</span></div>
+              <div class="row"><div class="ri ri-red">93</div><div class="row-info"><div class="row-title">Checkout</div><div class="row-sub">72% of revenue sessions</div></div><div class="bar"><div class="bar-fill bf-red" style="width:93%"></div></div></div>
+              <div class="row"><div class="ri ri-amb">81</div><div class="row-info"><div class="row-title">Password reset</div><div class="row-sub">High support volume</div></div><div class="bar"><div class="bar-fill bf-amb" style="width:81%"></div></div></div>
+              <div class="row"><div class="ri ri-amb">77</div><div class="row-info"><div class="row-title">Admin billing</div><div class="row-sub">Revenue-impacting</div></div><div class="bar"><div class="bar-fill bf-amb" style="width:77%"></div></div></div>
+              <div class="row"><div class="ri ri-amb">68</div><div class="row-info"><div class="row-title">Guest checkout</div><div class="row-sub">No coverage</div></div><div class="bar"><div class="bar-fill bf-amb" style="width:68%"></div></div></div>
+              <div class="row"><div class="ri ri-grn">22</div><div class="row-info"><div class="row-title">Search</div><div class="row-sub">Well covered</div></div><div class="bar"><div class="bar-fill bf-grn" style="width:22%"></div></div></div>
+            </div>
+            <div class="card">
+              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="git-pull-request-closed"></i></span><span class="ct-title">Coverage gaps</span></div><span class="b b-amber">5 found</span></div>
+              <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Coupon validation</div><div class="row-sub">No tests</div></div><span class="b b-red">Missing</span></div>
+              <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Refund flow</div><div class="row-sub">No tests</div></div><span class="b b-red">Missing</span></div>
+              <div class="row"><div class="ri ri-amb"><i data-lucide="minus"></i></div><div class="row-info"><div class="row-title">Payment edge cases</div><div class="row-sub">3 of 9 covered</div></div><span class="b b-amber">Partial</span></div>
+              <div class="row"><div class="ri ri-amb"><i data-lucide="minus"></i></div><div class="row-info"><div class="row-title">Mobile checkout</div><div class="row-sub">Happy path only</div></div><span class="b b-amber">Partial</span></div>
+              <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Login / auth</div><div class="row-sub">Full coverage</div></div><span class="b b-green">Covered</span></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="trending-up"></i></span><span class="ct-title">Coverage trend — 12 weeks</span></div><span class="b b-purple">Target 60%</span></div>
+            <div class="chart-wrap"><canvas id="ch-sw-trend"></canvas></div>
+          </div>
+
+          <div class="card">
+            <div class="sub-label"><i data-lucide="plug" style="width:14px"></i> Connected tools</div>
+            <div class="chips">
+              <span class="chip chip-live"><span class="chip-dot"></span>Jira</span>
+              <span class="chip chip-live"><span class="chip-dot"></span>GitHub</span>
+              <span class="chip chip-live"><span class="chip-dot"></span>Datadog</span>
+              <span class="chip chip-live"><span class="chip-dot"></span>TestRail</span>
+              <span class="chip chip-live"><span class="chip-dot"></span>Playwright</span>
+              <span class="chip chip-live"><span class="chip-dot"></span>Amplitude</span>
+              <span class="chip chip-warn"><span class="chip-dot"></span>Splunk · expiring</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---- SW RISKS ---- -->
+        <div class="page" id="sw-risks">
+          <div class="grid-4">
+            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="triangle-alert"></i></div><span class="mc-trend">active</span></div><div class="mc-label">Active risk signals</div><div class="mc-val">7</div></div>
+            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="flame"></i></div><span class="mc-trend">93/100</span></div><div class="mc-label">Highest risk flow</div><div class="mc-val" style="font-size:20px">Checkout</div></div>
+            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="octagon-alert"></i></div><span class="mc-trend">blocking</span></div><div class="mc-label">Unmitigated P1s</div><div class="mc-val">3</div></div>
+            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="git-merge"></i></div><span class="mc-trend">unverified</span></div><div class="mc-label">Risky PRs merged</div><div class="mc-val">2</div></div>
+          </div>
+          <div class="card">
+            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="network"></i></span><span class="ct-title">Cross-correlated risk signals</span></div><span class="b b-red">Live</span></div>
+            <div class="row"><div class="ri ri-red"><i data-lucide="server-crash"></i></div><div class="row-info"><div class="row-title">PaymentService returning 502</div><div class="row-sub">Datadog · 6.2% error rate · checkout path</div></div><span class="b b-red">Live</span></div>
+            <div class="row"><div class="ri ri-red"><i data-lucide="git-pull-request"></i></div><div class="row-info"><div class="row-title">PR #1482 merged without tests</div><div class="row-sub">GitHub · payment-service/charge.ts</div></div><span class="b b-red">Unverified</span></div>
+            <div class="row"><div class="ri ri-amb"><i data-lucide="ticket"></i></div><div class="row-info"><div class="row-title">3 Jira P1s open in checkout</div><div class="row-sub">2 with no assignee</div></div><span class="b b-amber">Blocking</span></div>
+            <div class="row"><div class="ri ri-amb"><i data-lucide="gauge"></i></div><div class="row-info"><div class="row-title">API latency degraded</div><div class="row-sub">Datadog · P95 +40ms since Wed</div></div><span class="b b-amber">Degraded</span></div>
+            <div class="row"><div class="ri ri-amb"><i data-lucide="key-round"></i></div><div class="row-info"><div class="row-title">Splunk auth credential expiring</div><div class="row-sub">3 days remaining</div></div><span class="b b-amber">Warn</span></div>
+            <div class="row"><div class="ri ri-grn"><i data-lucide="shield-check"></i></div><div class="row-info"><div class="row-title">Auth service healthy</div><div class="row-sub">No anomalies detected</div></div><span class="b b-green">Healthy</span></div>
+          </div>
+        </div>
+
+        <!-- ---- SW COMPLIANCE ---- -->
+        <div class="page" id="sw-compliance">
+          <div class="qhero">
+            <div class="qh-score"><div class="qh-num">42</div><div class="qh-lbl">Quality score / 100</div></div>
+            <div class="qh-stats">
+              <div class="qh-stat"><div class="qh-stat-num" style="color:var(--red)">3</div><div class="qh-stat-lbl">Critical</div></div>
+              <div class="qh-stat"><div class="qh-stat-num" style="color:var(--amber)">2</div><div class="qh-stat-lbl">Medium</div></div>
+              <div class="qh-stat"><div class="qh-stat-num" style="color:var(--amber)">214</div><div class="qh-stat-lbl">Stale</div></div>
+              <div class="qh-stat"><div class="qh-stat-num" style="color:var(--green)">1</div><div class="qh-stat-lbl">Healthy</div></div>
+            </div>
+            <button class="btn btn-primary" onclick="toast('📄 Exporting quality report…')">Export Report</button>
+          </div>
+          <div class="card">
+            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="scale"></i></span><span class="ct-title">Coverage vs production weight</span></div></div>
+            <div class="cov"><div class="cov-info"><div class="cov-name">Checkout</div><div class="cov-sub">72% of revenue</div></div><div class="cov-bar"><div class="bar-fill bf-red" style="width:38%"></div></div><div class="row-pct">38%</div><span class="b b-red">Critical</span></div>
+            <div class="cov"><div class="cov-info"><div class="cov-name">Guest checkout</div><div class="cov-sub">High traffic</div></div><div class="cov-bar"><div class="bar-fill bf-red" style="width:4%"></div></div><div class="row-pct">0%</div><span class="b b-red">Missing</span></div>
+            <div class="cov"><div class="cov-info"><div class="cov-name">Search</div><div class="cov-sub">Frequent use</div></div><div class="cov-bar"><div class="bar-fill bf-grn" style="width:88%"></div></div><div class="row-pct">88%</div><span class="b b-green">Strong</span></div>
+            <div class="cov"><div class="cov-info"><div class="cov-name">Account settings</div><div class="cov-sub">Moderate</div></div><div class="cov-bar"><div class="bar-fill bf-grn" style="width:74%"></div></div><div class="row-pct">74%</div><span class="b b-green">Good</span></div>
+            <div class="cov"><div class="cov-info"><div class="cov-name">Admin billing</div><div class="cov-sub">Revenue-impacting</div></div><div class="cov-bar"><div class="bar-fill bf-red" style="width:29%"></div></div><div class="row-pct">29%</div><span class="b b-red">Critical</span></div>
+            <div class="cov"><div class="cov-info"><div class="cov-name">Refund flow</div><div class="cov-sub">Compliance-relevant</div></div><div class="cov-bar"><div class="bar-fill bf-red" style="width:4%"></div></div><div class="row-pct">0%</div><span class="b b-red">Missing</span></div>
+          </div>
+          <div class="grid-2">
+            <div class="card">
+              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="octagon-alert"></i></span><span class="ct-title">Critical gaps</span></div><span class="b b-red">3</span></div>
+              <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Coupon validation</div><div class="row-sub">No tests · revenue path</div></div></div>
+              <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Refund flow</div><div class="row-sub">No tests · compliance</div></div></div>
+              <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Payment error handling</div><div class="row-sub">PR #1482 uncovered</div></div></div>
+            </div>
+            <div class="card">
+              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="sparkles"></i></span><span class="ct-title">Optimization opportunities</span></div></div>
+              <div class="row"><div class="ri ri-amb"><i data-lucide="copy"></i></div><div class="row-info"><div class="row-title">67 duplicate tests</div><div class="row-sub">Redundant assertions</div></div></div>
+              <div class="row"><div class="ri ri-amb"><i data-lucide="clock"></i></div><div class="row-info"><div class="row-title">214 stale tests</div><div class="row-sub">Not run in 90+ days</div></div></div>
+              <div class="row"><div class="ri ri-amb"><i data-lucide="trending-down"></i></div><div class="row-info"><div class="row-title">27% over-invested</div><div class="row-sub">Low-risk areas over-tested</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---- SW LIVE ---- -->
+        <div class="page" id="sw-live">
+          <div class="grid-4">
+            <div class="mc mc-cyan"><div class="mc-top"><div class="mc-ic"><i data-lucide="users"></i></div><span class="mc-trend">live</span></div><div class="mc-label">Active sessions</div><div class="mc-val" id="sw-sess">14,382</div></div>
+            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="trending-up"></i></div><span class="mc-trend">spike</span></div><div class="mc-label">Payment error rate</div><div class="mc-val">6.2%</div></div>
+            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="gauge"></i></div><span class="mc-trend">+40ms</span></div><div class="mc-label">API latency P95</div><div class="mc-val">340ms</div></div>
+            <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="route"></i></div><span class="mc-trend">tracked</span></div><div class="mc-label">Unique paths</div><div class="mc-val">1,247</div></div>
+          </div>
+          <div class="card">
+            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="git-fork"></i></span><span class="ct-title">Checkout flow — live funnel</span></div><span class="b b-red">Drop-off alert</span></div>
+            <div class="flow">
+              <div class="flow-node"><div class="fn-box fn-ok">Cart</div><div class="fn-pct" style="color:var(--green)">100%</div></div>
+              <span class="fn-arrow">→</span>
+              <div class="flow-node"><div class="fn-box fn-ok">Login</div><div class="fn-pct" style="color:var(--green)">91%</div></div>
+              <span class="fn-arrow">→</span>
+              <div class="flow-node"><div class="fn-box fn-ok">Shipping</div><div class="fn-pct" style="color:var(--green)">78%</div></div>
+              <span class="fn-arrow">→</span>
+              <div class="flow-node"><div class="fn-box fn-crit">⚠ Payment</div><div class="fn-pct" style="color:var(--red)">52%</div></div>
+              <span class="fn-arrow">→</span>
+              <div class="flow-node"><div class="fn-box fn-dim">Review</div><div class="fn-pct">49%</div></div>
+              <span class="fn-arrow">→</span>
+              <div class="flow-node"><div class="fn-box fn-dim">Confirm</div><div class="fn-pct">47%</div></div>
+            </div>
+            <div class="flow-note"><i data-lucide="trending-down" style="width:15px"></i> Payment drop-off spiked: 22% → 48%</div>
+          </div>
+          <div class="card">
+            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="rss"></i></span><span class="ct-title">Real-time error feed</span></div><span class="b b-red">Live</span></div>
+            <div class="efeed-row"><span class="ef-time">2m</span><span class="ef-dot ef-red"></span><div class="ef-info"><div class="ef-title">PaymentService 502 Bad Gateway</div><div class="ef-meta">checkout · 847 events</div></div><button class="btn btn-sm" onclick="toast('➕ Added PaymentService 502 to regression suite')">Add to regression</button></div>
+            <div class="efeed-row"><span class="ef-time">8m</span><span class="ef-dot ef-red"></span><div class="ef-info"><div class="ef-title">Stripe webhook timeout</div><div class="ef-meta">payments · 112 events</div></div><button class="btn btn-sm" onclick="toast('➕ Added Stripe webhook timeout to regression suite')">Add to regression</button></div>
+            <div class="efeed-row"><span class="ef-time">34m</span><span class="ef-dot ef-amb"></span><div class="ef-info"><div class="ef-title">Coupon null reference</div><div class="ef-meta">cart · 23 events</div></div><button class="btn btn-sm" onclick="toast('➕ Added coupon null ref to regression suite')">Add to regression</button></div>
+            <div class="efeed-row"><span class="ef-time">58m</span><span class="ef-dot ef-amb"></span><div class="ef-info"><div class="ef-title">Guest token expiry</div><div class="ef-meta">auth · 9 events</div></div></div>
+            <div class="efeed-row"><span class="ef-time">2h</span><span class="ef-dot ef-grn"></span><div class="ef-info"><div class="ef-title">Search timeout — resolved</div><div class="ef-meta">search · auto-recovered</div></div></div>
+          </div>
+        </div>
+
+        <!-- ---- SW SIGNALS ---- -->
+        <div class="page" id="sw-signals">
+          <div class="sig-header">
+            <div class="sub-label" style="margin-bottom:0"><i data-lucide="radar" style="width:14px"></i> Connected signal sources — 7 active</div>
+            <button class="btn btn-primary btn-sm" onclick="openWizard()"><i data-lucide="plus" style="width:14px;vertical-align:-2px"></i> Connect new source</button>
+          </div>
+          <div class="sig-grid">
+            <div class="sig-card live"><div class="sig-name">Jira</div><div class="sig-type">Issue tracking</div><div class="sig-val">3 P1s · 47 open</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+            <div class="sig-card live"><div class="sig-name">GitHub</div><div class="sig-type">Source control</div><div class="sig-val">PR #1482 flagged</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+            <div class="sig-card live"><div class="sig-name">Datadog</div><div class="sig-type">Observability</div><div class="sig-val">6.2% error rate</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+            <div class="sig-card live"><div class="sig-name">TestRail</div><div class="sig-type">Test management</div><div class="sig-val">1,847 tests</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+            <div class="sig-card live"><div class="sig-name">Playwright</div><div class="sig-type">E2E automation</div><div class="sig-val">CI green · 94%</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+            <div class="sig-card live"><div class="sig-name">Amplitude</div><div class="sig-type">Product analytics</div><div class="sig-val">14.3k sessions</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+            <div class="sig-card warn"><div class="sig-name">Splunk</div><div class="sig-type">Log aggregation</div><div class="sig-val">Auth expiring 3 days</div><div class="sig-status"><span class="sig-sdot"></span>Warning</div></div>
+            <div class="sig-card off"><div class="sig-name">New Relic</div><div class="sig-type">APM</div><div class="sig-val">—</div><div class="sig-status"><span class="sig-sdot"></span>Not connected</div></div>
+          </div>
+        </div>
+
+        <!-- ---- SW REPORTS ---- -->
+        <div class="page" id="sw-reports">
+          <div class="card">
+            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="file-text"></i></span><span class="ct-title">Audit reports</span></div><button class="btn btn-primary btn-sm" onclick="toast('📝 Creating new audit report…')">New report</button></div>
+            <div class="rep-row"><div class="rep-ic" style="background:var(--red-bg);color:var(--red)"><i data-lucide="file-warning"></i></div><div class="row-info"><div class="row-title">Quality Audit — Sprint 42</div><div class="row-sub">Score 42/100 · Generated today</div></div><span class="b b-red">42/100</span><button class="btn btn-sm" onclick="toast('👁 Opening Quality Audit — Sprint 42')">View</button></div>
+            <div class="rep-row"><div class="rep-ic" style="background:var(--amber-bg);color:var(--amber)"><i data-lucide="file-check"></i></div><div class="row-info"><div class="row-title">Release Readiness — v2.4.1</div><div class="row-sub">62% confidence · 3 days ago</div></div><span class="b b-amber">62%</span><button class="btn btn-sm" onclick="toast('👁 Opening Release Readiness — v2.4.1')">View</button></div>
+            <div class="rep-row"><div class="rep-ic" style="background:var(--green-bg);color:var(--green)"><i data-lucide="file-check-2"></i></div><div class="row-info"><div class="row-title">Monthly Quality Review — Oct</div><div class="row-sub">Improved 38 → 54 · 14 days ago</div></div><span class="b b-green">Improved</span><button class="btn btn-sm" onclick="toast('👁 Opening Monthly Quality Review — Oct')">View</button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- ===================== FINANCIAL ============================= -->
+      <!-- ============================================================= -->
+      <div class="industry-view" id="ind-fin">
+
+        <!-- ---- FIN OVERVIEW ---- -->
+        <div class="page active" id="fin-overview">
+          <div class="sh sh-blue">
+            <div class="sh-l"><span class="sh-emoji">🏦</span><div><div class="sh-title">Financial Services Intelligence</div><div class="sh-desc">Connecting trading systems, compliance frameworks, risk models, and regulatory reporting into one AI-powered risk picture.</div></div></div>
+            <div class="sh-kpi"><div class="sh-kpi-num" style="color:var(--red)">5</div><div class="sh-kpi-lbl">active risk signals</div></div>
+          </div>
+          <div class="alert">
+            <div class="alert-ic"><i data-lucide="triangle-alert"></i></div>
+            <div class="alert-body">
+              <div class="alert-title">Trading algorithm change deployed without regression validation</div>
+              <div class="alert-sub"><b>6 hours ago.</b> PR #887 modified <code>order-routing.py</code>. No test coverage for changed execution paths. <b>$2.4M</b> avg daily volume. SOX change management control violated.</div>
+              <div class="alert-btns"><button class="btn btn-primary" onclick="toast('📊 Assessing financial exposure for PR #887…')">Assess exposure</button><button class="btn" onclick="toast('🛡 Building SOX remediation plan…')">SOX remediation</button></div>
+            </div>
+          </div>
+          <div class="grid-4">
+            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="shield-x"></i></div><span class="mc-trend">+2</span></div><div class="mc-label">SOX control gaps</div><div class="mc-val">3</div></div>
+            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="calendar-clock"></i></div><span class="mc-trend">soon</span></div><div class="mc-label">Days to audit</div><div class="mc-val">14</div></div>
+            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="git-merge"></i></div><span class="mc-trend">live</span></div><div class="mc-label">Unvalidated algo changes</div><div class="mc-val">2</div></div>
+            <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="check-check"></i></div><span class="mc-trend">passing</span></div><div class="mc-label">FINRA compliance</div><div class="mc-val">98%</div></div>
+          </div>
+          <div class="grid-2">
+            <div class="card">
+              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="gavel"></i></span><span class="ct-title">Regulatory risk signals</span></div><span class="b b-red">Live</span></div>
+              <div class="row"><div class="ri ri-red"><i data-lucide="git-merge"></i></div><div class="row-info"><div class="row-title">Algo change unvalidated</div><div class="row-sub">PR #887 · order routing</div></div><span class="b b-red">Critical</span></div>
+              <div class="row"><div class="ri ri-red"><i data-lucide="timer"></i></div><div class="row-info"><div class="row-title">MiFID II latency</div><div class="row-sub">4.2s vs 1s limit</div></div><span class="b b-red">Breach</span></div>
+              <div class="row"><div class="ri ri-red"><i data-lucide="key-round"></i></div><div class="row-info"><div class="row-title">Privileged accounts</div><div class="row-sub">4 not reviewed 90+ days</div></div><span class="b b-red">SOX gap</span></div>
+              <div class="row"><div class="ri ri-amb"><i data-lucide="file-clock"></i></div><div class="row-info"><div class="row-title">Audit log gap</div><div class="row-sub">6h reconciliation gap</div></div><span class="b b-amber">Warn</span></div>
+              <div class="row"><div class="ri ri-grn"><i data-lucide="mail-check"></i></div><div class="row-info"><div class="row-title">Customer comms</div><div class="row-sub">All logs current</div></div><span class="b b-green">Compliant</span></div>
+            </div>
+            <div class="card">
+              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="shield-check"></i></span><span class="ct-title">Regulatory coverage</span></div></div>
+              <div class="cbar"><div class="cbar-label">SOX ITGC</div><div class="cbar-track"><div class="bar-fill bf-red" style="width:61%"></div></div><div class="cbar-pct">61%</div></div>
+              <div class="cbar"><div class="cbar-label">MiFID II</div><div class="cbar-track"><div class="bar-fill bf-amb" style="width:74%"></div></div><div class="cbar-pct">74%</div></div>
+              <div class="cbar"><div class="cbar-label">Basel III</div><div class="cbar-track"><div class="bar-fill bf-amb" style="width:82%"></div></div><div class="cbar-pct">82%</div></div>
+              <div class="cbar"><div class="cbar-label">FINRA</div><div class="cbar-track"><div class="bar-fill bf-grn" style="width:98%"></div></div><div class="cbar-pct">98%</div></div>
+              <div class="cbar"><div class="cbar-label">GDPR</div><div class="cbar-track"><div class="bar-fill bf-grn" style="width:88%"></div></div><div class="cbar-pct">88%</div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="sub-label"><i data-lucide="plug" style="width:14px"></i> Connected tools</div>
+            <div class="chips">
+              <span class="chip chip-live"><span class="chip-dot"></span>Bloomberg Terminal</span>
+              <span class="chip chip-live"><span class="chip-dot"></span>Trading Platform API</span>
+              <span class="chip chip-live"><span class="chip-dot"></span>GitHub</span>
+              <span class="chip chip-live"><span class="chip-dot"></span>Splunk/SIEM</span>
+              <span class="chip chip-live"><span class="chip-dot"></span>Compliance Manager</span>
+              <span class="chip chip-warn"><span class="chip-dot"></span>Identity Manager · review overdue</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---- FIN RISKS ---- -->
+        <div class="page" id="fin-risks">
+          <div class="grid-4">
+            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="triangle-alert"></i></div><span class="mc-trend">active</span></div><div class="mc-label">Active risk signals</div><div class="mc-val">5</div></div>
+            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="calendar-clock"></i></div><span class="mc-trend">↓</span></div><div class="mc-label">Days to audit</div><div class="mc-val">14</div></div>
+            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="banknote"></i></div><span class="mc-trend">at risk</span></div><div class="mc-label">Volume at risk / daily</div><div class="mc-val">$2.4M</div></div>
+            <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="shield-check"></i></div><span class="mc-trend">passing</span></div><div class="mc-label">Controls passing</div><div class="mc-val">34/37</div></div>
+          </div>
+          <div class="card">
+            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="trending-up"></i></span><span class="ct-title">Top risks — by financial exposure</span></div><span class="b b-red">Ranked</span></div>
+            <div class="row"><div class="rnum">1</div><div class="row-info"><div class="row-title">Unvalidated trading algo</div><div class="row-sub">PR #887 · order routing live 6h</div></div><span class="b b-red">$$$</span></div>
+            <div class="row"><div class="rnum">2</div><div class="row-info"><div class="row-title">MiFID II latency breach</div><div class="row-sub">4.2s reporting on 3 instruments</div></div><span class="b b-red">Fine risk</span></div>
+            <div class="row"><div class="rnum">3</div><div class="row-info"><div class="row-title">Privileged access 90 days</div><div class="row-sub">4 accounts not reviewed</div></div><span class="b b-amber">SOX</span></div>
+            <div class="row"><div class="rnum">4</div><div class="row-info"><div class="row-title">Basel III capital model</div><div class="row-sub">Unvalidated update last week</div></div><span class="b b-amber">Regulatory</span></div>
+            <div class="row"><div class="rnum">5</div><div class="row-info"><div class="row-title">GDPR requests overdue</div><div class="row-sub">2 past 30-day deadline</div></div><span class="b b-amber">GDPR</span></div>
+          </div>
+        </div>
+
+        <!-- ---- FIN COMPLIANCE ---- -->
+        <div class="page" id="fin-compliance">
+          <div class="sh sh-blue">
+            <div class="sh-l"><span class="sh-emoji">📋</span><div><div class="sh-title">Regulatory Compliance Posture</div><div class="sh-desc">Live mapping of controls against SOX, MiFID II, Basel III, FINRA, and GDPR frameworks.</div></div></div>
+            <div class="sh-kpi"><div class="sh-kpi-num" style="color:var(--amber)">82%</div><div class="sh-kpi-lbl">overall</div></div>
+          </div>
+          <div class="grid-2">
+            <div class="card">
+              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="shield-x"></i></span><span class="ct-title">SOX — failing controls</span></div><span class="b b-red">3 failing</span></div>
+              <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Change management</div><div class="row-sub">No dual approval on PR #887</div></div><span class="b b-red">Failing</span></div>
+              <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Access review</div><div class="row-sub">4 privileged accounts stale</div></div><span class="b b-red">Failing</span></div>
+              <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Audit trail</div><div class="row-sub">6h reconciliation gap</div></div><span class="b b-red">Failing</span></div>
+              <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Financial reporting</div><div class="row-sub">Controls operating</div></div><span class="b b-green">Passing</span></div>
+            </div>
+            <div class="card">
+              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="file-spreadsheet"></i></span><span class="ct-title">MiFID II — transaction reporting</span></div></div>
+              <div class="row"><div class="ri ri-red"><i data-lucide="timer"></i></div><div class="row-info"><div class="row-title">Equities</div><div class="row-sub">4.2s latency vs 1s limit</div></div><span class="b b-red">Breach</span></div>
+              <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Fixed income</div><div class="row-sub">0.6s reporting</div></div><span class="b b-green">Compliant</span></div>
+              <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Trade completeness</div><div class="row-sub">99.8% reported</div></div><span class="b b-green">Compliant</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="layers"></i></span><span class="ct-title">Full regulatory coverage</span></div></div>
+            <div class="cbar"><div class="cbar-label">SOX<small>IT general controls</small></div><div class="cbar-track"><div class="bar-fill bf-red" style="width:61%"></div></div><div class="cbar-pct">61%</div></div>
+            <div class="cbar"><div class="cbar-label">MiFID II<small>Transaction reporting</small></div><div class="cbar-track"><div class="bar-fill bf-amb" style="width:74%"></div></div><div class="cbar-pct">74%</div></div>
+            <div class="cbar"><div class="cbar-label">Basel III<small>Capital adequacy</small></div><div class="cbar-track"><div class="bar-fill bf-amb" style="width:82%"></div></div><div class="cbar-pct">82%</div></div>
+            <div class="cbar"><div class="cbar-label">FINRA<small>Recordkeeping</small></div><div class="cbar-track"><div class="bar-fill bf-grn" style="width:98%"></div></div><div class="cbar-pct">98%</div></div>
+            <div class="cbar"><div class="cbar-label">GDPR<small>Data protection</small></div><div class="cbar-track"><div class="bar-fill bf-grn" style="width:88%"></div></div><div class="cbar-pct">88%</div></div>
+          </div>
+        </div>
+
+        <!-- ---- FIN LIVE ---- -->
+        <div class="page" id="fin-live">
+          <div class="grid-4">
+            <div class="mc mc-cyan"><div class="mc-top"><div class="mc-ic"><i data-lucide="activity"></i></div><span class="mc-trend">live</span></div><div class="mc-label">Active trade volume</div><div class="mc-val">$847k</div></div>
+            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="timer"></i></div><span class="mc-trend">breach</span></div><div class="mc-label">Reporting latency</div><div class="mc-val">4.2s</div></div>
+            <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="check-check"></i></div><span class="mc-trend">ok</span></div><div class="mc-label">Trades reported</div><div class="mc-val">14,847</div></div>
+            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="alert-triangle"></i></div><span class="mc-trend">+2</span></div><div class="mc-label">Anomalies</div><div class="mc-val">3</div></div>
+          </div>
+          <div class="card">
+            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="rss"></i></span><span class="ct-title">Live system alerts</span></div><span class="b b-red">Live</span></div>
+            <div class="efeed-row"><span class="ef-time">now</span><span class="ef-dot ef-red"></span><div class="ef-info"><div class="ef-title">MiFID II latency breach</div><div class="ef-meta">equities · 4.2s reporting</div></div><span class="b b-red">Live</span></div>
+            <div class="efeed-row"><span class="ef-time">6h</span><span class="ef-dot ef-red"></span><div class="ef-info"><div class="ef-title">Order routing anomaly</div><div class="ef-meta">PR #887 · order-routing.py</div></div><span class="b b-red">Critical</span></div>
+            <div class="efeed-row"><span class="ef-time">6h</span><span class="ef-dot ef-amb"></span><div class="ef-info"><div class="ef-title">Trade reconciliation log gap</div><div class="ef-meta">audit trail · 6h window</div></div><span class="b b-amber">Warn</span></div>
+            <div class="efeed-row"><span class="ef-time">1d</span><span class="ef-dot ef-grn"></span><div class="ef-info"><div class="ef-title">Fixed income reporting normal</div><div class="ef-meta">0.6s latency</div></div><span class="b b-green">Normal</span></div>
+          </div>
+        </div>
+
+        <!-- ---- FIN SIGNALS ---- -->
+        <div class="page" id="fin-signals">
+          <div class="sig-header">
+            <div class="sub-label" style="margin-bottom:0"><i data-lucide="radar" style="width:14px"></i> Connected signal sources — 6 active</div>
+            <button class="btn btn-primary btn-sm" onclick="openWizard()"><i data-lucide="plus" style="width:14px;vertical-align:-2px"></i> Connect new source</button>
+          </div>
+          <div class="sig-grid">
+            <div class="sig-card live"><div class="sig-name">Bloomberg Terminal</div><div class="sig-type">Market data</div><div class="sig-val">Real-time feed</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+            <div class="sig-card live"><div class="sig-name">Trading Platform</div><div class="sig-type">Execution</div><div class="sig-val">$847k active</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+            <div class="sig-card live"><div class="sig-name">GitHub</div><div class="sig-type">Source control</div><div class="sig-val">PR #887 flagged</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+            <div class="sig-card live"><div class="sig-name">Splunk/SIEM</div><div class="sig-type">Security logs</div><div class="sig-val">Monitoring</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+            <div class="sig-card live"><div class="sig-name">Compliance Manager</div><div class="sig-type">GRC platform</div><div class="sig-val">37 controls</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+            <div class="sig-card warn"><div class="sig-name">Audit Trail System</div><div class="sig-type">Recordkeeping</div><div class="sig-val">6h gap detected</div><div class="sig-status"><span class="sig-sdot"></span>Warning</div></div>
+            <div class="sig-card warn"><div class="sig-name">Identity Manager</div><div class="sig-type">IAM</div><div class="sig-val">Review overdue</div><div class="sig-status"><span class="sig-sdot"></span>Warning</div></div>
+            <div class="sig-card live"><div class="sig-name">RegTech Platform</div><div class="sig-type">Reg reporting</div><div class="sig-val">MiFID + FINRA</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+          </div>
+        </div>
+
+        <!-- ---- FIN REPORTS ---- -->
+        <div class="page" id="fin-reports">
+          <div class="card">
+            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="file-text"></i></span><span class="ct-title">Audit reports</span></div><button class="btn btn-primary btn-sm" onclick="toast('📝 Creating new audit report…')">New report</button></div>
+            <div class="rep-row"><div class="rep-ic" style="background:var(--red-bg);color:var(--red)"><i data-lucide="file-warning"></i></div><div class="row-info"><div class="row-title">SOX ITGC Assessment — Q4</div><div class="row-sub">3 failing controls · today</div></div><span class="b b-red">Critical</span><button class="btn btn-sm" onclick="toast('👁 Opening SOX ITGC Assessment — Q4')">View</button></div>
+            <div class="rep-row"><div class="rep-ic" style="background:var(--amber-bg);color:var(--amber)"><i data-lucide="file-check"></i></div><div class="row-info"><div class="row-title">MiFID II Trade Reporting — Nov</div><div class="row-sub">1 breach · 3 days ago</div></div><span class="b b-amber">Review</span><button class="btn btn-sm" onclick="toast('👁 Opening MiFID II Trade Reporting — Nov')">View</button></div>
+            <div class="rep-row"><div class="rep-ic" style="background:var(--green-bg);color:var(--green)"><i data-lucide="file-check-2"></i></div><div class="row-info"><div class="row-title">FINRA Recordkeeping — Oct</div><div class="row-sub">98% compliant · 2 weeks ago</div></div><span class="b b-green">Passing</span><button class="btn btn-sm" onclick="toast('👁 Opening FINRA Recordkeeping — Oct')">View</button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- ===================== HEALTHCARE ============================ -->
+      <!-- ============================================================= -->
+      <div class="industry-view" id="ind-hc">
+
+        <!-- ---- HC OVERVIEW ---- -->
+        <div class="page active" id="hc-overview">
+          <div class="sh sh-green">
+            <div class="sh-l"><span class="sh-emoji">🏥</span><div><div class="sh-title">Healthcare Intelligence</div><div class="sh-desc">Connecting clinical systems, EHR, medication platforms, and compliance frameworks to protect patient safety and regulatory readiness.</div></div></div>
+            <div class="sh-kpi"><div class="sh-kpi-num" style="color:var(--red)">2</div><div class="sh-kpi-lbl">patient safety alerts</div></div>
+          </div>
+          <div class="alert">
+            <div class="alert-ic"><i data-lucide="triangle-alert"></i></div>
+            <div class="alert-body">
+              <div class="alert-title">Medication dispensing system — error rate spike</div>
+              <div class="alert-sub">Error rate: <b>0.3% → 4.1%</b> since 02:14am update. System update v8.4.2 deployed without regression testing. IV dosing path has zero automated validation. <b>23 error events in 4 hours.</b></div>
+              <div class="alert-btns"><button class="btn btn-primary" onclick="toast('🚨 Escalating to clinical pharmacy…')">Escalate now</button><button class="btn" onclick="toast('↩️ Assessing rollback of v8.4.2…')">Assess rollback</button></div>
+            </div>
+          </div>
+          <div class="grid-4">
+            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="pill"></i></div><span class="mc-trend">spike</span></div><div class="mc-label">Medication error rate</div><div class="mc-val">4.1%</div></div>
+            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="calendar-clock"></i></div><span class="mc-trend">soon</span></div><div class="mc-label">Days to JC survey</div><div class="mc-val">31</div></div>
+            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="shield-x"></i></div><span class="mc-trend">+1</span></div><div class="mc-label">HIPAA gaps</div><div class="mc-val">3</div></div>
+            <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="heart-pulse"></i></div><span class="mc-trend">live</span></div><div class="mc-label">Clinical systems online</div><div class="mc-val">8/8</div></div>
+          </div>
+          <div class="grid-2">
+            <div class="card">
+              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="heart-pulse"></i></span><span class="ct-title">Patient safety signals</span></div><span class="b b-red">Live</span></div>
+              <div class="row"><div class="ri ri-red"><i data-lucide="pill"></i></div><div class="row-info"><div class="row-title">Medication spike</div><div class="row-sub">IV dosing · 23 events</div></div><span class="b b-red">Critical</span></div>
+              <div class="row"><div class="ri ri-red"><i data-lucide="file-clock"></i></div><div class="row-info"><div class="row-title">EHR audit log</div><div class="row-sub">Failing 11 days</div></div><span class="b b-red">Critical</span></div>
+              <div class="row"><div class="ri ri-amb"><i data-lucide="user-x"></i></div><div class="row-info"><div class="row-title">7 PHI accounts</div><div class="row-sub">Inactive · not reviewed</div></div><span class="b b-amber">High</span></div>
+              <div class="row"><div class="ri ri-amb"><i data-lucide="clipboard-list"></i></div><div class="row-info"><div class="row-title">Med reconciliation</div><div class="row-sub">18% of admissions</div></div><span class="b b-amber">Medium</span></div>
+              <div class="row"><div class="ri ri-grn"><i data-lucide="flame-kindling"></i></div><div class="row-info"><div class="row-title">Fire safety</div><div class="row-sub">Inspections current</div></div><span class="b b-green">Compliant</span></div>
+            </div>
+            <div class="card">
+              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="shield-check"></i></span><span class="ct-title">Compliance coverage</span></div></div>
+              <div class="cbar"><div class="cbar-label">HIPAA Privacy</div><div class="cbar-track"><div class="bar-fill bf-red" style="width:72%"></div></div><div class="cbar-pct">72%</div></div>
+              <div class="cbar"><div class="cbar-label">HIPAA Security</div><div class="cbar-track"><div class="bar-fill bf-red" style="width:68%"></div></div><div class="cbar-pct">68%</div></div>
+              <div class="cbar"><div class="cbar-label">Joint Commission</div><div class="cbar-track"><div class="bar-fill bf-amb" style="width:77%"></div></div><div class="cbar-pct">77%</div></div>
+              <div class="cbar"><div class="cbar-label">CMS Conditions</div><div class="cbar-track"><div class="bar-fill bf-grn" style="width:91%"></div></div><div class="cbar-pct">91%</div></div>
+              <div class="cbar"><div class="cbar-label">Breach Notification</div><div class="cbar-track"><div class="bar-fill bf-grn" style="width:100%"></div></div><div class="cbar-pct">100%</div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="sub-label"><i data-lucide="plug" style="width:14px"></i> Connected tools</div>
+            <div class="chips">
+              <span class="chip chip-live"><span class="chip-dot"></span>Epic EHR</span>
+              <span class="chip chip-live"><span class="chip-dot"></span>Medication Dispensing</span>
+              <span class="chip chip-live"><span class="chip-dot"></span>Lab Info System</span>
+              <span class="chip chip-live"><span class="chip-dot"></span>Radiology PACS</span>
+              <span class="chip chip-live"><span class="chip-dot"></span>Scheduling</span>
+              <span class="chip chip-live"><span class="chip-dot"></span>Incident Reporting</span>
+              <span class="chip chip-warn"><span class="chip-dot"></span>Audit Log System · failing</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---- HC RISKS ---- -->
+        <div class="page" id="hc-risks">
+          <div class="grid-4">
+            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="triangle-alert"></i></div><span class="mc-trend">active</span></div><div class="mc-label">Active risk signals</div><div class="mc-val">6</div></div>
+            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="flame"></i></div><span class="mc-trend">4.1%</span></div><div class="mc-label">Highest risk system</div><div class="mc-val" style="font-size:17px">Med Dispensing</div></div>
+            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="calendar-clock"></i></div><span class="mc-trend">survey</span></div><div class="mc-label">JC survey countdown</div><div class="mc-val">31d</div></div>
+            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="search-check"></i></div><span class="mc-trend">audit</span></div><div class="mc-label">OIG audit countdown</div><div class="mc-val">21d</div></div>
+          </div>
+          <div class="card">
+            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="trending-up"></i></span><span class="ct-title">Top risks — by patient safety &amp; regulatory impact</span></div><span class="b b-red">Ranked</span></div>
+            <div class="row"><div class="rnum">1</div><div class="row-info"><div class="row-title">Medication dispensing error spike</div><div class="row-sub">IV dosing · 23 events · v8.4.2</div></div><span class="b b-red">Patient safety</span></div>
+            <div class="row"><div class="rnum">2</div><div class="row-info"><div class="row-title">EHR audit log failing 11 days</div><div class="row-sub">Silent export failure</div></div><span class="b b-red">HIPAA</span></div>
+            <div class="row"><div class="rnum">3</div><div class="row-info"><div class="row-title">7 inactive PHI accounts</div><div class="row-sub">Not reviewed 90 days</div></div><span class="b b-amber">HIPAA</span></div>
+            <div class="row"><div class="rnum">4</div><div class="row-info"><div class="row-title">Medical records 73% vs 90% standard</div><div class="row-sub">Completion rate gap</div></div><span class="b b-amber">JC survey</span></div>
+            <div class="row"><div class="rnum">5</div><div class="row-info"><div class="row-title">ED backup untested 14 months</div><div class="row-sub">Downtime procedure</div></div><span class="b b-amber">Readiness</span></div>
+            <div class="row"><div class="rnum">6</div><div class="row-info"><div class="row-title">Hand hygiene 84% vs 90%</div><div class="row-sub">Below benchmark</div></div><span class="b b-amber">JC survey</span></div>
+          </div>
+        </div>
+
+        <!-- ---- HC COMPLIANCE ---- -->
+        <div class="page" id="hc-compliance">
+          <div class="sh sh-green">
+            <div class="sh-l"><span class="sh-emoji">🛡️</span><div><div class="sh-title">HIPAA &amp; Joint Commission Posture</div><div class="sh-desc">Live control mapping against HIPAA Privacy/Security rules and Joint Commission survey standards.</div></div></div>
+            <div class="sh-kpi"><div class="sh-kpi-num" style="color:var(--amber)">76%</div><div class="sh-kpi-lbl">overall</div></div>
+          </div>
+          <div class="grid-2">
+            <div class="card">
+              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="shield-x"></i></span><span class="ct-title">HIPAA — failing controls</span></div><span class="b b-red">2 failing</span></div>
+              <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Audit log</div><div class="row-sub">§164.312b · failing 11 days</div></div><span class="b b-red">Failing</span></div>
+              <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Access controls</div><div class="row-sub">§164.312a · 7 stale accounts</div></div><span class="b b-red">Failing</span></div>
+              <div class="row"><div class="ri ri-amb"><i data-lucide="minus"></i></div><div class="row-info"><div class="row-title">Device encryption</div><div class="row-sub">§164.312e · 2 workstations</div></div><span class="b b-amber">Partial</span></div>
+              <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Breach notification</div><div class="row-sub">Process current</div></div><span class="b b-green">Passing</span></div>
+            </div>
+            <div class="card">
+              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="clipboard-check"></i></span><span class="ct-title">Joint Commission — 31 days to survey</span></div></div>
+              <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Medical records</div><div class="row-sub">RC.02.01.01 · 73% vs 90%</div></div><span class="b b-red">Gap</span></div>
+              <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Med reconciliation</div><div class="row-sub">MM.04.01.01 · 18% gap</div></div><span class="b b-red">Gap</span></div>
+              <div class="row"><div class="ri ri-amb"><i data-lucide="minus"></i></div><div class="row-info"><div class="row-title">Hand hygiene</div><div class="row-sub">IC.02.02.01 · 84% vs 90%</div></div><span class="b b-amber">Below target</span></div>
+              <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Fire safety</div><div class="row-sub">LS.03.01.10 · current</div></div><span class="b b-green">Passing</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---- HC LIVE ---- -->
+        <div class="page" id="hc-live">
+          <div class="grid-4">
+            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="pill"></i></div><span class="mc-trend">spike</span></div><div class="mc-label">Medication error rate</div><div class="mc-val">4.1%</div></div>
+            <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="heart-pulse"></i></div><span class="mc-trend">live</span></div><div class="mc-label">Clinical systems</div><div class="mc-val">8/8</div></div>
+            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="bed"></i></div><span class="mc-trend">census</span></div><div class="mc-label">Active inpatients</div><div class="mc-val">847</div></div>
+            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="alert-triangle"></i></div><span class="mc-trend">+1</span></div><div class="mc-label">Incidents today</div><div class="mc-val">3</div></div>
+          </div>
+          <div class="card">
+            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="rss"></i></span><span class="ct-title">Live clinical system alerts</span></div><span class="b b-red">Live</span></div>
+            <div class="efeed-row"><span class="ef-time">now</span><span class="ef-dot ef-red"></span><div class="ef-info"><div class="ef-title">Medication IV dosing errors</div><div class="ef-meta">dispensing · 23 events</div></div><span class="b b-red">Patient safety</span></div>
+            <div class="efeed-row"><span class="ef-time">11d</span><span class="ef-dot ef-red"></span><div class="ef-info"><div class="ef-title">EHR audit log still failing</div><div class="ef-meta">§164.312b · silent</div></div><span class="b b-red">HIPAA</span></div>
+            <div class="efeed-row"><span class="ef-time">2h</span><span class="ef-dot ef-amb"></span><div class="ef-info"><div class="ef-title">Lab result latency elevated</div><div class="ef-meta">LIS → EHR · 4.2s</div></div><span class="b b-amber">Warn</span></div>
+            <div class="efeed-row"><span class="ef-time">live</span><span class="ef-dot ef-grn"></span><div class="ef-info"><div class="ef-title">Epic EHR operational</div><div class="ef-meta">99.99% uptime</div></div><span class="b b-green">Normal</span></div>
+            <div class="efeed-row"><span class="ef-time">live</span><span class="ef-dot ef-grn"></span><div class="ef-info"><div class="ef-title">Radiology PACS operational</div><div class="ef-meta">imaging routing ok</div></div><span class="b b-green">Normal</span></div>
+          </div>
+        </div>
+
+        <!-- ---- HC SIGNALS ---- -->
+        <div class="page" id="hc-signals">
+          <div class="sig-header">
+            <div class="sub-label" style="margin-bottom:0"><i data-lucide="radar" style="width:14px"></i> Connected signal sources — 4 active</div>
+            <button class="btn btn-primary btn-sm" onclick="openWizard()"><i data-lucide="plus" style="width:14px;vertical-align:-2px"></i> Connect new source</button>
+          </div>
+          <div class="sig-grid">
+            <div class="sig-card live"><div class="sig-name">Epic EHR</div><div class="sig-type">Electronic health records</div><div class="sig-val">99.99% uptime</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+            <div class="sig-card warn"><div class="sig-name">Med Dispensing</div><div class="sig-type">Pharmacy automation</div><div class="sig-val">Error rate 4.1%</div><div class="sig-status"><span class="sig-sdot"></span>Warning</div></div>
+            <div class="sig-card warn"><div class="sig-name">Lab Info System</div><div class="sig-type">LIS</div><div class="sig-val">Latency elevated</div><div class="sig-status"><span class="sig-sdot"></span>Warning</div></div>
+            <div class="sig-card live"><div class="sig-name">Radiology PACS</div><div class="sig-type">Imaging</div><div class="sig-val">Routing ok</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+            <div class="sig-card live"><div class="sig-name">Scheduling</div><div class="sig-type">Patient access</div><div class="sig-val">Operational</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+            <div class="sig-card warn"><div class="sig-name">Audit Log System</div><div class="sig-type">Compliance logging</div><div class="sig-val">FAILING 11 days</div><div class="sig-status"><span class="sig-sdot"></span>Warning</div></div>
+            <div class="sig-card warn"><div class="sig-name">Identity Manager</div><div class="sig-type">IAM</div><div class="sig-val">7 accounts flagged</div><div class="sig-status"><span class="sig-sdot"></span>Warning</div></div>
+            <div class="sig-card live"><div class="sig-name">Incident Reporting</div><div class="sig-type">Safety events</div><div class="sig-val">3 today</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+          </div>
+        </div>
+
+        <!-- ---- HC REPORTS ---- -->
+        <div class="page" id="hc-reports">
+          <div class="card">
+            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="file-text"></i></span><span class="ct-title">Audit reports</span></div><button class="btn btn-primary btn-sm" onclick="toast('📝 Creating new audit report…')">New report</button></div>
+            <div class="rep-row"><div class="rep-ic" style="background:var(--red-bg);color:var(--red)"><i data-lucide="file-warning"></i></div><div class="row-info"><div class="row-title">HIPAA Security Risk Assessment — Q4</div><div class="row-sub">2 failing controls · today</div></div><span class="b b-red">Critical</span><button class="btn btn-sm" onclick="toast('👁 Opening HIPAA Security Risk Assessment — Q4')">View</button></div>
+            <div class="rep-row"><div class="rep-ic" style="background:var(--amber-bg);color:var(--amber)"><i data-lucide="file-check"></i></div><div class="row-info"><div class="row-title">Joint Commission Readiness — Nov</div><div class="row-sub">31 days to survey · 4 gaps</div></div><span class="b b-amber">Review</span><button class="btn btn-sm" onclick="toast('👁 Opening Joint Commission Readiness — Nov')">View</button></div>
+            <div class="rep-row"><div class="rep-ic" style="background:var(--green-bg);color:var(--green)"><i data-lucide="file-check-2"></i></div><div class="row-info"><div class="row-title">CMS Conditions of Participation — Oct</div><div class="row-sub">91% compliant · 2 weeks ago</div></div><span class="b b-green">Passing</span><button class="btn btn-sm" onclick="toast('👁 Opening CMS Conditions of Participation — Oct')">View</button></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ===== AI CHAT ===== -->
+<button class="ai-toggle" onclick="toggleAI()" title="Strata AI"><i data-lucide="message-square"></i></button>
+<div class="ai-panel" id="aiPanel">
+  <div class="ai-head">
+    <div class="ai-head-ic"><i data-lucide="brain"></i></div>
+    <div class="ai-head-info"><div class="ai-head-title">Strata AI</div><div class="ai-head-status"><span class="live-dot"></span> Analyzing your stack</div></div>
+    <button class="ai-x" onclick="toggleAI()"><i data-lucide="x"></i></button>
+  </div>
+  <div class="ai-msgs" id="aiMsgs"></div>
+  <div class="ai-chips" id="aiChips"></div>
+  <div class="ai-input-row">
+    <input class="ai-input" id="aiInput" placeholder="Ask about your risks…" onkeydown="if(event.key==='Enter')aiSend()">
+    <button class="ai-send" onclick="aiSend()"><i data-lucide="send"></i></button>
+  </div>
+</div>
+
+<!-- ===== CONNECT SOURCE WIZARD ===== -->
+<div class="wiz-overlay" id="wizOverlay" onclick="if(event.target===this)closeWizard()">
+  <div class="wiz">
+    <div class="wiz-head">
+      <div class="wiz-head-ic"><i data-lucide="radar"></i></div>
+      <div class="wiz-head-info">
+        <div class="wiz-head-title">Connect a signal source</div>
+        <div class="wiz-head-sub" id="wizSub">Software / QE · integrate a new data source</div>
+      </div>
+      <button class="wiz-x" onclick="closeWizard()"><i data-lucide="x"></i></button>
+    </div>
+    <div class="wiz-steps" id="wizSteps">
+      <div class="wiz-step active"><span class="wiz-step-dot">1</span><span class="wiz-step-lbl">Source</span></div>
+      <span class="wiz-step-line"></span>
+      <div class="wiz-step"><span class="wiz-step-dot">2</span><span class="wiz-step-lbl">Connect</span></div>
+      <span class="wiz-step-line"></span>
+      <div class="wiz-step"><span class="wiz-step-dot">3</span><span class="wiz-step-lbl">Signals</span></div>
+      <span class="wiz-step-line"></span>
+      <div class="wiz-step"><span class="wiz-step-dot">4</span><span class="wiz-step-lbl">Review</span></div>
+    </div>
+    <div class="wiz-body" id="wizBody"></div>
+    <div class="wiz-foot">
+      <button class="btn" id="wizBack" onclick="wizardBack()">Back</button>
+      <div class="wiz-foot-spacer"></div>
+      <button class="btn btn-primary" id="wizNext" onclick="wizardNext()">Continue</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+/* ===================== STATE ===================== */
+var curInd = 'sw';
+var pageTitles = {overview:'Overview',risks:'Risk Intelligence',compliance:'Compliance & Gaps',live:'Live Monitoring',signals:'Signal Sources',reports:'Audit Reports'};
+var pageEmojis = {overview:'📊',risks:'⚠️',compliance:'🛡️',live:'⚡',signals:'📡',reports:'📋'};
+
+var INDUSTRY = {
+  sw:{name:'Software / QE', sub:'Software / QE', live:'12 integrations live', badge:'3',
+      roles:['QA Manager','Eng Manager','VP Eng','Executive'], initials:['QM','EM','VP','EX']},
+  fin:{name:'Financial Services', sub:'Financial Services', live:'8 integrations live', badge:'2',
+      roles:['Risk Analyst','Compliance Officer','CTO','Chief Risk Officer'], initials:['RA','CO','CT','CR']},
+  hc:{name:'Healthcare', sub:'Healthcare', live:'8 integrations live', badge:'2',
+      roles:['IT Manager','Clinical Informatics','VP Clinical Ops','CMIO'], initials:['IT','CI','VP','CM']}
+};
+
+var curRoleIdx = 0;
+
+/* ===================== INDUSTRY / NAV ===================== */
+function switchIndustry(ind, btn){
+  curInd = ind;
+  document.querySelectorAll('.ind-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  document.querySelectorAll('.industry-view').forEach(function(v){v.classList.remove('active')});
+  document.getElementById('ind-'+ind).classList.add('active');
+  // reset to overview page
+  var view = document.getElementById('ind-'+ind);
+  view.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+  document.getElementById(ind+'-overview').classList.add('active');
+  // reset nav
+  document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active')});
+  document.querySelector('.nav-item[data-page="overview"]').classList.add('active');
+  // topbar
+  document.getElementById('tb-emoji').textContent = pageEmojis.overview;
+  document.getElementById('tb-title').textContent = pageTitles.overview;
+  updateSub();
+  // foot + badge
+  document.getElementById('foot-live').textContent = INDUSTRY[ind].live;
+  document.getElementById('nav-alert-badge').textContent = INDUSTRY[ind].badge;
+  curRoleIdx = 0;
+  renderRoles();
+  initAI();
+  lucide.createIcons();
+  if(ind==='sw') setTimeout(drawSWChart,200);
+}
+
+function navTo(page, btn){
+  var view = document.getElementById('ind-'+curInd);
+  view.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+  var target = document.getElementById(curInd+'-'+page);
+  if(target) target.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active')});
+  btn.classList.add('active');
+  document.getElementById('tb-emoji').textContent = pageEmojis[page];
+  document.getElementById('tb-title').textContent = pageTitles[page];
+  updateSub();
+  lucide.createIcons();
+  if(curInd==='sw' && page==='overview') setTimeout(drawSWChart,200);
+}
+
+function updateSub(){
+  document.getElementById('tb-sub').textContent = INDUSTRY[curInd].sub + ' · Last sync 12s ago';
+}
+
+/* ===================== ROLES ===================== */
+function switchRole(idx, btn){
+  curRoleIdx = idx;
+  document.querySelectorAll('#role-sw .role-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  document.getElementById('avatar').textContent = INDUSTRY[curInd].initials[idx];
+}
+
+function renderRoles(){
+  var cont = document.getElementById('role-sw');
+  cont.innerHTML = '';
+  INDUSTRY[curInd].roles.forEach(function(r, i){
+    var b = document.createElement('button');
+    b.className = 'role-btn' + (i===curRoleIdx?' active':'');
+    b.textContent = r;
+    b.onclick = function(){ switchRole(i, b); };
+    cont.appendChild(b);
+  });
+  document.getElementById('avatar').textContent = INDUSTRY[curInd].initials[curRoleIdx];
+}
+
+/* ===================== AI CHAT ===================== */
+var AI = {
+  sw:{
+    greeting:"Hi 👋 I'm watching your engineering stack in real time. Your biggest risk right now is checkout — 72% of revenue sessions, only 38% test coverage, and a live 502 error from PR #1482. What would you like to investigate?",
+    chips:["Why did release confidence drop?","Generate tests for checkout","What is PR #1482 blast radius?","Am I ready to release Friday?"],
+    name:"engineering",
+    responses:{
+      "Why did release confidence drop?":"Release confidence fell from **87% → 62%** this week. Root causes:\n1. PR #1482 merged Thursday — payment service changed with no test updates.\n2. API latency on checkout up 40ms since Wednesday.\n3. 3 open P1s in Jira, all in checkout, no assignee on 2.\n\n**Recommendation:** Block Friday release. 4 tests needed to reach minimum 65% coverage.",
+      "Generate tests for checkout":"Generating 6 Playwright tests from production error patterns:\n✅ **TC-001**: PaymentService 502 retry + fallback.\n✅ **TC-002**: Stripe webhook timeout handling.\n✅ **TC-003**: Guest checkout token expiry.\n✅ **TC-004**: Coupon null reference.\n✅ **TC-005**: Mobile checkout happy path.\n✅ **TC-006**: Concurrent session conflict.\n\nReady to push to `/tests/checkout/`",
+      "What is PR #1482 blast radius?":"PR #1482 modified `payment-service/charge.ts`. Blast radius:\n⚠️ 6 downstream services affected.\n❌ 3 of 6 have zero coverage for changed paths.\n💰 Checkout (72% of sessions) is highest risk.\n\nSpecific gaps:\n• PaymentService.charge() — 0 tests.\n• StripeWebhook handler — 0 tests.\n• OrderConfirmation state — 2 tests (partial).\n\n**Severity: Critical.** Recommend rollback or hotfix before Friday.",
+      "Am I ready to release Friday?":"Not yet. Release confidence: **62%**. Blockers:\n🚫 Checkout coverage at 38% (minimum: 65%).\n🚫 3 unresolved P1s in Jira.\n🚫 PaymentService 502 active in production.\n\nIf team resolves these by Thursday EOD, you could reach ~75% confidence and ship safely."
+    }
+  },
+  fin:{
+    greeting:"Good morning 👋 I'm monitoring your trading systems, compliance posture, and regulatory exposure in real time. Critical: A code change to the trading algorithm went live 6 hours ago with no regression validation. 3 SOX controls are showing gaps.",
+    chips:["What SOX controls are failing?","Assess trading algorithm change risk","Show me our regulatory exposure","What is our audit trail coverage?"],
+    name:"financial",
+    responses:{
+      "What SOX controls are failing?":"3 SOX controls showing gaps:\n🚫 **ITGC Change Management** — PR #887 deployed without dual approval.\n🚫 **Access Controls** — 4 privileged accounts not reviewed in 90+ days.\n⚠️ **Audit Trail** — 6-hour log gap in trade reconciliation.\n\n**Risk:** External auditor review in 14 days. Immediate remediation required.",
+      "Assess trading algorithm change risk":"Algorithm change PR #887 modified `algo/execution/order-routing.py` — core order routing logic. No regression testing performed.\n💰 $2.4M average daily volume through this path.\n📊 0 test cases cover the modified execution logic.\n⚡ Live 6 hours — no anomalies detected yet.\n\n**Recommend:** Immediate rollback pending full validation.",
+      "Show me our regulatory exposure":"Current regulatory exposure:\n🚫 **MiFID II** — Trade reporting latency 4.2s (limit: 1s) on 3 instrument types.\n⚠️ **Basel III** — Capital model has unvalidated update from last week.\n✅ **FINRA** — All customer communication logs current.\n⚠️ **GDPR** — 2 data subject requests past 30-day deadline.\n\n**Highest urgency:** MiFID II latency breach — regulatory fine risk.",
+      "What is our audit trail coverage?":"Audit trail completeness:\n✅ Trade execution logs: 99.8% complete.\n✅ Customer order history: 100% complete.\n⚠️ Algorithm change history: 73% — 4 recent changes undocumented.\n🚫 Privileged access logs: 61% — maintenance window gaps.\n\nUpcoming audit in 14 days — privileged access logs are highest risk."
+    }
+  },
+  hc:{
+    greeting:"Good morning 👋 I'm monitoring your clinical systems, patient safety controls, and HIPAA compliance posture in real time. Alert: The medication dispensing system has a 4% error rate spike since last night's update.",
+    chips:["What caused the medication system spike?","Show HIPAA compliance gaps","Which clinical workflows lack redundancy?","Upcoming Joint Commission risks?"],
+    name:"healthcare",
+    responses:{
+      "What caused the medication system spike?":"Medication dispensing error spike root cause:\nError rate jumped 0.3% → 4.1% at 02:14am after system update v8.4.2. Affected flows:\n⚠️ IV dosing calculation — 23 error events.\n⚠️ Allergy cross-reference — 14 timeouts.\n✅ Standard oral dispensing — unaffected.\n\nNo regression testing was performed before the update.\n**Recommendation:** Escalate to clinical pharmacy immediately. Consider rollback of v8.4.2.",
+      "Show HIPAA compliance gaps":"HIPAA compliance gaps:\n🚫 **Access Controls (§164.312a)** — 7 inactive accounts with PHI access not reviewed in 90 days.\n🚫 **Audit Logs (§164.312b)** — EHR audit log export failing silently for 11 days.\n⚠️ **Encryption (§164.312e)** — 2 radiology workstations not encrypted.\n✅ **Breach Notification** — Process current.\n\n**Risk:** OIG audit in 3 weeks. Audit log gap is highest severity finding.",
+      "Which clinical workflows lack redundancy?":"Clinical workflows with single points of failure:\n🚫 **Medication dispensing** — No manual fallback for system outage.\n🚫 **Lab result routing** — Single integration path from LIS to EHR.\n⚠️ **ED triage** — Backup process exists but last tested 14 months ago.\n⚠️ **Scheduling** — Staff training last updated Q1 2023.\n\nJoint Commission EC.02.01.01 requires documented, tested downtime procedures.",
+      "Upcoming Joint Commission risks?":"Joint Commission survey — 31 days out:\n🚫 **RC.02.01.01** — Medical record completion at 73% (standard: 90%).\n🚫 **MM.04.01.01** — Medication reconciliation gaps in 18% of admissions.\n⚠️ **IC.02.02.01** — Hand hygiene compliance at 84% (benchmark: 90%).\n✅ **LS.03.01.10** — Fire safety inspections current.\n\n**Highest risk:** Medication reconciliation — recommend immediate admission process audit."
+    }
+  }
+};
+
+function toggleAI(){
+  document.getElementById('aiPanel').classList.toggle('open');
+}
+
+function initAI(){
+  var data = AI[curInd];
+  var msgs = document.getElementById('aiMsgs');
+  msgs.innerHTML = '';
+  addAIMsg(data.greeting, 'ai');
+  var chipBox = document.getElementById('aiChips');
+  chipBox.innerHTML = '';
+  data.chips.forEach(function(c){
+    var b = document.createElement('button');
+    b.className = 'ai-chip';
+    b.textContent = c;
+    b.onclick = function(){ aiAsk(c); };
+    chipBox.appendChild(b);
+  });
+}
+
+function addAIMsg(text, role){
+  var msgs = document.getElementById('aiMsgs');
+  var wrap = document.createElement('div');
+  wrap.className = 'ai-msg ' + role;
+  var av = document.createElement('div');
+  av.className = 'ai-av';
+  av.textContent = role==='ai' ? 'AI' : 'You';
+  var bub = document.createElement('div');
+  bub.className = 'ai-bubble';
+  var html = text
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*(.+?)\*\*/g,'<b>$1</b>')
+    .replace(/`(.+?)`/g,'<code>$1</code>');
+  bub.innerHTML = html;
+  if(role==='ai'){ wrap.appendChild(av); wrap.appendChild(bub); }
+  else { wrap.appendChild(av); wrap.appendChild(bub); }
+  msgs.appendChild(wrap);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function addTyping(){
+  var msgs = document.getElementById('aiMsgs');
+  var wrap = document.createElement('div');
+  wrap.className = 'ai-msg ai';
+  wrap.id = 'typingMsg';
+  var av = document.createElement('div'); av.className='ai-av'; av.textContent='AI';
+  var t = document.createElement('div'); t.className='typing';
+  t.innerHTML = '<span></span><span></span><span></span>';
+  wrap.appendChild(av); wrap.appendChild(t);
+  msgs.appendChild(wrap);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+function removeTyping(){
+  var t = document.getElementById('typingMsg');
+  if(t) t.remove();
+}
+
+function aiAsk(question){
+  addAIMsg(question, 'user');
+  addTyping();
+  var data = AI[curInd];
+  var resp = data.responses[question];
+  if(!resp){
+    resp = "Analyzing your " + data.name + " data for that query. Cross-referencing all connected sources. Compiling risk assessment...";
+  }
+  setTimeout(function(){
+    removeTyping();
+    addAIMsg(resp, 'ai');
+  }, 950);
+}
+
+function aiSend(){
+  var inp = document.getElementById('aiInput');
+  var v = inp.value.trim();
+  if(!v) return;
+  inp.value = '';
+  aiAsk(v);
+}
+
+/* ===================== CHART ===================== */
+function drawSWChart(){
+  var cv = document.getElementById('ch-sw-trend');
+  if(!cv || cv._done) return;
+  cv._done = true;
+  var ctx = cv.getContext('2d');
+  var grad = ctx.createLinearGradient(0,0,0,230);
+  grad.addColorStop(0,'rgba(124,111,224,0.35)');
+  grad.addColorStop(1,'rgba(124,111,224,0.02)');
+  new Chart(ctx,{
+    type:'line',
+    data:{
+      labels:['W1','W2','W3','W4','W5','W6','W7','W8','W9','W10','W11','W12'],
+      datasets:[
+        {label:'Coverage %',data:[46,47,49,48,51,53,52,55,56,57,59,58],
+         borderColor:'#7C6FE0',backgroundColor:grad,fill:true,tension:.35,
+         pointRadius:3,pointBackgroundColor:'#A599F0',borderWidth:2.5},
+        {label:'Target',data:[60,60,60,60,60,60,60,60,60,60,60,60],
+         borderColor:'#34D399',borderDash:[6,5],fill:false,pointRadius:0,borderWidth:1.5}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:true,labels:{boxWidth:12,font:{size:11}}}},
+      scales:{
+        y:{min:40,max:65,grid:{color:'#30363D'},ticks:{callback:function(v){return v+'%'}}},
+        x:{grid:{display:false}}
+      }
+    }
+  });
+}
+
+/* ===================== CONNECT SOURCE WIZARD ===================== */
+var WIZ_SOURCES = {
+  sw:[
+    {id:'newrelic',name:'New Relic',type:'APM / observability',icon:'gauge'},
+    {id:'sentry',name:'Sentry',type:'Error tracking',icon:'bug'},
+    {id:'pagerduty',name:'PagerDuty',type:'Incident response',icon:'siren'},
+    {id:'snyk',name:'Snyk',type:'Security scanning',icon:'shield'},
+    {id:'circleci',name:'CircleCI',type:'CI / CD pipeline',icon:'git-branch'},
+    {id:'launchdarkly',name:'LaunchDarkly',type:'Feature flags',icon:'flag'}
+  ],
+  fin:[
+    {id:'reuters',name:'Refinitiv',type:'Market data feed',icon:'line-chart'},
+    {id:'murex',name:'Murex',type:'Trading & risk',icon:'candlestick-chart'},
+    {id:'archer',name:'Archer GRC',type:'Risk & compliance',icon:'shield'},
+    {id:'servicenow',name:'ServiceNow GRC',type:'Controls workflow',icon:'workflow'},
+    {id:'nice',name:'NICE Actimize',type:'Surveillance / AML',icon:'scan-eye'},
+    {id:'moodys',name:"Moody's Analytics",type:'Credit risk models',icon:'calculator'}
+  ],
+  hc:[
+    {id:'cerner',name:'Oracle Cerner',type:'EHR system',icon:'stethoscope'},
+    {id:'surescripts',name:'Surescripts',type:'E-prescribing',icon:'pill'},
+    {id:'qualtrics',name:'Qualtrics',type:'Patient experience',icon:'clipboard-list'},
+    {id:'vocera',name:'Vocera',type:'Clinical comms',icon:'radio'},
+    {id:'changehc',name:'Change Healthcare',type:'Claims / revenue',icon:'receipt'},
+    {id:'caradigm',name:'Caradigm',type:'Population health',icon:'users'}
+  ]
+};
+var WIZ_SIGNALS = {
+  sw:[
+    {n:'Error & exception events',d:'Stream runtime errors into risk scoring'},
+    {n:'Performance / latency metrics',d:'P95/P99 traces per endpoint'},
+    {n:'Deployment & release events',d:'Correlate changes with incidents'},
+    {n:'Alert / incident webhooks',d:'Real-time paging signals'}
+  ],
+  fin:[
+    {n:'Trade & order events',d:'Execution and routing activity'},
+    {n:'Control test results',d:'GRC control pass/fail status'},
+    {n:'Surveillance alerts',d:'AML and market-abuse flags'},
+    {n:'Reference & market data',d:'Pricing and instrument feeds'}
+  ],
+  hc:[
+    {n:'Clinical event stream',d:'Orders, results, encounters'},
+    {n:'Medication / dispensing logs',d:'Pharmacy automation events'},
+    {n:'Audit & access logs',d:'HIPAA §164.312 audit trail'},
+    {n:'Incident & safety reports',d:'Patient-safety event feed'}
+  ]
+};
+
+var wizStep = 1;
+var wizSel = null;      // selected source id
+var wizSigSel = {};     // signal index -> bool
+
+function openWizard(){
+  wizStep = 1; wizSel = null; wizSigSel = {};
+  document.getElementById('wizSub').textContent = INDUSTRY[curInd].name + ' · integrate a new data source';
+  document.getElementById('wizOverlay').classList.add('open');
+  renderWizard();
+}
+function closeWizard(){
+  document.getElementById('wizOverlay').classList.remove('open');
+}
+
+function wizSelectSource(id, el){
+  wizSel = id;
+  document.querySelectorAll('#wizBody .wiz-src').forEach(function(s){s.classList.remove('sel')});
+  el.classList.add('sel');
+}
+function wizToggleSignal(i, el){
+  wizSigSel[i] = !wizSigSel[i];
+  el.classList.toggle('on', !!wizSigSel[i]);
+}
+
+function wizardBack(){
+  if(wizStep>1){ wizStep--; renderWizard(); }
+}
+function wizardNext(){
+  if(wizStep===1 && !wizSel){ toast('⚠️ Select a source to continue'); return; }
+  if(wizStep===4){ wizardFinish(); return; }
+  if(wizStep===5){ closeWizard(); return; }
+  wizStep++;
+  renderWizard();
+}
+
+function wizardFinish(){
+  wizStep = 5;
+  renderWizard();
+  var name = WIZ_SOURCES[curInd].find(function(s){return s.id===wizSel}).name;
+  toast('🔌 ' + name + ' connected — ingesting signals');
+}
+
+function wizName(){
+  var s = WIZ_SOURCES[curInd].find(function(x){return x.id===wizSel});
+  return s ? s.name : '—';
+}
+
+function renderWizard(){
+  // stepper state
+  var steps = document.querySelectorAll('#wizSteps .wiz-step');
+  steps.forEach(function(st, i){
+    st.classList.remove('active','done');
+    var dot = st.querySelector('.wiz-step-dot');
+    var n = i+1;
+    var shown = wizStep===5 ? 5 : wizStep;
+    if(n < shown){ st.classList.add('done'); dot.innerHTML='<i data-lucide="check"></i>'; }
+    else if(n === shown){ st.classList.add('active'); dot.textContent = n; }
+    else { dot.textContent = n; }
+  });
+
+  var body = document.getElementById('wizBody');
+  var back = document.getElementById('wizBack');
+  var next = document.getElementById('wizNext');
+  back.style.visibility = (wizStep>1 && wizStep<5) ? 'visible' : 'hidden';
+  next.style.display = '';
+
+  if(wizStep===1){
+    var grid = WIZ_SOURCES[curInd].map(function(s){
+      var sel = wizSel===s.id ? ' sel' : '';
+      return '<div class="wiz-src'+sel+'" onclick="wizSelectSource(\''+s.id+'\',this)">'+
+             '<div class="wiz-src-ic"><i data-lucide="'+s.icon+'"></i></div>'+
+             '<div class="wiz-src-info"><div class="wiz-src-name">'+s.name+'</div><div class="wiz-src-type">'+s.type+'</div></div>'+
+             '<div class="wiz-src-check"><i data-lucide="check-circle-2"></i></div></div>';
+    }).join('');
+    body.innerHTML = '<div class="wiz-section-title">Choose a source to connect</div>'+
+      '<div class="wiz-section-desc">Strata will correlate this source against your existing risk signals.</div>'+
+      '<div class="wiz-src-grid">'+grid+'</div>';
+    next.textContent = 'Continue';
+  }
+  else if(wizStep===2){
+    body.innerHTML = '<div class="wiz-section-title">Connect to '+wizName()+'</div>'+
+      '<div class="wiz-section-desc">Credentials are encrypted at rest and never written to logs.</div>'+
+      '<div class="wiz-field"><label class="wiz-label">Instance / endpoint URL</label>'+
+      '<input class="wiz-input" placeholder="https://api.'+wizSel+'.com/v2" value="https://api.'+wizSel+'.com/v2"></div>'+
+      '<div class="wiz-field"><label class="wiz-label">Authentication method</label>'+
+      '<select class="wiz-select"><option>API key</option><option>OAuth 2.0</option><option>Service account</option></select></div>'+
+      '<div class="wiz-field"><label class="wiz-label">API key / token</label>'+
+      '<input class="wiz-input" type="password" placeholder="••••••••••••••••" value="sk_live_4f9c2a7e">'+
+      '<div class="wiz-hint">Read-only scope is sufficient for signal ingestion.</div></div>';
+    next.textContent = 'Test & continue';
+  }
+  else if(wizStep===3){
+    var rows = WIZ_SIGNALS[curInd].map(function(sg, i){
+      var on = wizSigSel[i] ? ' on' : '';
+      return '<div class="wiz-check-row'+on+'" onclick="wizToggleSignal('+i+',this)">'+
+             '<div class="wiz-cb"><i data-lucide="check"></i></div>'+
+             '<div class="wiz-check-info"><div class="wiz-check-name">'+sg.n+'</div><div class="wiz-check-desc">'+sg.d+'</div></div></div>';
+    }).join('');
+    body.innerHTML = '<div class="wiz-section-title">Select signals to ingest</div>'+
+      '<div class="wiz-section-desc">Pick which data streams from '+wizName()+' feed into risk scoring.</div>'+rows;
+    next.textContent = 'Continue';
+  }
+  else if(wizStep===4){
+    var cnt = Object.keys(wizSigSel).filter(function(k){return wizSigSel[k]}).length;
+    if(cnt===0) cnt = 'All';
+    body.innerHTML = '<div class="wiz-section-title">Review &amp; confirm</div>'+
+      '<div class="wiz-section-desc">Strata will begin ingesting within ~30 seconds of connection.</div>'+
+      '<div class="wiz-review">'+
+      '<div class="wiz-rev-row"><span class="wiz-rev-k">Source</span><span class="wiz-rev-v">'+wizName()+'</span></div>'+
+      '<div class="wiz-rev-row"><span class="wiz-rev-k">Industry workspace</span><span class="wiz-rev-v">'+INDUSTRY[curInd].name+'</span></div>'+
+      '<div class="wiz-rev-row"><span class="wiz-rev-k">Auth method</span><span class="wiz-rev-v">API key</span></div>'+
+      '<div class="wiz-rev-row"><span class="wiz-rev-k">Signals enabled</span><span class="wiz-rev-v">'+cnt+'</span></div>'+
+      '<div class="wiz-rev-row"><span class="wiz-rev-k">Scope</span><span class="wiz-rev-v">read-only</span></div>'+
+      '</div>';
+    next.textContent = 'Connect source';
+  }
+  else if(wizStep===5){
+    body.innerHTML = '<div class="wiz-success">'+
+      '<div class="wiz-succ-ic"><i data-lucide="check"></i></div>'+
+      '<div class="wiz-succ-title">'+wizName()+' connected</div>'+
+      '<div class="wiz-succ-sub">Strata is now ingesting signals and cross-correlating them with your existing sources. New risk insights will appear within a few minutes.</div></div>';
+    back.style.visibility = 'hidden';
+    next.textContent = 'Done';
+  }
+  lucide.createIcons();
+}
+
+/* ===================== TOAST ===================== */
+function toast(msg){
+  var wrap = document.getElementById('toastWrap');
+  var t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = msg;
+  wrap.appendChild(t);
+  setTimeout(function(){
+    t.style.transition='opacity .3s,transform .3s';
+    t.style.opacity='0'; t.style.transform='translateX(20px)';
+    setTimeout(function(){t.remove();},300);
+  }, 3400);
+}
+
+/* ===================== LIVE COUNTER ===================== */
+setInterval(function(){
+  var el = document.getElementById('sw-sess');
+  if(el){
+    var base = 14382 + Math.floor(Math.random()*420 - 180);
+    el.textContent = base.toLocaleString();
+  }
+}, 2800);
+
+/* ===================== INIT ===================== */
+Chart.defaults.color = '#8B949E';
+Chart.defaults.borderColor = '#30363D';
+renderRoles();
+initAI();
+lucide.createIcons();
+setTimeout(drawSWChart, 200);
+</script>
+</body>
+</html>
