@@ -517,8 +517,8 @@ box-shadow:0 0 0 1px transparent}
           <div class="role-view active" id="sw-r-qa">
             <div class="role-context"><i data-lucide="microscope"></i><span><b>QA Manager view</b> · test coverage, gaps, and quality risk across your flows</span></div>
             <div class="grid-4">
-              <div class="mc mc-purple"><div class="mc-top"><div class="mc-ic"><i data-lucide="shield"></i></div><span class="mc-trend">↓ 4%</span></div><div class="mc-label">Overall coverage</div><div class="mc-val">58%</div></div>
-              <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="check-check"></i></div><span class="mc-trend">+23</span></div><div class="mc-label">Automated tests</div><div class="mc-val">1,847</div></div>
+              <div class="mc mc-purple"><div class="mc-top"><div class="mc-ic"><i data-lucide="shield"></i></div><span class="mc-trend">↓ 4%</span></div><div class="mc-label">Overall coverage</div><div class="mc-val" data-live="coverage">58%</div></div>
+              <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="check-check"></i></div><span class="mc-trend">+23</span></div><div class="mc-label">Automated tests</div><div class="mc-val" data-live="total-tests">1,847</div></div>
               <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="bug"></i></div><span class="mc-trend">+3</span></div><div class="mc-label">Escaped defects</div><div class="mc-val">11</div></div>
               <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="clock"></i></div><span class="mc-trend">stale</span></div><div class="mc-label">Stale tests</div><div class="mc-val">214</div></div>
             </div>
@@ -565,7 +565,7 @@ box-shadow:0 0 0 1px transparent}
               <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="zap"></i></div><span class="mc-trend">+6 pts</span></div><div class="mc-label">Sprint velocity</div><div class="mc-val">84 pts</div></div>
               <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="bug"></i></div><span class="mc-trend">+8</span></div><div class="mc-label">Open defects</div><div class="mc-val">43</div></div>
               <div class="mc mc-purple"><div class="mc-top"><div class="mc-ic"><i data-lucide="git-pull-request"></i></div><span class="mc-trend">−3h</span></div><div class="mc-label">PR cycle time</div><div class="mc-val">18h</div></div>
-              <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="rocket"></i></div><span class="mc-trend">−25%</span></div><div class="mc-label">Release readiness</div><div class="mc-val">62%</div></div>
+              <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="rocket"></i></div><span class="mc-trend">−25%</span></div><div class="mc-label">Release readiness</div><div class="mc-val" data-live="release">62%</div></div>
             </div>
             <div class="grid-2">
               <div class="card">
@@ -642,7 +642,7 @@ box-shadow:0 0 0 1px transparent}
           <div class="grid-4">
             <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="triangle-alert"></i></div><span class="mc-trend">active</span></div><div class="mc-label">Active risk signals</div><div class="mc-val">7</div></div>
             <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="flame"></i></div><span class="mc-trend">93/100</span></div><div class="mc-label">Highest risk flow</div><div class="mc-val" style="font-size:20px">Checkout</div></div>
-            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="octagon-alert"></i></div><span class="mc-trend">blocking</span></div><div class="mc-label">Unmitigated P1s</div><div class="mc-val">3</div></div>
+            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="octagon-alert"></i></div><span class="mc-trend">blocking</span></div><div class="mc-label">Unmitigated P1s</div><div class="mc-val" data-live="p1-open">3</div></div>
             <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="git-merge"></i></div><span class="mc-trend">unverified</span></div><div class="mc-label">Risky PRs merged</div><div class="mc-val">2</div></div>
           </div>
           <div class="card">
@@ -697,8 +697,8 @@ box-shadow:0 0 0 1px transparent}
         <div class="page" id="sw-live">
           <div class="grid-4">
             <div class="mc mc-cyan"><div class="mc-top"><div class="mc-ic"><i data-lucide="users"></i></div><span class="mc-trend">live</span></div><div class="mc-label">Active sessions</div><div class="mc-val" id="sw-sess">14,382</div></div>
-            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="trending-up"></i></div><span class="mc-trend">spike</span></div><div class="mc-label">Payment error rate</div><div class="mc-val">6.2%</div></div>
-            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="gauge"></i></div><span class="mc-trend">+40ms</span></div><div class="mc-label">API latency P95</div><div class="mc-val">340ms</div></div>
+            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="trending-up"></i></div><span class="mc-trend">spike</span></div><div class="mc-label">Payment error rate</div><div class="mc-val" data-live="payment-error">0.8%</div></div>
+            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="gauge"></i></div><span class="mc-trend">+40ms</span></div><div class="mc-label">API latency P95</div><div class="mc-val" data-live="api-latency">298ms</div></div>
             <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="route"></i></div><span class="mc-trend">tracked</span></div><div class="mc-label">Unique paths</div><div class="mc-val">1,247</div></div>
           </div>
           <div class="card">
@@ -710,11 +710,11 @@ box-shadow:0 0 0 1px transparent}
               <span class="fn-arrow">→</span>
               <div class="flow-node"><div class="fn-box fn-ok">Shipping</div><div class="fn-pct" style="color:var(--green)">78%</div></div>
               <span class="fn-arrow">→</span>
-              <div class="flow-node"><div class="fn-box fn-crit">⚠ Payment</div><div class="fn-pct" style="color:var(--red)">52%</div></div>
+              <div class="flow-node" id="fn-payment"><div class="fn-box fn-ok">Payment</div><div class="fn-pct" style="color:var(--green)">76%</div></div>
               <span class="fn-arrow">→</span>
-              <div class="flow-node"><div class="fn-box fn-dim">Review</div><div class="fn-pct">49%</div></div>
+              <div class="flow-node" id="fn-review"><div class="fn-box fn-ok">Review</div><div class="fn-pct" style="color:var(--green)">73%</div></div>
               <span class="fn-arrow">→</span>
-              <div class="flow-node"><div class="fn-box fn-dim">Confirm</div><div class="fn-pct">47%</div></div>
+              <div class="flow-node" id="fn-confirm"><div class="fn-box fn-ok">Confirm</div><div class="fn-pct" style="color:var(--green)">71%</div></div>
             </div>
             <div class="flow-note"><i data-lucide="trending-down" style="width:15px"></i> Payment drop-off spiked: 22% → 48%</div>
           </div>
@@ -1226,6 +1226,27 @@ box-shadow:0 0 0 1px transparent}
     </main>
   </div>
 </div>
+
+<!-- ===== DEMO CONTROLLER ===== -->
+<div id="demoBar" style="position:fixed;top:0;left:0;right:0;z-index:500;background:linear-gradient(90deg,#0D1117,#1C2333);border-bottom:1px solid #30363D;padding:8px 20px;display:flex;align-items:center;gap:12px;font-family:var(--f);font-size:12px;transform:translateY(-100%);transition:transform .3s">
+  <div style="display:flex;align-items:center;gap:7px;font-weight:700;color:#7C6FE0;flex-shrink:0">
+    <svg width="16" height="16" viewBox="0 0 40 40" fill="none"><defs><linearGradient id="lg2" x1="0" y1="0" x2="40" y2="40"><stop offset="0" stop-color="#7C6FE0"/><stop offset="1" stop-color="#22D3EE"/></linearGradient></defs><ellipse cx="20" cy="20" rx="17" ry="11" stroke="url(#lg2)" stroke-width="2.2" fill="none"/><circle cx="20" cy="20" r="5.5" fill="url(#lg2)"/><circle cx="20" cy="20" r="2.2" fill="#0D1117"/></svg>
+    Demo Mode
+  </div>
+  <div style="width:1px;height:20px;background:#30363D"></div>
+  <div style="color:#8B949E;flex-shrink:0">Fire scenario:</div>
+  <button onclick="triggerScenario('payment-error-spike')" style="font-family:var(--f);font-size:11px;font-weight:600;padding:5px 12px;border-radius:7px;border:1px solid rgba(248,113,113,0.4);background:rgba(248,113,113,0.1);color:#F87171;cursor:pointer">⚡ Payment error spike</button>
+  <button onclick="triggerScenario('pr-merged-no-tests')" style="font-family:var(--f);font-size:11px;font-weight:600;padding:5px 12px;border-radius:7px;border:1px solid rgba(251,191,36,0.4);background:rgba(251,191,36,0.1);color:#FBBF24;cursor:pointer">⚠️ PR merged no tests</button>
+  <button onclick="triggerScenario('generate-tests')" style="font-family:var(--f);font-size:11px;font-weight:600;padding:5px 12px;border-radius:7px;border:1px solid rgba(52,211,153,0.4);background:rgba(52,211,153,0.1);color:#34D399;cursor:pointer">🧪 AI generates tests</button>
+  <button onclick="triggerScenario('reset')" style="font-family:var(--f);font-size:11px;font-weight:600;padding:5px 12px;border-radius:7px;border:1px solid #30363D;background:#1C2333;color:#8B949E;cursor:pointer">↺ Reset</button>
+  <div style="flex:1"></div>
+  <div id="demoWsStatus" style="display:flex;align-items:center;gap:6px;color:#6E7681;font-size:11px">
+    <span id="demoWsDot" style="width:7px;height:7px;border-radius:50%;background:#6E7681;display:inline-block"></span>
+    <span id="demoWsLabel">Connecting…</span>
+  </div>
+  <button onclick="hideDemoBar()" style="font-family:var(--f);font-size:11px;padding:4px 10px;border-radius:7px;border:1px solid #30363D;background:transparent;color:#6E7681;cursor:pointer">Hide</button>
+</div>
+<button id="demoBarToggle" onclick="showDemoBar()" style="position:fixed;top:8px;left:50%;transform:translateX(-50%);z-index:499;font-family:var(--f);font-size:11px;font-weight:700;padding:5px 14px;border-radius:0 0 9px 9px;border:1px solid #30363D;border-top:none;background:#161B22;color:#7C6FE0;cursor:pointer;display:none">▼ Demo controls</button>
 
 <!-- ===== AI CHAT ===== -->
 <button class="ai-toggle" onclick="toggleAI()" title="Strata AI"><i data-lucide="message-square"></i></button>
@@ -1812,6 +1833,137 @@ function toast(msg){
     setTimeout(function(){t.remove();},300);
   }, 3400);
 }
+
+/* ===================== DEMO CONTROLLER ===================== */
+var demoWs = null;
+var demoConnected = false;
+var BACKEND = 'http://localhost:3001';
+var BACKEND_WS = 'ws://localhost:3001';
+
+function showDemoBar(){
+  document.getElementById('demoBar').style.transform = 'translateY(0)';
+  document.getElementById('demoBarToggle').style.display = 'none';
+  document.querySelector('.main-wrap').style.marginTop = '44px';
+  connectDemoWs();
+}
+function hideDemoBar(){
+  document.getElementById('demoBar').style.transform = 'translateY(-100%)';
+  document.getElementById('demoBarToggle').style.display = 'block';
+  document.querySelector('.main-wrap').style.marginTop = '0';
+}
+
+function setWsStatus(connected){
+  demoConnected = connected;
+  var dot   = document.getElementById('demoWsDot');
+  var label = document.getElementById('demoWsLabel');
+  if(connected){
+    dot.style.background = '#34D399';
+    dot.style.boxShadow  = '0 0 6px #34D399';
+    label.textContent    = 'Backend connected';
+  } else {
+    dot.style.background = '#F87171';
+    dot.style.boxShadow  = 'none';
+    label.textContent    = 'Backend offline — run npm start in mock-backend/';
+  }
+}
+
+function connectDemoWs(){
+  try {
+    demoWs = new WebSocket(BACKEND_WS);
+    demoWs.onopen    = function(){ setWsStatus(true); };
+    demoWs.onclose   = function(){ setWsStatus(false); demoWs = null; };
+    demoWs.onerror   = function(){ setWsStatus(false); };
+    demoWs.onmessage = function(evt){
+      try { handleDemoMessage(JSON.parse(evt.data)); }
+      catch(e){ console.warn('[demo ws] bad msg', e); }
+    };
+  } catch(e){ setWsStatus(false); }
+}
+
+function handleDemoMessage(msg){
+  if(msg.type === 'snapshot') applySnapshot(msg.data);
+  if(msg.type === 'alert' || msg.type === 'risk' || msg.type === 'success' || msg.type === 'info'){
+    toast(msg.title + (msg.detail ? ' — ' + msg.detail : ''));
+  }
+}
+
+function applySnapshot(d){
+  // Coverage
+  setMetricText('sw-r-qa',   '[data-live="coverage"]',       d.coverage + '%');
+  setMetricText('sw-r-exec', '[data-live="coverage-trend"]', '+' + (d.coverage - 46) + '%');
+  setMetricText('sw-r-em',   '[data-live="release"]',        d.coverage > 60 ? '78%' : '62%');
+  // Total tests
+  setMetricText('sw-r-qa',   '[data-live="total-tests"]',    d.total_tests.toLocaleString());
+  // Payment error rate
+  setMetricText('sw-live',   '[data-live="payment-error"]',  d.payment_error_rate + '%');
+  // API latency
+  setMetricText('sw-live',   '[data-live="api-latency"]',    d.api_latency_p95 + 'ms');
+  // P1s
+  setMetricText('sw-risks',  '[data-live="p1-open"]',        d.p1_open);
+  // Session counter
+  if(d.active_sessions) {
+    var el = document.getElementById('sw-sess');
+    if(el) el.textContent = d.active_sessions.toLocaleString();
+  }
+  // Alert banner — show if payment error rate is critical
+  var banner = document.querySelector('#sw-overview .alert');
+  if(banner) banner.style.display = d.payment_error_rate >= 3 ? '' : '';
+  // Checkout funnel nodes
+  if(d.checkout_funnel){
+    var f = d.checkout_funnel;
+    updateFunnelNode('fn-payment', f.payment, f.payment < 60);
+    updateFunnelNode('fn-review',  f.review,  f.review  < 55);
+    updateFunnelNode('fn-confirm', f.confirm, f.confirm < 55);
+  }
+}
+
+function setMetricText(parentId, selector, value){
+  var parent = document.getElementById(parentId);
+  if(!parent) return;
+  var el = parent.querySelector(selector);
+  if(el) el.textContent = value;
+}
+
+function updateFunnelNode(id, pct, isCrit){
+  var node = document.getElementById(id);
+  if(!node) return;
+  var box = node.querySelector('.fn-box');
+  var pctEl = node.querySelector('.fn-pct');
+  if(box){
+    box.className = 'fn-box ' + (isCrit ? 'fn-crit' : 'fn-ok');
+  }
+  if(pctEl){
+    pctEl.textContent = pct + '%';
+    pctEl.style.color = isCrit ? 'var(--red)' : 'var(--green)';
+  }
+}
+
+function triggerScenario(scenario){
+  if(!demoConnected){
+    toast('⚠️ Backend not connected — run: cd mock-backend && npm start');
+    return;
+  }
+  fetch(BACKEND + '/api/trigger', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({scenario})
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    if(data.snapshot) applySnapshot(data.snapshot);
+    console.log('[demo] triggered', scenario, data);
+  })
+  .catch(function(e){
+    toast('⚠️ Trigger failed — is the backend running?');
+    setWsStatus(false);
+  });
+}
+
+// Auto-show demo bar if backend is reachable
+fetch(BACKEND + '/api/health')
+  .then(function(r){ return r.json(); })
+  .then(function(){ showDemoBar(); })
+  .catch(function(){ /* backend not running — bar stays hidden */ });
 
 /* ===================== LIVE COUNTER ===================== */
 setInterval(function(){

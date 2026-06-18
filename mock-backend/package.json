@@ -1,0 +1,15 @@
+{
+  "name": "strata-mock-backend",
+  "version": "1.0.0",
+  "description": "Mock integration backend for Strata demo",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "ws": "^8.14.2"
+  }
+}

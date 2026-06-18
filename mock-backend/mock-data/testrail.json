@@ -1,0 +1,19 @@
+{
+  "summary": {
+    "total": 1847,
+    "automated": 1623,
+    "manual": 224,
+    "passing": 1741,
+    "failing": 89,
+    "stale": 214,
+    "coverage": 58
+  },
+  "suites": [
+    { "name": "Checkout", "tests": 124, "coverage": 38, "last_run": "2024-01-15T06:00:00Z", "status": "failing" },
+    { "name": "Auth", "tests": 312, "coverage": 91, "last_run": "2024-01-15T06:00:00Z", "status": "passing" },
+    { "name": "Search", "tests": 198, "coverage": 88, "last_run": "2024-01-15T06:00:00Z", "status": "passing" },
+    { "name": "Cart", "tests": 87, "coverage": 54, "last_run": "2024-01-15T06:00:00Z", "status": "failing" },
+    { "name": "Admin Billing", "tests": 43, "coverage": 29, "last_run": "2024-01-14T06:00:00Z", "status": "failing" },
+    { "name": "Guest Checkout", "tests": 0, "coverage": 0, "last_run": null, "status": "missing" }
+  ]
+}

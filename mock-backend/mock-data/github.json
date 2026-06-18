@@ -1,0 +1,53 @@
+{
+  "pulls": [
+    {
+      "id": 1482,
+      "number": 1482,
+      "title": "Fix payment routing — retry logic",
+      "state": "open",
+      "author": "alex.chen",
+      "branch": "fix/payment-retry",
+      "changed_files": ["payment-service/charge.ts", "payment-service/webhook.ts"],
+      "tests_added": 0,
+      "risk_score": 93,
+      "created_at": "2024-01-15T09:24:00Z",
+      "merged": false,
+      "coverage_delta": -4
+    },
+    {
+      "id": 1479,
+      "number": 1479,
+      "title": "Refactor auth middleware",
+      "state": "merged",
+      "author": "sarah.k",
+      "branch": "refactor/auth",
+      "changed_files": ["auth/middleware.ts", "auth/session.ts"],
+      "tests_added": 12,
+      "risk_score": 18,
+      "created_at": "2024-01-14T14:10:00Z",
+      "merged": true,
+      "coverage_delta": 3
+    },
+    {
+      "id": 1477,
+      "number": 1477,
+      "title": "Add coupon validation logic",
+      "state": "open",
+      "author": "mike.t",
+      "branch": "feat/coupons",
+      "changed_files": ["cart/coupon.ts", "cart/discount.ts"],
+      "tests_added": 0,
+      "risk_score": 72,
+      "created_at": "2024-01-13T11:30:00Z",
+      "merged": false,
+      "coverage_delta": -2
+    }
+  ],
+  "repo": {
+    "name": "acme-checkout",
+    "coverage": 58,
+    "total_tests": 1847,
+    "ci_status": "failing",
+    "last_deploy": "2024-01-15T10:00:00Z"
+  }
+}

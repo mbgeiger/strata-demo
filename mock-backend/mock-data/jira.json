@@ -1,0 +1,60 @@
+{
+  "issues": [
+    {
+      "id": "ACM-1041",
+      "title": "PaymentService 502 on high-traffic checkout",
+      "priority": "P1",
+      "status": "open",
+      "assignee": null,
+      "component": "checkout",
+      "created": "2024-01-15T08:45:00Z",
+      "labels": ["production", "payment", "critical"]
+    },
+    {
+      "id": "ACM-1039",
+      "title": "Stripe webhook timeout not handled",
+      "priority": "P1",
+      "status": "open",
+      "assignee": null,
+      "component": "checkout",
+      "created": "2024-01-15T07:30:00Z",
+      "labels": ["payment", "webhook"]
+    },
+    {
+      "id": "ACM-1036",
+      "title": "Guest checkout token expiry not caught",
+      "priority": "P1",
+      "status": "in_progress",
+      "assignee": "alex.chen",
+      "component": "auth",
+      "created": "2024-01-14T16:00:00Z",
+      "labels": ["auth", "guest"]
+    },
+    {
+      "id": "ACM-1028",
+      "title": "Coupon null reference on empty cart",
+      "priority": "P2",
+      "status": "open",
+      "assignee": "mike.t",
+      "component": "cart",
+      "created": "2024-01-14T11:00:00Z",
+      "labels": ["cart", "coupon"]
+    },
+    {
+      "id": "ACM-1019",
+      "title": "Mobile checkout layout breaks on iOS 17",
+      "priority": "P2",
+      "status": "open",
+      "assignee": null,
+      "component": "mobile",
+      "created": "2024-01-13T09:15:00Z",
+      "labels": ["mobile", "ui"]
+    }
+  ],
+  "summary": {
+    "total_open": 47,
+    "p1_open": 3,
+    "p2_open": 12,
+    "unassigned_p1": 2
+  }
+}

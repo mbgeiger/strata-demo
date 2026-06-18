@@ -1,0 +1,30 @@
+{
+  "metrics": {
+    "payment_error_rate": {
+      "current": 0.8,
+      "unit": "%",
+      "status": "ok",
+      "series": [0.4, 0.5, 0.4, 0.6, 0.7, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8]
+    },
+    "api_latency_p95": {
+      "current": 298,
+      "unit": "ms",
+      "status": "ok",
+      "series": [240, 255, 248, 260, 271, 285, 291, 298, 298, 298, 298, 298]
+    },
+    "active_sessions": {
+      "current": 14382,
+      "unit": "users",
+      "status": "ok"
+    },
+    "checkout_funnel": {
+      "cart": 100,
+      "login": 91,
+      "shipping": 78,
+      "payment": 76,
+      "review": 73,
+      "confirm": 71
+    }
+  },
+  "alerts": []
+}

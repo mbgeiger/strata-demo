@@ -1,0 +1,86 @@
+{
+  "scenarios": {
+    "payment-error-spike": {
+      "label": "Payment error spike",
+      "description": "Simulates PR #1482 causing a 502 spike in PaymentService",
+      "changes": {
+        "datadog.metrics.payment_error_rate.current": 6.2,
+        "datadog.metrics.payment_error_rate.status": "critical",
+        "datadog.metrics.payment_error_rate.series": [0.4, 0.5, 0.4, 0.6, 0.7, 0.8, 0.9, 1.2, 2.1, 3.8, 5.4, 6.2],
+        "datadog.metrics.api_latency_p95.current": 340,
+        "datadog.metrics.api_latency_p95.status": "warning",
+        "datadog.metrics.checkout_funnel.payment": 52,
+        "datadog.metrics.checkout_funnel.review": 49,
+        "datadog.metrics.checkout_funnel.confirm": 47,
+        "datadog.alerts": [
+          { "id": "dd-001", "title": "PaymentService 502 rate exceeded threshold", "severity": "critical", "timestamp": "now" }
+        ]
+      },
+      "broadcast": {
+        "type": "alert",
+        "severity": "critical",
+        "title": "PaymentService error rate spiked to 6.2%",
+        "detail": "Correlated with PR #1482. 847 users affected.",
+        "metric_updates": {
+          "payment_error_rate": 6.2,
+          "api_latency_p95": 340,
+          "checkout_drop": 48
+        }
+      }
+    },
+    "pr-merged-no-tests": {
+      "label": "PR merged without tests",
+      "description": "Simulates a developer merging PR #1482 without updating tests",
+      "changes": {
+        "github.repo.coverage": 54,
+        "github.repo.ci_status": "failing",
+        "testrail.summary.coverage": 54,
+        "testrail.summary.failing": 104,
+        "jira.summary.p1_open": 4
+      },
+      "broadcast": {
+        "type": "risk",
+        "severity": "high",
+        "title": "PR #1482 merged — 0 tests added",
+        "detail": "payment-service/charge.ts changed. Coverage dropped 58% → 54%.",
+        "metric_updates": {
+          "coverage": 54,
+          "escaped_defects": 12
+        }
+      }
+    },
+    "generate-tests": {
+      "label": "AI generates tests",
+      "description": "Strata AI generates 6 Playwright tests from production errors",
+      "changes": {
+        "testrail.summary.total": 1853,
+        "testrail.summary.automated": 1629,
+        "testrail.suites.0.tests": 130,
+        "testrail.suites.0.coverage": 52,
+        "github.repo.coverage": 62
+      },
+      "broadcast": {
+        "type": "success",
+        "severity": "ok",
+        "title": "6 Playwright tests generated and pushed",
+        "detail": "Coverage: 58% → 62%. Checkout suite: 38% → 52%.",
+        "metric_updates": {
+          "coverage": 62,
+          "total_tests": 1853
+        }
+      }
+    },
+    "reset": {
+      "label": "Reset to baseline",
+      "description": "Resets all metrics to baseline state",
+      "changes": {},
+      "broadcast": {
+        "type": "info",
+        "severity": "ok",
+        "title": "Demo reset to baseline",
+        "detail": "All metrics restored to starting state.",
+        "metric_updates": {}
+      }
+    }
+  }
+}
