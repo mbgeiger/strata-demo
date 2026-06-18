@@ -70,6 +70,113 @@
         }
       }
     },
+    "release-blocked": {
+      "label": "Release blocked",
+      "description": "Combined error spike + untested PR collapses release confidence to 42%",
+      "changes": {
+        "datadog.metrics.payment_error_rate.current": 6.2,
+        "datadog.metrics.payment_error_rate.status": "critical",
+        "datadog.metrics.payment_error_rate.series": [0.4, 0.5, 0.4, 0.6, 0.7, 0.8, 0.9, 1.2, 2.1, 3.8, 5.4, 6.2],
+        "datadog.metrics.api_latency_p95.current": 340,
+        "datadog.metrics.api_latency_p95.status": "warning",
+        "datadog.metrics.checkout_funnel.payment": 52,
+        "datadog.metrics.checkout_funnel.review": 49,
+        "datadog.metrics.checkout_funnel.confirm": 47,
+        "datadog.alerts": [
+          { "id": "dd-001", "title": "PaymentService 502 rate exceeded threshold", "severity": "critical", "timestamp": "now" },
+          { "id": "dd-002", "title": "Release confidence below minimum threshold (42%)", "severity": "critical", "timestamp": "now" }
+        ],
+        "github.repo.coverage": 54,
+        "github.repo.ci_status": "failing",
+        "testrail.summary.coverage": 54,
+        "testrail.summary.failing": 104,
+        "jira.summary.p1_open": 5
+      },
+      "broadcast": {
+        "type": "alert",
+        "severity": "critical",
+        "title": "🚫 Friday release blocked — confidence 42%",
+        "detail": "3 blockers: PaymentService 502 active, PR #1482 untested, 5 open P1s. Do not ship.",
+        "metric_updates": {
+          "payment_error_rate": 6.2,
+          "api_latency_p95": 340,
+          "coverage": 54,
+          "release_confidence": 42,
+          "p1_open": 5,
+          "checkout_drop": 48
+        }
+      }
+    },
+    "med-system-spike": {
+      "label": "Medication system spike",
+      "description": "Medication dispensing error rate spikes to 4.1% after v8.4.2 update — Healthcare industry",
+      "changes": {
+        "datadog.metrics.payment_error_rate.current": 4.1,
+        "datadog.metrics.payment_error_rate.status": "critical",
+        "datadog.metrics.payment_error_rate.series": [0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 2.6, 3.8, 4.0, 4.1, 4.1],
+        "datadog.metrics.api_latency_p95.current": 4200,
+        "datadog.metrics.api_latency_p95.status": "warning",
+        "datadog.alerts": [
+          { "id": "hc-001", "title": "Medication dispensing error rate exceeded safe threshold", "severity": "critical", "timestamp": "now" },
+          { "id": "hc-002", "title": "IV dosing path — 23 error events in 4 hours", "severity": "critical", "timestamp": "now" }
+        ]
+      },
+      "broadcast": {
+        "type": "alert",
+        "severity": "critical",
+        "title": "🚨 Medication dispensing: 0.3% → 4.1% error rate",
+        "detail": "v8.4.2 deployed 02:14am without regression testing. IV dosing path affected. 23 error events.",
+        "metric_updates": {
+          "med_error_rate": 4.1,
+          "lab_latency": 4200
+        }
+      }
+    },
+    "med-system-rollback": {
+      "label": "Medication system rollback",
+      "description": "v8.4.2 rolled back — error rate returns to safe baseline",
+      "changes": {
+        "datadog.metrics.payment_error_rate.current": 0.3,
+        "datadog.metrics.payment_error_rate.status": "ok",
+        "datadog.metrics.payment_error_rate.series": [4.1, 4.0, 3.8, 3.1, 2.4, 1.6, 0.9, 0.5, 0.3, 0.3, 0.3, 0.3],
+        "datadog.metrics.api_latency_p95.current": 310,
+        "datadog.metrics.api_latency_p95.status": "ok",
+        "datadog.alerts": []
+      },
+      "broadcast": {
+        "type": "success",
+        "severity": "ok",
+        "title": "✅ v8.4.2 rolled back — error rate 4.1% → 0.3%",
+        "detail": "Medication dispensing system restored to v8.4.1. IV dosing path stable. Clinical pharmacy notified.",
+        "metric_updates": {
+          "med_error_rate": 0.3,
+          "lab_latency": 310
+        }
+      }
+    },
+    "stale-tests-cleaned": {
+      "label": "Stale tests cleaned up",
+      "description": "214 stale tests removed — CI pipeline time drops from 28 min to 11 min",
+      "changes": {
+        "testrail.summary.stale": 0,
+        "testrail.summary.total": 1633,
+        "testrail.summary.automated": 1633,
+        "testrail.summary.passing": 1587,
+        "testrail.summary.failing": 46,
+        "github.repo.ci_status": "passing"
+      },
+      "broadcast": {
+        "type": "success",
+        "severity": "ok",
+        "title": "214 stale tests removed from CI pipeline",
+        "detail": "Pipeline time: 28 min → 11 min. False-failure rate eliminated. CI now green.",
+        "metric_updates": {
+          "stale_tests": 0,
+          "total_tests": 1633,
+          "ci_time_min": 11
+        }
+      }
+    },
     "reset": {
       "label": "Reset to baseline",
       "description": "Resets all metrics to baseline state",
