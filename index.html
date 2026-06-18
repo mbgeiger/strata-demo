@@ -171,6 +171,29 @@ box-shadow:0 0 0 1px transparent}
 .btn-primary:hover{box-shadow:0 0 14px var(--purple-glow)}
 .btn-sm{font-size:11px;padding:5px 10px}
 
+/* ===== ROLE VIEW + RAG ===== */
+.role-view{display:none}
+.role-view.active{display:block;animation:fade .25s ease}
+.role-context{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:11px 15px;border-radius:11px;background:linear-gradient(90deg,rgba(124,111,224,.12),rgba(34,211,238,.06));border:1px solid var(--border)}
+.role-context i{width:17px;height:17px;color:var(--purple-l);flex-shrink:0}
+.role-context b{font-weight:700}
+.role-context span{font-size:12px;color:var(--text-2)}
+.rag-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+@media(max-width:1100px){.rag-grid{grid-template-columns:1fr}}
+.rag{border-radius:13px;padding:18px;border:1px solid var(--border);position:relative;overflow:hidden}
+.rag::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.rag-r{background:var(--red-bg);border-color:var(--red-border)} .rag-r::before{background:var(--red)}
+.rag-a{background:var(--amber-bg);border-color:var(--amber-border)} .rag-a::before{background:var(--amber)}
+.rag-g{background:var(--green-bg);border-color:var(--green-border)} .rag-g::before{background:var(--green)}
+.rag-hdr{display:flex;align-items:center;gap:9px;margin-bottom:12px}
+.rag-ico{width:30px;height:30px;border-radius:9px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center}
+.rag-ico i{width:16px;height:16px}
+.rag-r .rag-ico i{color:var(--red)} .rag-a .rag-ico i{color:var(--amber)} .rag-g .rag-ico i{color:var(--green)}
+.rag-t{font-size:12px;font-weight:600;color:var(--text-2)}
+.rag-s{font-size:30px;font-weight:800;letter-spacing:-1px}
+.rag-r .rag-s{color:var(--red)} .rag-a .rag-s{color:var(--amber)} .rag-g .rag-s{color:var(--green)}
+.rag-u{font-size:11px;color:var(--text-3);margin-top:4px}
+
 /* ===== SECTION HEADER ===== */
 .sh{position:relative;background:var(--surf);border:1px solid var(--border);border-radius:13px;padding:20px 22px;margin-bottom:18px;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:20px}
 .sh::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
@@ -490,47 +513,126 @@ box-shadow:0 0 0 1px transparent}
             </div>
           </div>
 
-          <div class="grid-4">
-            <div class="mc mc-purple"><div class="mc-top"><div class="mc-ic"><i data-lucide="shield"></i></div><span class="mc-trend">↓ 4%</span></div><div class="mc-label">Overall coverage</div><div class="mc-val">58%</div></div>
-            <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="check-check"></i></div><span class="mc-trend">+23</span></div><div class="mc-label">Automated tests</div><div class="mc-val">1,847</div></div>
-            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="bug"></i></div><span class="mc-trend">+3</span></div><div class="mc-label">Escaped defects</div><div class="mc-val">11</div></div>
-            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="clock"></i></div><span class="mc-trend">stale</span></div><div class="mc-label">Stale tests</div><div class="mc-val">214</div></div>
-          </div>
-
-          <div class="grid-2">
-            <div class="card">
-              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="target"></i></span><span class="ct-title">Risk-ranked flows</span></div><span class="b b-red">Live</span></div>
-              <div class="row"><div class="ri ri-red">93</div><div class="row-info"><div class="row-title">Checkout</div><div class="row-sub">72% of revenue sessions</div></div><div class="bar"><div class="bar-fill bf-red" style="width:93%"></div></div></div>
-              <div class="row"><div class="ri ri-amb">81</div><div class="row-info"><div class="row-title">Password reset</div><div class="row-sub">High support volume</div></div><div class="bar"><div class="bar-fill bf-amb" style="width:81%"></div></div></div>
-              <div class="row"><div class="ri ri-amb">77</div><div class="row-info"><div class="row-title">Admin billing</div><div class="row-sub">Revenue-impacting</div></div><div class="bar"><div class="bar-fill bf-amb" style="width:77%"></div></div></div>
-              <div class="row"><div class="ri ri-amb">68</div><div class="row-info"><div class="row-title">Guest checkout</div><div class="row-sub">No coverage</div></div><div class="bar"><div class="bar-fill bf-amb" style="width:68%"></div></div></div>
-              <div class="row"><div class="ri ri-grn">22</div><div class="row-info"><div class="row-title">Search</div><div class="row-sub">Well covered</div></div><div class="bar"><div class="bar-fill bf-grn" style="width:22%"></div></div></div>
+          <!-- ===== QA MANAGER VIEW ===== -->
+          <div class="role-view active" id="sw-r-qa">
+            <div class="role-context"><i data-lucide="microscope"></i><span><b>QA Manager view</b> · test coverage, gaps, and quality risk across your flows</span></div>
+            <div class="grid-4">
+              <div class="mc mc-purple"><div class="mc-top"><div class="mc-ic"><i data-lucide="shield"></i></div><span class="mc-trend">↓ 4%</span></div><div class="mc-label">Overall coverage</div><div class="mc-val">58%</div></div>
+              <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="check-check"></i></div><span class="mc-trend">+23</span></div><div class="mc-label">Automated tests</div><div class="mc-val">1,847</div></div>
+              <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="bug"></i></div><span class="mc-trend">+3</span></div><div class="mc-label">Escaped defects</div><div class="mc-val">11</div></div>
+              <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="clock"></i></div><span class="mc-trend">stale</span></div><div class="mc-label">Stale tests</div><div class="mc-val">214</div></div>
+            </div>
+            <div class="grid-2">
+              <div class="card">
+                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="target"></i></span><span class="ct-title">Risk-ranked flows</span></div><span class="b b-red">Live</span></div>
+                <div class="row"><div class="ri ri-red">93</div><div class="row-info"><div class="row-title">Checkout</div><div class="row-sub">72% of revenue sessions</div></div><div class="bar"><div class="bar-fill bf-red" style="width:93%"></div></div></div>
+                <div class="row"><div class="ri ri-amb">81</div><div class="row-info"><div class="row-title">Password reset</div><div class="row-sub">High support volume</div></div><div class="bar"><div class="bar-fill bf-amb" style="width:81%"></div></div></div>
+                <div class="row"><div class="ri ri-amb">77</div><div class="row-info"><div class="row-title">Admin billing</div><div class="row-sub">Revenue-impacting</div></div><div class="bar"><div class="bar-fill bf-amb" style="width:77%"></div></div></div>
+                <div class="row"><div class="ri ri-amb">68</div><div class="row-info"><div class="row-title">Guest checkout</div><div class="row-sub">No coverage</div></div><div class="bar"><div class="bar-fill bf-amb" style="width:68%"></div></div></div>
+                <div class="row"><div class="ri ri-grn">22</div><div class="row-info"><div class="row-title">Search</div><div class="row-sub">Well covered</div></div><div class="bar"><div class="bar-fill bf-grn" style="width:22%"></div></div></div>
+              </div>
+              <div class="card">
+                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="git-pull-request-closed"></i></span><span class="ct-title">Coverage gaps</span></div><span class="b b-amber">5 found</span></div>
+                <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Coupon validation</div><div class="row-sub">No tests</div></div><span class="b b-red">Missing</span></div>
+                <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Refund flow</div><div class="row-sub">No tests</div></div><span class="b b-red">Missing</span></div>
+                <div class="row"><div class="ri ri-amb"><i data-lucide="minus"></i></div><div class="row-info"><div class="row-title">Payment edge cases</div><div class="row-sub">3 of 9 covered</div></div><span class="b b-amber">Partial</span></div>
+                <div class="row"><div class="ri ri-amb"><i data-lucide="minus"></i></div><div class="row-info"><div class="row-title">Mobile checkout</div><div class="row-sub">Happy path only</div></div><span class="b b-amber">Partial</span></div>
+                <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Login / auth</div><div class="row-sub">Full coverage</div></div><span class="b b-green">Covered</span></div>
+              </div>
             </div>
             <div class="card">
-              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="git-pull-request-closed"></i></span><span class="ct-title">Coverage gaps</span></div><span class="b b-amber">5 found</span></div>
-              <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Coupon validation</div><div class="row-sub">No tests</div></div><span class="b b-red">Missing</span></div>
-              <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Refund flow</div><div class="row-sub">No tests</div></div><span class="b b-red">Missing</span></div>
-              <div class="row"><div class="ri ri-amb"><i data-lucide="minus"></i></div><div class="row-info"><div class="row-title">Payment edge cases</div><div class="row-sub">3 of 9 covered</div></div><span class="b b-amber">Partial</span></div>
-              <div class="row"><div class="ri ri-amb"><i data-lucide="minus"></i></div><div class="row-info"><div class="row-title">Mobile checkout</div><div class="row-sub">Happy path only</div></div><span class="b b-amber">Partial</span></div>
-              <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Login / auth</div><div class="row-sub">Full coverage</div></div><span class="b b-green">Covered</span></div>
+              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="trending-up"></i></span><span class="ct-title">Coverage trend — 12 weeks</span></div><span class="b b-purple">Target 60%</span></div>
+              <div class="chart-wrap"><canvas id="ch-sw-trend"></canvas></div>
+            </div>
+            <div class="card">
+              <div class="sub-label"><i data-lucide="plug" style="width:14px"></i> Connected tools</div>
+              <div class="chips">
+                <span class="chip chip-live"><span class="chip-dot"></span>Jira</span>
+                <span class="chip chip-live"><span class="chip-dot"></span>GitHub</span>
+                <span class="chip chip-live"><span class="chip-dot"></span>Datadog</span>
+                <span class="chip chip-live"><span class="chip-dot"></span>TestRail</span>
+                <span class="chip chip-live"><span class="chip-dot"></span>Playwright</span>
+                <span class="chip chip-live"><span class="chip-dot"></span>Amplitude</span>
+                <span class="chip chip-warn"><span class="chip-dot"></span>Splunk · expiring</span>
+              </div>
             </div>
           </div>
 
-          <div class="card">
-            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="trending-up"></i></span><span class="ct-title">Coverage trend — 12 weeks</span></div><span class="b b-purple">Target 60%</span></div>
-            <div class="chart-wrap"><canvas id="ch-sw-trend"></canvas></div>
+          <!-- ===== ENG MANAGER VIEW ===== -->
+          <div class="role-view" id="sw-r-em">
+            <div class="role-context"><i data-lucide="users-round"></i><span><b>Eng Manager view</b> · delivery velocity, defect load, and release readiness for your team</span></div>
+            <div class="grid-4">
+              <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="zap"></i></div><span class="mc-trend">+6 pts</span></div><div class="mc-label">Sprint velocity</div><div class="mc-val">84 pts</div></div>
+              <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="bug"></i></div><span class="mc-trend">+8</span></div><div class="mc-label">Open defects</div><div class="mc-val">43</div></div>
+              <div class="mc mc-purple"><div class="mc-top"><div class="mc-ic"><i data-lucide="git-pull-request"></i></div><span class="mc-trend">−3h</span></div><div class="mc-label">PR cycle time</div><div class="mc-val">18h</div></div>
+              <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="rocket"></i></div><span class="mc-trend">−25%</span></div><div class="mc-label">Release readiness</div><div class="mc-val">62%</div></div>
+            </div>
+            <div class="grid-2">
+              <div class="card">
+                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="bar-chart-2"></i></span><span class="ct-title">Defects by component — 90 days</span></div></div>
+                <div class="chart-wrap"><canvas id="ch-sw-def"></canvas></div>
+              </div>
+              <div class="card">
+                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="siren"></i></span><span class="ct-title">Release risk factors</span></div></div>
+                <div class="row"><div class="ri ri-red"><i data-lucide="git-merge"></i></div><div class="row-info"><div class="row-title">Payment service changed</div><div class="row-sub">PR #1482 merged · coverage not updated</div></div><span class="b b-red">High</span></div>
+                <div class="row"><div class="ri ri-amb"><i data-lucide="gauge"></i></div><div class="row-info"><div class="row-title">API latency up 40ms</div><div class="row-sub">Datadog · checkout endpoint · since Wed</div></div><span class="b b-amber">Medium</span></div>
+                <div class="row"><div class="ri ri-amb"><i data-lucide="ticket"></i></div><div class="row-info"><div class="row-title">3 Jira P1s open</div><div class="row-sub">All in checkout · unresolved</div></div><span class="b b-amber">Medium</span></div>
+                <div class="row"><div class="ri ri-grn"><i data-lucide="shield-check"></i></div><div class="row-info"><div class="row-title">Auth service stable</div><div class="row-sub">No defects in 14 days · 91% coverage</div></div><span class="b b-green">Low</span></div>
+              </div>
+            </div>
           </div>
 
-          <div class="card">
-            <div class="sub-label"><i data-lucide="plug" style="width:14px"></i> Connected tools</div>
-            <div class="chips">
-              <span class="chip chip-live"><span class="chip-dot"></span>Jira</span>
-              <span class="chip chip-live"><span class="chip-dot"></span>GitHub</span>
-              <span class="chip chip-live"><span class="chip-dot"></span>Datadog</span>
-              <span class="chip chip-live"><span class="chip-dot"></span>TestRail</span>
-              <span class="chip chip-live"><span class="chip-dot"></span>Playwright</span>
-              <span class="chip chip-live"><span class="chip-dot"></span>Amplitude</span>
-              <span class="chip chip-warn"><span class="chip-dot"></span>Splunk · expiring</span>
+          <!-- ===== VP ENG VIEW ===== -->
+          <div class="role-view" id="sw-r-vp">
+            <div class="role-context"><i data-lucide="briefcase"></i><span><b>VP Eng view</b> · release confidence, production health, and engineering ROI across the org</span></div>
+            <div class="grid-4">
+              <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="target"></i></div><span class="mc-trend">−25%</span></div><div class="mc-label">Release confidence</div><div class="mc-val">62%</div></div>
+              <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="siren"></i></div><span class="mc-trend">+2</span></div><div class="mc-label">Prod incidents</div><div class="mc-val">3</div></div>
+              <div class="mc mc-purple"><div class="mc-top"><div class="mc-ic"><i data-lucide="timer"></i></div><span class="mc-trend">tgt 3.8h</span></div><div class="mc-label">MTTR</div><div class="mc-val">4.2h</div></div>
+              <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="trending-up"></i></div><span class="mc-trend">saved</span></div><div class="mc-label">QA ROI this qtr</div><div class="mc-val">$142k</div></div>
+            </div>
+            <div class="card">
+              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="map"></i></span><span class="ct-title">Production flow coverage map</span></div><span class="b b-cyan">Live data</span></div>
+              <div class="cov"><div class="cov-info"><div class="cov-name">Checkout</div><div class="cov-sub">72% of prod sessions</div></div><div class="cov-bar"><div class="bar-fill bf-red" style="width:38%"></div></div><div class="row-pct">38%</div><span class="b b-red">Critical</span></div>
+              <div class="cov"><div class="cov-info"><div class="cov-name">Onboarding</div><div class="cov-sub">61% of new users</div></div><div class="cov-bar"><div class="bar-fill bf-amb" style="width:55%"></div></div><div class="row-pct">55%</div><span class="b b-amber">Review</span></div>
+              <div class="cov"><div class="cov-info"><div class="cov-name">Account settings</div><div class="cov-sub">48% of sessions</div></div><div class="cov-bar"><div class="bar-fill bf-grn" style="width:74%"></div></div><div class="row-pct">74%</div><span class="b b-green">Good</span></div>
+              <div class="cov"><div class="cov-info"><div class="cov-name">Search</div><div class="cov-sub">44% of sessions</div></div><div class="cov-bar"><div class="bar-fill bf-grn" style="width:88%"></div></div><div class="row-pct">88%</div><span class="b b-green">Strong</span></div>
+              <div class="cov"><div class="cov-info"><div class="cov-name">Admin billing</div><div class="cov-sub">12% of sessions</div></div><div class="cov-bar"><div class="bar-fill bf-red" style="width:29%"></div></div><div class="row-pct">29%</div><span class="b b-red">Critical</span></div>
+            </div>
+            <div class="card">
+              <div class="sub-label"><i data-lucide="plug" style="width:14px"></i> Integration health</div>
+              <div class="sig-grid">
+                <div class="sig-card live"><div class="sig-name">Jira</div><div class="sig-type">Issue tracking</div><div class="sig-val">2,341 issues</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+                <div class="sig-card live"><div class="sig-name">GitHub</div><div class="sig-type">Source control</div><div class="sig-val">847 PRs</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+                <div class="sig-card live"><div class="sig-name">Datadog</div><div class="sig-type">APM</div><div class="sig-val">1.2M spans</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+                <div class="sig-card live"><div class="sig-name">TestRail</div><div class="sig-type">Test mgmt</div><div class="sig-val">1,847 tests</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+                <div class="sig-card warn"><div class="sig-name">Splunk</div><div class="sig-type">Logs</div><div class="sig-val">Expiring 3 days</div><div class="sig-status"><span class="sig-sdot"></span>Warning</div></div>
+                <div class="sig-card off"><div class="sig-name">ServiceNow</div><div class="sig-type">ITSM</div><div class="sig-val">—</div><div class="sig-status"><span class="sig-sdot"></span>Not connected</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== EXECUTIVE VIEW ===== -->
+          <div class="role-view" id="sw-r-exec">
+            <div class="role-context"><i data-lucide="crown"></i><span><b>Executive view</b> · business-level signal: risk, customer impact, and value delivered</span></div>
+            <div class="rag-grid">
+              <div class="rag rag-r"><div class="rag-hdr"><div class="rag-ico"><i data-lucide="target"></i></div><div class="rag-t">Release confidence</div></div><div class="rag-s">62%</div><div class="rag-u">↓ 25 pts this week</div></div>
+              <div class="rag rag-a"><div class="rag-hdr"><div class="rag-ico"><i data-lucide="users"></i></div><div class="rag-t">Customer impact risk</div></div><div class="rag-s">Medium</div><div class="rag-u">3 prod incidents open</div></div>
+              <div class="rag rag-g"><div class="rag-hdr"><div class="rag-ico"><i data-lucide="trending-up"></i></div><div class="rag-t">QA efficiency gain</div></div><div class="rag-s">+18%</div><div class="rag-u">vs same quarter last year</div></div>
+            </div>
+            <div class="card">
+              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="siren"></i></span><span class="ct-title">Top 5 risks this week</span></div></div>
+              <div class="row"><div class="ri ri-red"><i data-lucide="shopping-cart"></i></div><div class="row-info"><div class="row-title">Checkout at 38% test coverage</div><div class="row-sub">72% of revenue sessions · 3 open P1 defects</div></div><span class="b b-red">Revenue</span></div>
+              <div class="row"><div class="ri ri-amb"><i data-lucide="gauge"></i></div><div class="row-info"><div class="row-title">Payment API latency degraded</div><div class="row-sub">+40ms since Wednesday · no rollback planned</div></div><span class="b b-amber">Perf</span></div>
+              <div class="row"><div class="ri ri-amb"><i data-lucide="rotate-ccw"></i></div><div class="row-info"><div class="row-title">Refund flow untested</div><div class="row-sub">4 customer support tickets this week</div></div><span class="b b-amber">CX</span></div>
+              <div class="row"><div class="ri ri-amb"><i data-lucide="key"></i></div><div class="row-info"><div class="row-title">Splunk auth expiring in 3 days</div><div class="row-sub">Risk signal visibility will go dark</div></div><span class="b b-amber">Ops</span></div>
+              <div class="row"><div class="ri ri-grn"><i data-lucide="trash-2"></i></div><div class="row-info"><div class="row-title">214 stale tests in CI pipeline</div><div class="row-sub">~28 min overhead per run · addressable</div></div><span class="b b-green">Efficiency</span></div>
+            </div>
+            <div class="grid-4">
+              <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="shield-off"></i></div><span class="mc-trend">Q3</span></div><div class="mc-label">Defects prevented</div><div class="mc-val">87</div></div>
+              <div class="mc mc-purple"><div class="mc-top"><div class="mc-ic"><i data-lucide="piggy-bank"></i></div><span class="mc-trend">saved</span></div><div class="mc-label">Cost avoided</div><div class="mc-val">$142k</div></div>
+              <div class="mc mc-cyan"><div class="mc-top"><div class="mc-ic"><i data-lucide="timer"></i></div><span class="mc-trend">from 3d</span></div><div class="mc-label">Regression time</div><div class="mc-val">2.1h</div></div>
+              <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="line-chart"></i></div><span class="mc-trend">6mo</span></div><div class="mc-label">Coverage trend</div><div class="mc-val">+12%</div></div>
             </div>
           </div>
         </div>
@@ -1043,6 +1145,7 @@ function switchIndustry(ind, btn){
   document.getElementById('nav-alert-badge').textContent = INDUSTRY[ind].badge;
   curRoleIdx = 0;
   renderRoles();
+  applyRoleView();
   initAI();
   lucide.createIcons();
   if(ind==='sw') setTimeout(drawSWChart,200);
@@ -1059,7 +1162,7 @@ function navTo(page, btn){
   document.getElementById('tb-title').textContent = pageTitles[page];
   updateSub();
   lucide.createIcons();
-  if(curInd==='sw' && page==='overview') setTimeout(drawSWChart,200);
+  if(curInd==='sw' && page==='overview') applyRoleView();
 }
 
 function updateSub(){
@@ -1067,11 +1170,26 @@ function updateSub(){
 }
 
 /* ===================== ROLES ===================== */
+var SW_ROLE_KEYS = ['qa','em','vp','exec'];
+
 function switchRole(idx, btn){
   curRoleIdx = idx;
   document.querySelectorAll('#role-sw .role-btn').forEach(function(b){b.classList.remove('active')});
   btn.classList.add('active');
   document.getElementById('avatar').textContent = INDUSTRY[curInd].initials[idx];
+  applyRoleView();
+}
+
+// Toggle role-specific Overview layouts (Software/QE has 4 distinct views).
+function applyRoleView(){
+  if(curInd !== 'sw') return;
+  var key = SW_ROLE_KEYS[curRoleIdx] || 'qa';
+  SW_ROLE_KEYS.forEach(function(k){
+    var el = document.getElementById('sw-r-'+k);
+    if(el) el.classList.toggle('active', k===key);
+  });
+  if(key==='qa') setTimeout(drawSWChart, 80);
+  if(key==='em') setTimeout(drawDefChart, 80);
 }
 
 function renderRoles(){
@@ -1229,6 +1347,33 @@ function drawSWChart(){
       plugins:{legend:{display:true,labels:{boxWidth:12,font:{size:11}}}},
       scales:{
         y:{min:40,max:65,grid:{color:'#30363D'},ticks:{callback:function(v){return v+'%'}}},
+        x:{grid:{display:false}}
+      }
+    }
+  });
+}
+
+function drawDefChart(){
+  var cv = document.getElementById('ch-sw-def');
+  if(!cv || cv._done) return;
+  cv._done = true;
+  var ctx = cv.getContext('2d');
+  new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels:['Checkout','Billing','Auth','Search','Mobile','Admin'],
+      datasets:[{
+        label:'Open defects',
+        data:[17,9,4,3,7,3],
+        backgroundColor:['#F87171','#FBBF24','#34D399','#34D399','#FBBF24','#FBBF24'],
+        borderRadius:5,barThickness:26
+      }]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{
+        y:{beginAtZero:true,grid:{color:'#30363D'},ticks:{precision:0}},
         x:{grid:{display:false}}
       }
     }
