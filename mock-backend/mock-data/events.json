@@ -51,7 +51,7 @@
     },
     "generate-tests": {
       "label": "AI generates tests",
-      "description": "Strata AI generates 6 Playwright tests from production errors",
+      "description": "Hielios AI generates 6 Playwright tests from production errors",
       "changes": {
         "testrail.summary.total": 1853,
         "testrail.summary.automated": 1629,

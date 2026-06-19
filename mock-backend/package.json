@@ -1,5 +1,5 @@
 {
-  "name": "strata-mock-backend",
+  "name": "hielios-mock-backend",
   "version": "1.0.0",
   "description": "Mock integration backend for Strata demo",
   "main": "server.js",

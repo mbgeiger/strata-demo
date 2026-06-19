@@ -169,7 +169,7 @@ function setNestedValue(obj, dotPath, value) {
 // ── Start ─────────────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 3001;
 server.listen(PORT, () => {
-  console.log(`\n🟢 Strata mock backend running`);
+  console.log(`\n🟢 Hielios mock backend running`);
   console.log(`   REST  → http://localhost:${PORT}/api`);
   console.log(`   WS    → ws://localhost:${PORT}`);
   console.log(`\n   Key endpoints:`);

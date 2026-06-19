@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Strata — Intelligence Platform</title>
+<title>Hielios — Intelligence Platform</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -447,7 +447,7 @@ box-shadow:0 0 0 1px transparent}
         <line x1="6" y1="9" x2="9" y2="12" stroke="url(#lg)" stroke-width="2" stroke-linecap="round"/>
       </svg>
       <div>
-        <div class="logo-txt">Strata</div>
+        <div class="logo-txt">Hielios</div>
         <div class="logo-tag">Intelligence Platform</div>
       </div>
     </div>
@@ -886,11 +886,11 @@ box-shadow:0 0 0 1px transparent}
 <button id="demoBarToggle" onclick="showDemoBar()" style="position:fixed;top:8px;left:50%;transform:translateX(-50%);z-index:499;font-family:var(--f);font-size:11px;font-weight:700;padding:5px 14px;border-radius:0 0 9px 9px;border:1px solid #30363D;border-top:none;background:#161B22;color:#7C6FE0;cursor:pointer;display:none">▼ Demo controls</button>
 
 <!-- ===== AI CHAT ===== -->
-<button class="ai-toggle" onclick="toggleAI()" title="Strata AI"><i data-lucide="message-square"></i></button>
+<button class="ai-toggle" onclick="toggleAI()" title="Hielios AI"><i data-lucide="message-square"></i></button>
 <div class="ai-panel" id="aiPanel">
   <div class="ai-head">
     <div class="ai-head-ic"><i data-lucide="brain"></i></div>
-    <div class="ai-head-info"><div class="ai-head-title">Strata AI</div><div class="ai-head-status"><span class="live-dot"></span> Analyzing your stack</div></div>
+    <div class="ai-head-info"><div class="ai-head-title">Hielios AI</div><div class="ai-head-status"><span class="live-dot"></span> Analyzing your stack</div></div>
     <button class="ai-x" onclick="toggleAI()"><i data-lucide="x"></i></button>
   </div>
   <div class="ai-msgs" id="aiMsgs"></div>
@@ -1371,7 +1371,7 @@ function renderWizard(){
              '<div class="wiz-src-check"><i data-lucide="check-circle-2"></i></div></div>';
     }).join('');
     body.innerHTML = '<div class="wiz-section-title">Choose a source to connect</div>'+
-      '<div class="wiz-section-desc">Strata will correlate this source against your existing risk signals.</div>'+
+      '<div class="wiz-section-desc">Hielios will correlate this source against your existing risk signals.</div>'+
       '<div class="wiz-src-grid">'+grid+'</div>';
     next.textContent = 'Continue';
   }
@@ -1402,7 +1402,7 @@ function renderWizard(){
     var cnt = Object.keys(wizSigSel).filter(function(k){return wizSigSel[k]}).length;
     if(cnt===0) cnt = 'All';
     body.innerHTML = '<div class="wiz-section-title">Review &amp; confirm</div>'+
-      '<div class="wiz-section-desc">Strata will begin ingesting within ~30 seconds of connection.</div>'+
+      '<div class="wiz-section-desc">Hielios will begin ingesting within ~30 seconds of connection.</div>'+
       '<div class="wiz-review">'+
       '<div class="wiz-rev-row"><span class="wiz-rev-k">Source</span><span class="wiz-rev-v">'+wizName()+'</span></div>'+
       '<div class="wiz-rev-row"><span class="wiz-rev-k">Industry workspace</span><span class="wiz-rev-v">'+INDUSTRY[curInd].name+'</span></div>'+
@@ -1416,7 +1416,7 @@ function renderWizard(){
     body.innerHTML = '<div class="wiz-success">'+
       '<div class="wiz-succ-ic"><i data-lucide="check"></i></div>'+
       '<div class="wiz-succ-title">'+wizName()+' connected</div>'+
-      '<div class="wiz-succ-sub">Strata is now ingesting signals and cross-correlating them with your existing sources. New risk insights will appear within a few minutes.</div></div>';
+      '<div class="wiz-succ-sub">Hielios is now ingesting signals and cross-correlating them with your existing sources. New risk insights will appear within a few minutes.</div></div>';
     back.style.visibility = 'hidden';
     next.textContent = 'Done';
   }
