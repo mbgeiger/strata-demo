@@ -1,0 +1,1589 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hielios — Intelligence Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.383.0/umd/lucide.min.js"></script>
+<style>
+:root{
+--navy:#0D1117; --navy-2:#161B22; --navy-3:#1C2333;
+--purple:#7C6FE0; --purple-l:#A599F0; --purple-d:#5A4FBF; --purple-glow:rgba(124,111,224,0.3);
+--cyan:#22D3EE; --cyan-d:#0891B2; --cyan-glow:rgba(34,211,238,0.2);
+--red:#F87171; --red-d:#DC2626; --red-bg:rgba(248,113,113,0.1); --red-border:rgba(248,113,113,0.3);
+--amber:#FBBF24; --amber-d:#D97706; --amber-bg:rgba(251,191,36,0.1); --amber-border:rgba(251,191,36,0.3);
+--green:#34D399; --green-d:#059669; --green-bg:rgba(52,211,153,0.1); --green-border:rgba(52,211,153,0.3);
+--blue:#60A5FA; --blue-bg:rgba(96,165,250,0.1); --blue-border:rgba(96,165,250,0.3);
+--border:#30363D; --border-2:#484F58;
+--text:#E6EDF3; --text-2:#8B949E; --text-3:#6E7681;
+--surf:#161B22; --surf-2:#1C2333; --surf-3:#21262D;
+--f:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+--fm:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:var(--f);background:var(--navy);color:var(--text);font-size:14px;line-height:1.5;overflow:hidden}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+button,input{font-family:var(--f)}
+
+/* ===== APP SHELL ===== */
+.app{display:flex;height:100vh;width:100vw}
+.sidebar{width:224px;flex-shrink:0;background:var(--navy-2);border-right:1px solid var(--border);display:flex;flex-direction:column;height:100vh}
+.main-wrap{flex:1;display:flex;flex-direction:column;min-width:0;height:100vh}
+.content{flex:1;overflow-y:auto;padding:24px;background:var(--navy)}
+
+/* ===== SIDEBAR ===== */
+.logo-row{display:flex;align-items:center;gap:10px;padding:18px 16px 14px}
+.logo-svg{width:34px;height:34px;flex-shrink:0}
+.logo-txt{font-size:19px;font-weight:800;background:linear-gradient(90deg,#fff,var(--purple-l));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.logo-tag{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--text-3);font-weight:600;margin-top:3px}
+
+.ind-switch{padding:0 12px 12px;display:flex;flex-direction:column;gap:6px;border-bottom:1px solid var(--border);margin-bottom:10px}
+.ind-btn{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:9px;border:1px solid var(--border);background:var(--surf-2);color:var(--text-2);font-size:12px;font-weight:600;cursor:pointer;text-align:left;transition:.15s;width:100%}
+.ind-btn:hover{border-color:var(--border-2);color:var(--text)}
+.ind-btn.active{color:var(--text);border-color:transparent;background:
+linear-gradient(var(--surf-2),var(--surf-2)) padding-box,
+linear-gradient(90deg,var(--purple),var(--cyan)) border-box;
+box-shadow:0 0 0 1px transparent}
+.ind-btn.active{background:linear-gradient(90deg,rgba(124,111,224,.18),rgba(34,211,238,.12));border-color:var(--purple)}
+.ind-emoji{font-size:15px}
+
+.nav{flex:1;overflow-y:auto;padding:4px 12px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:8px 9px;border-radius:9px;color:var(--text-2);cursor:pointer;font-size:13px;font-weight:500;margin-bottom:3px;transition:.13s;position:relative}
+.nav-item:hover{background:var(--surf-2);color:var(--text)}
+.nav-item.active{background:var(--surf-3);color:var(--text);font-weight:600}
+.nav-ic{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-ic i{width:15px;height:15px}
+.ni-purple{background:rgba(124,111,224,.15);color:var(--purple-l)}
+.ni-red{background:var(--red-bg);color:var(--red)}
+.ni-green{background:var(--green-bg);color:var(--green)}
+.ni-cyan{background:var(--cyan-glow);color:var(--cyan)}
+.ni-amber{background:var(--amber-bg);color:var(--amber)}
+.ni-blue{background:var(--blue-bg);color:var(--blue)}
+.nav-badge{position:absolute;right:8px;background:var(--red-d);color:#fff;font-size:10px;font-weight:700;min-width:17px;height:17px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 5px}
+
+.side-foot{padding:12px;border-top:1px solid var(--border)}
+.live-pill{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:9px;background:var(--green-bg);border:1px solid var(--green-border);font-size:11px;font-weight:600;color:var(--green)}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 2s infinite}
+.ver{font-size:9px;color:var(--text-3);text-align:center;margin-top:8px;font-family:var(--fm)}
+
+/* ===== TOPBAR ===== */
+.topbar{height:60px;flex-shrink:0;border-bottom:1px solid var(--border);background:var(--navy-2);display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+.tb-left{display:flex;align-items:center;gap:12px}
+.tb-emoji{font-size:22px}
+.tb-title{font-size:16px;font-weight:700;line-height:1.1}
+.tb-sub{font-size:11px;color:var(--text-2);margin-top:2px}
+.tb-right{display:flex;align-items:center;gap:14px}
+.role-pill{display:flex;align-items:center;gap:7px;background:var(--surf-2);border:1px solid var(--border);border-radius:20px;padding:5px 6px}
+.role-pill .rp-label{font-size:10px;color:var(--text-3);padding-left:6px;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.role-btn{font-size:11px;font-weight:600;padding:4px 9px;border-radius:14px;border:none;background:transparent;color:var(--text-2);cursor:pointer;transition:.13s}
+.role-btn:hover{color:var(--text)}
+.role-btn.active{background:linear-gradient(90deg,var(--purple),var(--cyan));color:#fff}
+.bell{position:relative;cursor:pointer;color:var(--text-2);width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:var(--surf-2);border:1px solid var(--border)}
+.bell:hover{color:var(--text)}
+.bell i{width:17px;height:17px}
+.bell-dot{position:absolute;top:7px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--red);border:1.5px solid var(--navy-2)}
+.avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff}
+
+/* ===== VIEWS / PAGES ===== */
+.industry-view{display:none}
+.industry-view.active{display:block}
+.page{display:none;animation:fade .25s ease}
+.page.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ===== GRID ===== */
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+@media(max-width:1100px){.grid-4{grid-template-columns:repeat(2,1fr)}.grid-2{grid-template-columns:1fr}}
+
+/* ===== METRIC CARD ===== */
+.mc{background:var(--surf);border:1px solid var(--border);border-radius:13px;padding:16px;position:relative}
+.mc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
+.mc-ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.mc-ic i{width:18px;height:18px}
+.mc-trend{font-size:10px;font-weight:700;padding:3px 8px;border-radius:12px}
+.mc-label{font-size:11px;color:var(--text-2);font-weight:500;margin-bottom:4px}
+.mc-val{font-size:26px;font-weight:800;letter-spacing:-.5px}
+.mc-red .mc-ic{background:var(--red-bg);color:var(--red)} .mc-red .mc-trend{background:var(--red-bg);color:var(--red)}
+.mc-green .mc-ic{background:var(--green-bg);color:var(--green)} .mc-green .mc-trend{background:var(--green-bg);color:var(--green)}
+.mc-amber .mc-ic{background:var(--amber-bg);color:var(--amber)} .mc-amber .mc-trend{background:var(--amber-bg);color:var(--amber)}
+.mc-purple .mc-ic{background:rgba(124,111,224,.15);color:var(--purple-l)} .mc-purple .mc-trend{background:rgba(124,111,224,.15);color:var(--purple-l)}
+.mc-cyan .mc-ic{background:var(--cyan-glow);color:var(--cyan)} .mc-cyan .mc-trend{background:var(--cyan-glow);color:var(--cyan)}
+.mc-blue .mc-ic{background:var(--blue-bg);color:var(--blue)} .mc-blue .mc-trend{background:var(--blue-bg);color:var(--blue)}
+
+/* ===== CARD ===== */
+.card{background:var(--surf);border:1px solid var(--border);border-radius:13px;padding:17px;margin-bottom:18px}
+.ct{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.ct-left{display:flex;align-items:center;gap:10px}
+.ct-ic{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:var(--surf-3)}
+.ct-ic i{width:16px;height:16px}
+.ct-title{font-size:14px;font-weight:700}
+
+/* ===== BADGE ===== */
+.b{font-size:10px;font-weight:700;padding:3px 9px;border-radius:12px;display:inline-flex;align-items:center;gap:4px}
+.b-red{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border)}
+.b-amber{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border)}
+.b-green{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+.b-purple{background:rgba(124,111,224,.15);color:var(--purple-l);border:1px solid var(--purple-glow)}
+.b-cyan{background:var(--cyan-glow);color:var(--cyan);border:1px solid rgba(34,211,238,.3)}
+.b-blue{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border)}
+
+/* ===== ROW ===== */
+.row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border)}
+.row:last-child{border-bottom:none}
+.ri{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700;font-size:12px}
+.ri i{width:15px;height:15px}
+.ri-red{background:var(--red-bg);color:var(--red)}
+.ri-amb{background:var(--amber-bg);color:var(--amber)}
+.ri-grn{background:var(--green-bg);color:var(--green)}
+.ri-pur{background:rgba(124,111,224,.15);color:var(--purple-l)}
+.ri-blue{background:var(--blue-bg);color:var(--blue)}
+.row-info{flex:1;min-width:0}
+.row-title{font-size:13px;font-weight:600}
+.row-sub{font-size:11px;color:var(--text-2);margin-top:1px}
+.bar{flex:1;max-width:120px;height:6px;background:var(--surf-3);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px}
+.bf-red{background:linear-gradient(90deg,var(--red-d),var(--red))}
+.bf-amb{background:linear-gradient(90deg,var(--amber-d),var(--amber))}
+.bf-grn{background:linear-gradient(90deg,var(--green-d),var(--green))}
+.bf-pur{background:linear-gradient(90deg,var(--purple-d),var(--purple))}
+.bf-blue{background:linear-gradient(90deg,#2563EB,var(--blue))}
+.row-pct{font-size:13px;font-weight:700;min-width:42px;text-align:right;font-family:var(--fm)}
+
+/* ===== ALERT BANNER ===== */
+.alert{display:flex;gap:14px;align-items:flex-start;border-left:3px solid var(--red);background:linear-gradient(90deg,var(--red-bg),rgba(248,113,113,.02));border:1px solid var(--red-border);border-left:3px solid var(--red);border-radius:11px;padding:15px 17px;margin-bottom:18px}
+.alert-ic{width:38px;height:38px;border-radius:10px;background:var(--red-bg);color:var(--red);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.alert-ic i{width:20px;height:20px}
+.alert-body{flex:1}
+.alert-title{font-size:14px;font-weight:700;color:var(--red);margin-bottom:3px}
+.alert-sub{font-size:12px;color:var(--text-2);line-height:1.45}
+.alert-btns{display:flex;gap:8px;margin-top:11px}
+.btn{font-size:12px;font-weight:600;padding:7px 13px;border-radius:8px;border:1px solid var(--border);background:var(--surf-3);color:var(--text);cursor:pointer;transition:.13s}
+.btn:hover{border-color:var(--border-2)}
+.btn-primary{background:linear-gradient(90deg,var(--purple),var(--cyan));border:none;color:#fff}
+.btn-primary:hover{box-shadow:0 0 14px var(--purple-glow)}
+.btn-sm{font-size:11px;padding:5px 10px}
+
+/* ===== ROLE VIEW + RAG ===== */
+.role-view{display:none}
+.role-view.active{display:block;animation:fade .25s ease}
+.role-context{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:11px 15px;border-radius:11px;background:linear-gradient(90deg,rgba(124,111,224,.12),rgba(34,211,238,.06));border:1px solid var(--border)}
+.role-context i{width:17px;height:17px;color:var(--purple-l);flex-shrink:0}
+.role-context b{font-weight:700}
+.role-context span{font-size:12px;color:var(--text-2)}
+.rag-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+@media(max-width:1100px){.rag-grid{grid-template-columns:1fr}}
+.rag{border-radius:13px;padding:18px;border:1px solid var(--border);position:relative;overflow:hidden}
+.rag::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.rag-r{background:var(--red-bg);border-color:var(--red-border)} .rag-r::before{background:var(--red)}
+.rag-a{background:var(--amber-bg);border-color:var(--amber-border)} .rag-a::before{background:var(--amber)}
+.rag-g{background:var(--green-bg);border-color:var(--green-border)} .rag-g::before{background:var(--green)}
+.rag-hdr{display:flex;align-items:center;gap:9px;margin-bottom:12px}
+.rag-ico{width:30px;height:30px;border-radius:9px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center}
+.rag-ico i{width:16px;height:16px}
+.rag-r .rag-ico i{color:var(--red)} .rag-a .rag-ico i{color:var(--amber)} .rag-g .rag-ico i{color:var(--green)}
+.rag-t{font-size:12px;font-weight:600;color:var(--text-2)}
+.rag-s{font-size:30px;font-weight:800;letter-spacing:-1px}
+.rag-r .rag-s{color:var(--red)} .rag-a .rag-s{color:var(--amber)} .rag-g .rag-s{color:var(--green)}
+.rag-u{font-size:11px;color:var(--text-3);margin-top:4px}
+
+/* ===== SECTION HEADER ===== */
+.sh{position:relative;background:var(--surf);border:1px solid var(--border);border-radius:13px;padding:20px 22px;margin-bottom:18px;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.sh::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.sh-red::before{background:linear-gradient(90deg,var(--red-d),var(--red))}
+.sh-blue::before{background:linear-gradient(90deg,#2563EB,var(--blue))}
+.sh-green::before{background:linear-gradient(90deg,var(--green-d),var(--green))}
+.sh-purple::before{background:linear-gradient(90deg,var(--purple-d),var(--purple))}
+.sh-l{display:flex;align-items:center;gap:16px}
+.sh-emoji{font-size:34px}
+.sh-title{font-size:18px;font-weight:800}
+.sh-desc{font-size:12px;color:var(--text-2);margin-top:4px;max-width:560px}
+.sh-kpi{text-align:right;flex-shrink:0}
+.sh-kpi-num{font-size:30px;font-weight:800;letter-spacing:-1px}
+.sh-kpi-lbl{font-size:11px;color:var(--text-2)}
+
+/* ===== COMPLIANCE BAR ROW ===== */
+.cbar{display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid var(--border)}
+.cbar:last-child{border-bottom:none}
+.cbar-label{min-width:160px;font-size:13px;font-weight:600}
+.cbar-label small{display:block;font-size:11px;color:var(--text-2);font-weight:400;margin-top:2px}
+.cbar-track{flex:1;height:8px;background:var(--surf-3);border-radius:5px;overflow:hidden}
+.cbar-pct{font-size:13px;font-weight:700;min-width:44px;text-align:right;font-family:var(--fm)}
+
+/* ===== COVERAGE ROW ===== */
+.cov{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border)}
+.cov:last-child{border-bottom:none}
+.cov-info{flex:1;min-width:0}
+.cov-name{font-size:13px;font-weight:600}
+.cov-sub{font-size:11px;color:var(--text-2);margin-top:1px}
+.cov-bar{width:110px;height:7px;background:var(--surf-3);border-radius:5px;overflow:hidden;flex-shrink:0}
+
+/* ===== QUALITY HERO ===== */
+.qhero{background:var(--surf);border:1px solid var(--border);border-radius:13px;padding:22px;margin-bottom:18px;display:flex;align-items:center;gap:30px;flex-wrap:wrap}
+.qh-score{text-align:center}
+.qh-num{font-size:56px;font-weight:800;color:var(--red);line-height:1;letter-spacing:-2px}
+.qh-lbl{font-size:11px;color:var(--text-2);margin-top:4px}
+.qh-stats{display:flex;gap:0;flex:1}
+.qh-stat{flex:1;text-align:center;padding:0 16px;border-right:1px solid var(--border)}
+.qh-stat:last-child{border-right:none}
+.qh-stat-num{font-size:22px;font-weight:800}
+.qh-stat-lbl{font-size:10px;color:var(--text-2);margin-top:3px}
+
+/* ===== SIGNAL CARD ===== */
+.sig-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.sig-card{background:var(--surf);border:1px solid var(--border);border-left:3px solid var(--border-2);border-radius:11px;padding:15px}
+.sig-card.live{border-left-color:var(--green)}
+.sig-card.warn{border-left-color:var(--amber)}
+.sig-card.off{border-left-color:var(--text-3);opacity:.7}
+.sig-name{font-size:14px;font-weight:700}
+.sig-type{font-size:11px;color:var(--text-2);margin-top:2px}
+.sig-val{font-size:12px;color:var(--text);margin-top:8px;font-family:var(--fm)}
+.sig-status{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:11px;font-weight:600}
+.sig-sdot{width:7px;height:7px;border-radius:50%}
+.live .sig-sdot{background:var(--green);box-shadow:0 0 7px var(--green);animation:pulse 2s infinite}
+.live .sig-status{color:var(--green)}
+.warn .sig-sdot{background:var(--amber);box-shadow:0 0 7px var(--amber)}
+.warn .sig-status{color:var(--amber)}
+.off .sig-sdot{background:var(--text-3)}
+.off .sig-status{color:var(--text-3)}
+
+/* ===== TOOL CHIPS ===== */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;padding:5px 11px;border-radius:14px;border:1px solid var(--border)}
+.chip-dot{width:6px;height:6px;border-radius:50%}
+.chip-live{background:var(--green-bg);color:var(--green);border-color:var(--green-border)}
+.chip-live .chip-dot{background:var(--green);box-shadow:0 0 6px var(--green)}
+.chip-warn{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-border)}
+.chip-warn .chip-dot{background:var(--amber)}
+
+/* ===== FLOW NODES ===== */
+.flow{display:flex;align-items:flex-start;gap:4px;flex-wrap:wrap;padding:8px 0}
+.flow-node{text-align:center}
+.fn-box{padding:12px 16px;border-radius:10px;font-size:12px;font-weight:700;min-width:78px;border:1px solid}
+.fn-ok{background:var(--green-bg);border-color:var(--green-border);color:var(--green)}
+.fn-crit{background:var(--red-bg);border-color:var(--red-border);color:var(--red);animation:pulseRed 1.6s infinite}
+.fn-dim{background:var(--surf-3);border-color:var(--border);color:var(--text-2)}
+.fn-pct{font-size:12px;font-weight:700;margin-top:6px;font-family:var(--fm)}
+.fn-arrow{color:var(--text-3);align-self:center;padding:0 2px;font-size:18px;margin-top:14px}
+.flow-note{margin-top:14px;font-size:12px;color:var(--red);font-weight:600;display:flex;align-items:center;gap:7px}
+
+/* ===== ERROR FEED ===== */
+.efeed-row{display:flex;align-items:center;gap:13px;padding:11px 0;border-bottom:1px solid var(--border)}
+.efeed-row:last-child{border-bottom:none}
+.ef-time{font-size:11px;color:var(--text-3);font-family:var(--fm);min-width:38px}
+.ef-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.ef-red{background:var(--red);box-shadow:0 0 8px var(--red)}
+.ef-amb{background:var(--amber);box-shadow:0 0 8px var(--amber)}
+.ef-grn{background:var(--green);box-shadow:0 0 8px var(--green)}
+.ef-info{flex:1;min-width:0}
+.ef-title{font-size:13px;font-weight:600}
+.ef-meta{font-size:11px;color:var(--text-2);font-family:var(--fm);margin-top:1px}
+
+/* numbered risk rows */
+.rnum{width:26px;height:26px;border-radius:50%;background:var(--surf-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;color:var(--text-2)}
+
+/* report row */
+.rep-row{display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid var(--border)}
+.rep-row:last-child{border-bottom:none}
+.rep-ic{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rep-ic i{width:18px;height:18px}
+
+.chart-wrap{height:230px;position:relative}
+
+/* ===== AI CHAT ===== */
+.ai-toggle{position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--cyan));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 6px 22px var(--purple-glow);z-index:200;transition:.2s}
+.ai-toggle:hover{transform:scale(1.07);box-shadow:0 6px 30px var(--purple-glow)}
+.ai-toggle i{width:24px;height:24px}
+.ai-panel{position:fixed;bottom:90px;right:24px;width:360px;height:500px;background:var(--navy-2);border:1px solid var(--border);border-radius:16px;z-index:201;display:flex;flex-direction:column;overflow:hidden;transform-origin:bottom right;transform:scale(.85);opacity:0;pointer-events:none;transition:transform .22s cubic-bezier(.2,.9,.3,1.2),opacity .2s;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.ai-panel.open{transform:scale(1);opacity:1;pointer-events:auto}
+.ai-head{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border);background:var(--surf)}
+.ai-head-ic{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--purple),var(--cyan));display:flex;align-items:center;justify-content:center;color:#fff}
+.ai-head-ic i{width:17px;height:17px}
+.ai-head-info{flex:1}
+.ai-head-title{font-size:13px;font-weight:700}
+.ai-head-status{font-size:10px;color:var(--green);display:flex;align-items:center;gap:5px;margin-top:1px}
+.ai-x{cursor:pointer;color:var(--text-2);background:none;border:none;display:flex}
+.ai-x:hover{color:var(--text)}
+.ai-x i{width:18px;height:18px}
+.ai-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px}
+.ai-msg{display:flex;gap:8px;max-width:90%}
+.ai-msg.user{align-self:flex-end;flex-direction:row-reverse}
+.ai-av{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff}
+.ai-msg.ai .ai-av{background:linear-gradient(135deg,var(--purple),var(--cyan))}
+.ai-msg.user .ai-av{background:var(--surf-3);color:var(--text-2)}
+.ai-bubble{padding:10px 13px;border-radius:13px;font-size:12.5px;line-height:1.5;white-space:pre-wrap}
+.ai-msg.ai .ai-bubble{background:var(--surf-2);border:1px solid var(--border);border-top-left-radius:4px}
+.ai-msg.user .ai-bubble{background:linear-gradient(135deg,var(--purple),var(--cyan));color:#fff;border-top-right-radius:4px}
+.ai-bubble code{font-family:var(--fm);font-size:11px;background:rgba(255,255,255,.08);padding:1px 5px;border-radius:4px}
+.ai-bubble b{font-weight:700}
+.typing{display:flex;gap:4px;padding:12px 14px;background:var(--surf-2);border:1px solid var(--border);border-radius:13px;border-top-left-radius:4px;width:fit-content}
+.typing span{width:7px;height:7px;border-radius:50%;background:var(--text-2);animation:typing 1.3s infinite}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+.ai-chips{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 10px}
+.ai-chip{font-size:11px;font-weight:600;padding:6px 10px;border-radius:13px;background:var(--surf-2);border:1px solid var(--border);color:var(--text-2);cursor:pointer;transition:.13s}
+.ai-chip:hover{border-color:var(--purple);color:var(--text)}
+.ai-input-row{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--border)}
+.ai-input{flex:1;background:var(--surf-2);border:1px solid var(--border);border-radius:9px;padding:9px 12px;color:var(--text);font-size:12.5px;outline:none}
+.ai-input:focus{border-color:var(--purple)}
+.ai-send{width:38px;border:none;border-radius:9px;background:linear-gradient(135deg,var(--purple),var(--cyan));color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.ai-send i{width:17px;height:17px}
+
+/* ===== TOAST ===== */
+.toast-wrap{position:fixed;bottom:24px;right:96px;z-index:300;display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.toast{background:var(--surf-2);border:1px solid var(--border-2);border-left:3px solid var(--purple);border-radius:10px;padding:11px 16px;font-size:12.5px;font-weight:500;color:var(--text);box-shadow:0 8px 28px rgba(0,0,0,.4);animation:toastIn .3s ease;max-width:340px}
+@keyframes toastIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+
+/* ===== SIGNAL HEADER ===== */
+.sig-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+
+/* ===== WIZARD MODAL ===== */
+.wiz-overlay{position:fixed;inset:0;background:rgba(5,8,14,.72);backdrop-filter:blur(3px);z-index:400;display:none;align-items:center;justify-content:center;padding:24px}
+.wiz-overlay.open{display:flex;animation:fade .2s ease}
+.wiz{width:560px;max-width:100%;max-height:90vh;background:var(--navy-2);border:1px solid var(--border);border-radius:16px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.6);animation:wizIn .25s cubic-bezier(.2,.9,.3,1.1)}
+@keyframes wizIn{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
+.wiz-head{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--border);background:var(--surf)}
+.wiz-head-ic{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--purple),var(--cyan));display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
+.wiz-head-ic i{width:18px;height:18px}
+.wiz-head-info{flex:1}
+.wiz-head-title{font-size:15px;font-weight:700}
+.wiz-head-sub{font-size:11px;color:var(--text-2);margin-top:1px}
+.wiz-x{cursor:pointer;color:var(--text-2);background:none;border:none;display:flex}
+.wiz-x:hover{color:var(--text)}
+.wiz-x i{width:20px;height:20px}
+
+.wiz-steps{display:flex;align-items:center;gap:6px;padding:14px 20px;border-bottom:1px solid var(--border)}
+.wiz-step{display:flex;align-items:center;gap:7px;flex-shrink:0}
+.wiz-step-dot{width:24px;height:24px;border-radius:50%;background:var(--surf-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text-3);transition:.2s}
+.wiz-step-dot i{width:13px;height:13px}
+.wiz-step-lbl{font-size:11px;font-weight:600;color:var(--text-3);transition:.2s}
+.wiz-step.active .wiz-step-dot{background:linear-gradient(135deg,var(--purple),var(--cyan));border-color:transparent;color:#fff}
+.wiz-step.active .wiz-step-lbl{color:var(--text)}
+.wiz-step.done .wiz-step-dot{background:var(--green-bg);border-color:var(--green-border);color:var(--green)}
+.wiz-step.done .wiz-step-lbl{color:var(--text-2)}
+.wiz-step-line{flex:1;height:1px;background:var(--border);min-width:10px}
+
+.wiz-body{padding:20px;overflow-y:auto;flex:1}
+.wiz-section-title{font-size:13px;font-weight:700;margin-bottom:4px}
+.wiz-section-desc{font-size:12px;color:var(--text-2);margin-bottom:16px}
+
+.wiz-src-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.wiz-src{display:flex;align-items:center;gap:11px;padding:13px;border:1px solid var(--border);border-radius:11px;background:var(--surf);cursor:pointer;transition:.13s}
+.wiz-src:hover{border-color:var(--border-2)}
+.wiz-src.sel{border-color:var(--purple);background:linear-gradient(90deg,rgba(124,111,224,.14),rgba(34,211,238,.08))}
+.wiz-src-ic{width:34px;height:34px;border-radius:9px;background:var(--surf-3);display:flex;align-items:center;justify-content:center;color:var(--purple-l);flex-shrink:0}
+.wiz-src-ic i{width:17px;height:17px}
+.wiz-src-info{min-width:0}
+.wiz-src-name{font-size:13px;font-weight:600}
+.wiz-src-type{font-size:11px;color:var(--text-2);margin-top:1px}
+.wiz-src-check{margin-left:auto;color:var(--purple-l);display:none}
+.wiz-src.sel .wiz-src-check{display:flex}
+.wiz-src-check i{width:18px;height:18px}
+
+.wiz-field{margin-bottom:14px}
+.wiz-label{font-size:12px;font-weight:600;margin-bottom:6px;display:block}
+.wiz-input,.wiz-select{width:100%;background:var(--surf-2);border:1px solid var(--border);border-radius:9px;padding:10px 12px;color:var(--text);font-size:13px;font-family:var(--f);outline:none}
+.wiz-input:focus,.wiz-select:focus{border-color:var(--purple)}
+.wiz-input::placeholder{color:var(--text-3)}
+.wiz-hint{font-size:11px;color:var(--text-3);margin-top:5px}
+
+.wiz-check-row{display:flex;align-items:flex-start;gap:11px;padding:11px;border:1px solid var(--border);border-radius:10px;margin-bottom:8px;cursor:pointer;transition:.13s}
+.wiz-check-row:hover{border-color:var(--border-2)}
+.wiz-check-row.on{border-color:var(--purple);background:rgba(124,111,224,.07)}
+.wiz-cb{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--border-2);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;color:#fff;transition:.13s}
+.wiz-check-row.on .wiz-cb{background:linear-gradient(135deg,var(--purple),var(--cyan));border-color:transparent}
+.wiz-cb i{width:12px;height:12px;opacity:0}
+.wiz-check-row.on .wiz-cb i{opacity:1}
+.wiz-check-info{flex:1}
+.wiz-check-name{font-size:13px;font-weight:600}
+.wiz-check-desc{font-size:11px;color:var(--text-2);margin-top:1px}
+
+.wiz-review{background:var(--surf);border:1px solid var(--border);border-radius:11px;padding:4px 16px;margin-bottom:14px}
+.wiz-rev-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);font-size:13px}
+.wiz-rev-row:last-child{border-bottom:none}
+.wiz-rev-k{color:var(--text-2)}
+.wiz-rev-v{font-weight:600;text-align:right;font-family:var(--fm);font-size:12px}
+
+.wiz-success{text-align:center;padding:26px 10px}
+.wiz-succ-ic{width:64px;height:64px;border-radius:50%;background:var(--green-bg);border:1px solid var(--green-border);display:flex;align-items:center;justify-content:center;color:var(--green);margin:0 auto 16px;animation:pulseRed 1.6s 1}
+.wiz-succ-ic i{width:32px;height:32px}
+.wiz-succ-title{font-size:17px;font-weight:800;margin-bottom:6px}
+.wiz-succ-sub{font-size:12.5px;color:var(--text-2);max-width:360px;margin:0 auto}
+
+.wiz-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 20px;border-top:1px solid var(--border);background:var(--surf)}
+.wiz-foot-spacer{flex:1}
+
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes pulseRed{0%,100%{box-shadow:0 0 0 0 rgba(248,113,113,.4)}50%{box-shadow:0 0 0 6px rgba(248,113,113,0)}}
+@keyframes typing{0%,60%,100%{opacity:.25}30%{opacity:1}}
+
+.sub-label{font-size:12px;color:var(--text-2);font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <div class="logo-row">
+      <svg class="logo-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="lg" x1="0" y1="0" x2="40" y2="40">
+            <stop offset="0" stop-color="#7C6FE0"/><stop offset="1" stop-color="#22D3EE"/>
+          </linearGradient>
+        </defs>
+        <ellipse cx="20" cy="20" rx="17" ry="11" stroke="url(#lg)" stroke-width="2.2" fill="none"/>
+        <circle cx="20" cy="20" r="5.5" fill="url(#lg)"/>
+        <circle cx="20" cy="20" r="2.2" fill="#0D1117"/>
+        <line x1="20" y1="2" x2="20" y2="7" stroke="url(#lg)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="20" y1="33" x2="20" y2="38" stroke="url(#lg)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="34" y1="9" x2="31" y2="12" stroke="url(#lg)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="6" y1="9" x2="9" y2="12" stroke="url(#lg)" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <div class="logo-txt">Hielios</div>
+        <div class="logo-tag">Intelligence Platform</div>
+      </div>
+    </div>
+
+    <div class="ind-switch">
+      <button class="ind-btn active" data-ind="sw" onclick="switchIndustry('sw',this)"><span class="ind-emoji">💻</span> Software / QE</button>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-item active" data-page="overview" onclick="navTo('overview',this)"><span class="nav-ic ni-purple"><i data-lucide="layout-dashboard"></i></span> Overview</div>
+      <div class="nav-item" data-page="risks" onclick="navTo('risks',this)"><span class="nav-ic ni-red"><i data-lucide="triangle-alert"></i></span> Risk Intelligence</div>
+      <div class="nav-item" data-page="compliance" onclick="navTo('compliance',this)"><span class="nav-ic ni-green"><i data-lucide="shield-check"></i></span> Compliance &amp; Gaps</div>
+      <div class="nav-item" data-page="live" onclick="navTo('live',this)"><span class="nav-ic ni-cyan"><i data-lucide="activity"></i></span> Live Monitoring<span class="nav-badge" id="nav-alert-badge">3</span></div>
+      <div class="nav-item" data-page="signals" onclick="navTo('signals',this)"><span class="nav-ic ni-amber"><i data-lucide="radar"></i></span> Signal Sources</div>
+      <div class="nav-item" data-page="reports" onclick="navTo('reports',this)"><span class="nav-ic ni-blue"><i data-lucide="file-text"></i></span> Audit Reports</div>
+    </nav>
+
+    <div class="side-foot">
+      <div class="live-pill"><span class="live-dot"></span> <span id="foot-live">12 integrations live</span></div>
+      <div class="ver">v3.2.0 · build 4821</div>
+    </div>
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <div class="main-wrap">
+    <header class="topbar">
+      <div class="tb-left">
+        <span class="tb-emoji" id="tb-emoji">📊</span>
+        <div>
+          <div class="tb-title" id="tb-title">Overview</div>
+          <div class="tb-sub" id="tb-sub">Software / QE · Last sync 12s ago</div>
+        </div>
+      </div>
+      <div class="tb-right">
+        <div class="role-pill">
+          <span class="rp-label">Role</span>
+          <div id="role-sw" style="display:flex;gap:2px"></div>
+        </div>
+        <div class="bell"><i data-lucide="bell"></i><span class="bell-dot"></span></div>
+        <div class="avatar" id="avatar">QM</div>
+      </div>
+    </header>
+
+    <main class="content" id="content">
+      <!-- ============================================================= -->
+      <!-- ===================== SOFTWARE / QE ========================= -->
+      <!-- ============================================================= -->
+      <div class="industry-view active" id="ind-sw">
+
+        <!-- ---- SW OVERVIEW ---- -->
+        <div class="page active" id="sw-overview">
+          <div class="alert">
+            <div class="alert-ic"><i data-lucide="triangle-alert"></i></div>
+            <div class="alert-body">
+              <div class="alert-title">Checkout payment step — error rate spike</div>
+              <div class="alert-sub">Error rate: <b>0.8% → 6.2%</b> in last 11 min. Correlated with PR #1482. No test covers this path. <b>847 users affected.</b></div>
+              <div class="alert-btns">
+                <button class="btn btn-primary" onclick="toast('🧪 Generating tests for checkout payment path…')">Generate tests now</button>
+                <button class="btn" onclick="toast('📊 Assessing blast radius across 6 downstream services…')">Assess blast radius</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== QA MANAGER VIEW ===== -->
+          <div class="role-view active" id="sw-r-qa">
+            <div class="role-context"><i data-lucide="microscope"></i><span><b>QA Manager view</b> · test coverage, gaps, and quality risk across your flows</span></div>
+            <div class="grid-4">
+              <div class="mc mc-purple"><div class="mc-top"><div class="mc-ic"><i data-lucide="shield"></i></div><span class="mc-trend">↓ 4%</span></div><div class="mc-label">Overall coverage</div><div class="mc-val" data-live="coverage">58%</div></div>
+              <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="check-check"></i></div><span class="mc-trend">+23</span></div><div class="mc-label">Automated tests</div><div class="mc-val" data-live="total-tests">1,847</div></div>
+              <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="bug"></i></div><span class="mc-trend">+3</span></div><div class="mc-label">Escaped defects</div><div class="mc-val">11</div></div>
+              <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="clock"></i></div><span class="mc-trend">stale</span></div><div class="mc-label">Stale tests</div><div class="mc-val">214</div></div>
+            </div>
+            <div class="grid-2">
+              <div class="card">
+                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="target"></i></span><span class="ct-title">Risk-ranked flows</span></div><span class="b b-red">Live</span></div>
+                <div class="row"><div class="ri ri-red">93</div><div class="row-info"><div class="row-title">Checkout</div><div class="row-sub">72% of revenue sessions</div></div><div class="bar"><div class="bar-fill bf-red" style="width:93%"></div></div></div>
+                <div class="row"><div class="ri ri-amb">81</div><div class="row-info"><div class="row-title">Password reset</div><div class="row-sub">High support volume</div></div><div class="bar"><div class="bar-fill bf-amb" style="width:81%"></div></div></div>
+                <div class="row"><div class="ri ri-amb">77</div><div class="row-info"><div class="row-title">Admin billing</div><div class="row-sub">Revenue-impacting</div></div><div class="bar"><div class="bar-fill bf-amb" style="width:77%"></div></div></div>
+                <div class="row"><div class="ri ri-amb">68</div><div class="row-info"><div class="row-title">Guest checkout</div><div class="row-sub">No coverage</div></div><div class="bar"><div class="bar-fill bf-amb" style="width:68%"></div></div></div>
+                <div class="row"><div class="ri ri-grn">22</div><div class="row-info"><div class="row-title">Search</div><div class="row-sub">Well covered</div></div><div class="bar"><div class="bar-fill bf-grn" style="width:22%"></div></div></div>
+              </div>
+              <div class="card">
+                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="git-pull-request-closed"></i></span><span class="ct-title">Coverage gaps</span></div><span class="b b-amber">5 found</span></div>
+                <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Coupon validation</div><div class="row-sub">No tests</div></div><span class="b b-red">Missing</span></div>
+                <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Refund flow</div><div class="row-sub">No tests</div></div><span class="b b-red">Missing</span></div>
+                <div class="row"><div class="ri ri-amb"><i data-lucide="minus"></i></div><div class="row-info"><div class="row-title">Payment edge cases</div><div class="row-sub">3 of 9 covered</div></div><span class="b b-amber">Partial</span></div>
+                <div class="row"><div class="ri ri-amb"><i data-lucide="minus"></i></div><div class="row-info"><div class="row-title">Mobile checkout</div><div class="row-sub">Happy path only</div></div><span class="b b-amber">Partial</span></div>
+                <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Login / auth</div><div class="row-sub">Full coverage</div></div><span class="b b-green">Covered</span></div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="trending-up"></i></span><span class="ct-title">Coverage trend — 12 weeks</span></div><span class="b b-purple">Target 60%</span></div>
+              <div class="chart-wrap"><canvas id="ch-sw-trend"></canvas></div>
+            </div>
+            <div class="card">
+              <div class="sub-label"><i data-lucide="plug" style="width:14px"></i> Connected tools</div>
+              <div class="chips">
+                <span class="chip chip-live"><span class="chip-dot"></span>Jira</span>
+                <span class="chip chip-live"><span class="chip-dot"></span>GitHub</span>
+                <span class="chip chip-live"><span class="chip-dot"></span>Datadog</span>
+                <span class="chip chip-live"><span class="chip-dot"></span>TestRail</span>
+                <span class="chip chip-live"><span class="chip-dot"></span>Playwright</span>
+                <span class="chip chip-live"><span class="chip-dot"></span>Amplitude</span>
+                <span class="chip chip-warn"><span class="chip-dot"></span>Splunk · expiring</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== ENG MANAGER VIEW ===== -->
+          <div class="role-view" id="sw-r-em">
+            <div class="role-context"><i data-lucide="users-round"></i><span><b>Eng Manager view</b> · delivery velocity, defect load, and release readiness for your team</span></div>
+            <div class="grid-4">
+              <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="zap"></i></div><span class="mc-trend">+6 pts</span></div><div class="mc-label">Sprint velocity</div><div class="mc-val">84 pts</div></div>
+              <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="bug"></i></div><span class="mc-trend">+8</span></div><div class="mc-label">Open defects</div><div class="mc-val">43</div></div>
+              <div class="mc mc-purple"><div class="mc-top"><div class="mc-ic"><i data-lucide="git-pull-request"></i></div><span class="mc-trend">−3h</span></div><div class="mc-label">PR cycle time</div><div class="mc-val">18h</div></div>
+              <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="rocket"></i></div><span class="mc-trend">−25%</span></div><div class="mc-label">Release readiness</div><div class="mc-val" data-live="release">62%</div></div>
+            </div>
+            <div class="grid-2">
+              <div class="card">
+                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="bar-chart-2"></i></span><span class="ct-title">Defects by component — 90 days</span></div></div>
+                <div class="chart-wrap"><canvas id="ch-sw-def"></canvas></div>
+              </div>
+              <div class="card">
+                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="siren"></i></span><span class="ct-title">Release risk factors</span></div></div>
+                <div class="row"><div class="ri ri-red"><i data-lucide="git-merge"></i></div><div class="row-info"><div class="row-title">Payment service changed</div><div class="row-sub">PR #1482 merged · coverage not updated</div></div><span class="b b-red">High</span></div>
+                <div class="row"><div class="ri ri-amb"><i data-lucide="gauge"></i></div><div class="row-info"><div class="row-title">API latency up 40ms</div><div class="row-sub">Datadog · checkout endpoint · since Wed</div></div><span class="b b-amber">Medium</span></div>
+                <div class="row"><div class="ri ri-amb"><i data-lucide="ticket"></i></div><div class="row-info"><div class="row-title">3 Jira P1s open</div><div class="row-sub">All in checkout · unresolved</div></div><span class="b b-amber">Medium</span></div>
+                <div class="row"><div class="ri ri-grn"><i data-lucide="shield-check"></i></div><div class="row-info"><div class="row-title">Auth service stable</div><div class="row-sub">No defects in 14 days · 91% coverage</div></div><span class="b b-green">Low</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== VP ENG VIEW ===== -->
+          <div class="role-view" id="sw-r-vp">
+            <div class="role-context"><i data-lucide="briefcase"></i><span><b>VP Eng view</b> · release confidence, production health, and engineering ROI across the org</span></div>
+            <div class="grid-4">
+              <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="target"></i></div><span class="mc-trend">−25%</span></div><div class="mc-label">Release confidence</div><div class="mc-val">62%</div></div>
+              <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="siren"></i></div><span class="mc-trend">+2</span></div><div class="mc-label">Prod incidents</div><div class="mc-val">3</div></div>
+              <div class="mc mc-purple"><div class="mc-top"><div class="mc-ic"><i data-lucide="timer"></i></div><span class="mc-trend">tgt 3.8h</span></div><div class="mc-label">MTTR</div><div class="mc-val">4.2h</div></div>
+              <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="trending-up"></i></div><span class="mc-trend">saved</span></div><div class="mc-label">QA ROI this qtr</div><div class="mc-val">$142k</div></div>
+            </div>
+            <div class="card">
+              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="map"></i></span><span class="ct-title">Production flow coverage map</span></div><span class="b b-cyan">Live data</span></div>
+              <div class="cov"><div class="cov-info"><div class="cov-name">Checkout</div><div class="cov-sub">72% of prod sessions</div></div><div class="cov-bar"><div class="bar-fill bf-red" style="width:38%"></div></div><div class="row-pct">38%</div><span class="b b-red">Critical</span></div>
+              <div class="cov"><div class="cov-info"><div class="cov-name">Onboarding</div><div class="cov-sub">61% of new users</div></div><div class="cov-bar"><div class="bar-fill bf-amb" style="width:55%"></div></div><div class="row-pct">55%</div><span class="b b-amber">Review</span></div>
+              <div class="cov"><div class="cov-info"><div class="cov-name">Account settings</div><div class="cov-sub">48% of sessions</div></div><div class="cov-bar"><div class="bar-fill bf-grn" style="width:74%"></div></div><div class="row-pct">74%</div><span class="b b-green">Good</span></div>
+              <div class="cov"><div class="cov-info"><div class="cov-name">Search</div><div class="cov-sub">44% of sessions</div></div><div class="cov-bar"><div class="bar-fill bf-grn" style="width:88%"></div></div><div class="row-pct">88%</div><span class="b b-green">Strong</span></div>
+              <div class="cov"><div class="cov-info"><div class="cov-name">Admin billing</div><div class="cov-sub">12% of sessions</div></div><div class="cov-bar"><div class="bar-fill bf-red" style="width:29%"></div></div><div class="row-pct">29%</div><span class="b b-red">Critical</span></div>
+            </div>
+            <div class="card">
+              <div class="sub-label"><i data-lucide="plug" style="width:14px"></i> Integration health</div>
+              <div class="sig-grid">
+                <div class="sig-card live"><div class="sig-name">Jira</div><div class="sig-type">Issue tracking</div><div class="sig-val">2,341 issues</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+                <div class="sig-card live"><div class="sig-name">GitHub</div><div class="sig-type">Source control</div><div class="sig-val">847 PRs</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+                <div class="sig-card live"><div class="sig-name">Datadog</div><div class="sig-type">APM</div><div class="sig-val">1.2M spans</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+                <div class="sig-card live"><div class="sig-name">TestRail</div><div class="sig-type">Test mgmt</div><div class="sig-val">1,847 tests</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+                <div class="sig-card warn"><div class="sig-name">Splunk</div><div class="sig-type">Logs</div><div class="sig-val">Expiring 3 days</div><div class="sig-status"><span class="sig-sdot"></span>Warning</div></div>
+                <div class="sig-card off"><div class="sig-name">ServiceNow</div><div class="sig-type">ITSM</div><div class="sig-val">—</div><div class="sig-status"><span class="sig-sdot"></span>Not connected</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== PRODUCT MANAGER VIEW ===== -->
+          <div class="role-view" id="sw-r-pm">
+            <div class="role-context"><i data-lucide="layout-dashboard"></i><span><b>Product Manager view</b> · feature delivery, user impact, and quality signals that affect your roadmap</span></div>
+            <div class="grid-4">
+              <div class="mc mc-cyan"><div class="mc-top"><div class="mc-ic"><i data-lucide="package-check"></i></div><span class="mc-trend">sprint 42</span></div><div class="mc-label">Features shipped</div><div class="mc-val">7 / 9</div></div>
+              <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="trending-down"></i></div><span class="mc-trend">−4pt</span></div><div class="mc-label">Checkout conversion</div><div class="mc-val" data-live="pm-conv">71%</div></div>
+              <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="smile"></i></div><span class="mc-trend">−3</span></div><div class="mc-label">NPS score</div><div class="mc-val">42</div></div>
+              <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="bug"></i></div><span class="mc-trend">↑ high</span></div><div class="mc-label">Bugs blocking features</div><div class="mc-val">5</div></div>
+            </div>
+            <div class="grid-2">
+              <div class="card">
+                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="list-checks"></i></span><span class="ct-title">Sprint 42 feature status</span></div><span class="b b-amber">2 at risk</span></div>
+                <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Guest checkout flow</div><div class="row-sub">Shipped · 0 P1 defects</div></div><span class="b b-green">Done</span></div>
+                <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Search filters v2</div><div class="row-sub">Shipped · 88% test coverage</div></div><span class="b b-green">Done</span></div>
+                <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Account dashboard redesign</div><div class="row-sub">Shipped · QA signed off</div></div><span class="b b-green">Done</span></div>
+                <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Coupon code UX</div><div class="row-sub">Blocked · null-ref bug in cart · P1</div></div><span class="b b-red">Blocked</span></div>
+                <div class="row"><div class="ri ri-amb"><i data-lucide="clock"></i></div><div class="row-info"><div class="row-title">Refund self-service</div><div class="row-sub">In QA · 0% test coverage · at risk</div></div><span class="b b-amber">At risk</span></div>
+                <div class="row"><div class="ri ri-amb"><i data-lucide="git-pull-request"></i></div><div class="row-info"><div class="row-title">Payment method save</div><div class="row-sub">PR #1482 in review · untested</div></div><span class="b b-amber">In review</span></div>
+                <div style="margin-top:10px;display:flex;gap:8px">
+                  <button class="btn btn-sm" onclick="toast('📊 Opening sprint 42 delivery report…')">Sprint report</button>
+                  <button class="btn btn-sm" onclick="toast('⚠️ Escalating coupon block to Eng Manager…')">Escalate blocker</button>
+                </div>
+              </div>
+              <div class="card">
+                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="heart-handshake"></i></span><span class="ct-title">Quality → user metrics correlation</span></div></div>
+                <div class="cov"><div class="cov-info"><div class="cov-name">Checkout conversion</div><div class="cov-sub">Drops when error rate &gt; 1%</div></div><div class="cov-bar"><div class="bar-fill bf-red" style="width:71%"></div></div><div class="row-pct">71%</div><span class="b b-red">↓ 4pt</span></div>
+                <div class="cov"><div class="cov-info"><div class="cov-name">Payment success rate</div><div class="cov-sub">Correlated with PR #1482</div></div><div class="cov-bar"><div class="bar-fill bf-red" style="width:61%"></div></div><div class="row-pct">61%</div><span class="b b-red">Critical</span></div>
+                <div class="cov"><div class="cov-info"><div class="cov-name">Search engagement</div><div class="cov-sub">Stable · filters v2 positive</div></div><div class="cov-bar"><div class="bar-fill bf-grn" style="width:83%"></div></div><div class="row-pct">83%</div><span class="b b-green">Up 2pt</span></div>
+                <div class="cov"><div class="cov-info"><div class="cov-name">Guest checkout adopted</div><div class="cov-sub">New feature · 34% trial → complete</div></div><div class="cov-bar"><div class="bar-fill bf-amb" style="width:34%"></div></div><div class="row-pct">34%</div><span class="b b-amber">Growing</span></div>
+                <div style="margin-top:10px"><button class="btn btn-sm" onclick="toast('📈 Opening Amplitude dashboard for checkout funnel…')">Open Amplitude</button></div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="bar-chart-2"></i></span><span class="ct-title">Feature delivery velocity — last 8 sprints</span></div><span class="b b-purple">Story points</span></div>
+              <div class="chart-wrap"><canvas id="ch-pm-vel"></canvas></div>
+            </div>
+            <div class="card">
+              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="triangle-alert"></i></span><span class="ct-title">Quality risks to your Q4 roadmap</span></div><span class="b b-red">Action needed</span></div>
+              <div class="row"><div class="ri ri-red"><i data-lucide="package-x"></i></div><div class="row-info"><div class="row-title">v2.5.0 release confidence at 62%</div><div class="row-sub">Checkout must reach 65% coverage to ship — currently 38%</div></div><button class="btn btn-sm" onclick="toast('🛡 Requesting AI test generation for checkout…')">Generate tests</button></div>
+              <div class="row"><div class="ri ri-amb"><i data-lucide="calendar-x"></i></div><div class="row-info"><div class="row-title">Refund self-service may slip sprint</div><div class="row-sub">0% coverage · QA cannot sign off without tests</div></div><button class="btn btn-sm" onclick="toast('📋 Adding refund flow to QA backlog…')">Add to QA queue</button></div>
+              <div class="row"><div class="ri ri-amb"><i data-lucide="users"></i></div><div class="row-info"><div class="row-title">847 users hit payment errors today</div><div class="row-sub">NPS risk: each incident historically costs −2 NPS pts</div></div><button class="btn btn-sm" onclick="toast('📧 Drafting customer impact summary…')">Draft summary</button></div>
+            </div>
+          </div>
+
+          <!-- ===== RELEASE MANAGER VIEW ===== -->
+          <div class="role-view" id="sw-r-rm">
+            <div class="role-context"><i data-lucide="rocket"></i><span><b>Release Manager view</b> · gate status, deployment risk, and go/no-go decision for every release</span></div>
+            <div class="grid-4">
+              <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="target"></i></div><span class="mc-trend">−25%</span></div><div class="mc-label">Release confidence</div><div class="mc-val" data-live="release">62%</div></div>
+              <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="shield-x"></i></div><span class="mc-trend">blocking</span></div><div class="mc-label">Open blockers</div><div class="mc-val">3</div></div>
+              <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="calendar-clock"></i></div><span class="mc-trend">Friday</span></div><div class="mc-label">Days to release</div><div class="mc-val">3d</div></div>
+              <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="git-merge"></i></div><span class="mc-trend">high risk</span></div><div class="mc-label">Change risk score</div><div class="mc-val">74 / 100</div></div>
+            </div>
+            <div class="grid-2">
+              <div class="card">
+                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="check-square"></i></span><span class="ct-title">Release v2.5.0 — gate checklist</span></div><span class="b b-red" id="rm-gate-count">5 / 9 passed</span></div>
+                <div class="row" id="rm-g1" onclick="rmToggleGate('rm-g1','Test coverage ≥ 65%')" style="cursor:pointer"><div class="ri ri-red" id="rm-g1-ic"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Test coverage ≥ 65%</div><div class="row-sub">Current: 58% · Checkout: 38%</div></div><span class="b b-red" id="rm-g1-b">Failing</span></div>
+                <div class="row" id="rm-g2" onclick="rmToggleGate('rm-g2','Zero P1 defects')" style="cursor:pointer"><div class="ri ri-red" id="rm-g2-ic"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Zero P1 defects</div><div class="row-sub">3 open P1s in checkout</div></div><span class="b b-red" id="rm-g2-b">Failing</span></div>
+                <div class="row" id="rm-g3" onclick="rmToggleGate('rm-g3','All PRs reviewed')" style="cursor:pointer"><div class="ri ri-red" id="rm-g3-ic"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">All PRs reviewed</div><div class="row-sub">PR #1482 unreviewed · high risk score</div></div><span class="b b-red" id="rm-g3-b">Failing</span></div>
+                <div class="row" id="rm-g4" onclick="rmToggleGate('rm-g4','CI pipeline green')" style="cursor:pointer"><div class="ri ri-amb" id="rm-g4-ic"><i data-lucide="minus"></i></div><div class="row-info"><div class="row-title">CI pipeline green</div><div class="row-sub">2 flaky suites · intermittent failures</div></div><span class="b b-amber" id="rm-g4-b">Warning</span></div>
+                <div class="row" id="rm-g5" onclick="rmToggleGate('rm-g5','Regression suite passed')" style="cursor:pointer"><div class="ri ri-grn" id="rm-g5-ic"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Regression suite passed</div><div class="row-sub">Auth, Search, Cart · all green</div></div><span class="b b-green" id="rm-g5-b">Passed</span></div>
+                <div class="row" id="rm-g6" onclick="rmToggleGate('rm-g6','Security scan clean')" style="cursor:pointer"><div class="ri ri-grn" id="rm-g6-ic"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Security scan clean</div><div class="row-sub">Snyk · 0 critical vulnerabilities</div></div><span class="b b-green" id="rm-g6-b">Passed</span></div>
+                <div class="row" id="rm-g7" onclick="rmToggleGate('rm-g7','Staging smoke tests')" style="cursor:pointer"><div class="ri ri-grn" id="rm-g7-ic"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Staging smoke tests</div><div class="row-sub">47 / 47 passing on staging-v2.5.0</div></div><span class="b b-green" id="rm-g7-b">Passed</span></div>
+                <div class="row" id="rm-g8" onclick="rmToggleGate('rm-g8','Feature flags configured')" style="cursor:pointer"><div class="ri ri-grn" id="rm-g8-ic"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Feature flags configured</div><div class="row-sub">LaunchDarkly · 3 flags set for gradual rollout</div></div><span class="b b-green" id="rm-g8-b">Passed</span></div>
+                <div class="row" id="rm-g9" onclick="rmToggleGate('rm-g9','Rollback plan documented')" style="cursor:pointer"><div class="ri ri-grn" id="rm-g9-ic"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Rollback plan documented</div><div class="row-sub">Runbook updated · oncall briefed</div></div><span class="b b-green" id="rm-g9-b">Passed</span></div>
+                <div style="margin-top:12px;display:flex;gap:8px">
+                  <button class="btn" style="background:rgba(248,113,113,0.12);border-color:rgba(248,113,113,0.4);color:#F87171;font-weight:700" onclick="toast('🚫 Release v2.5.0 BLOCKED — 3 failing gates. Team notified.')">🚫 Block release</button>
+                  <button class="btn btn-primary" onclick="toast('✅ Release v2.5.0 GO decision submitted for approval')">Request go approval</button>
+                </div>
+              </div>
+              <div class="card">
+                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="activity"></i></span><span class="ct-title">Release confidence — trend</span></div><span class="b b-red">v2.5.0</span></div>
+                <div class="chart-wrap"><canvas id="ch-rm-conf"></canvas></div>
+                <div style="margin-top:14px">
+                  <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="git-merge"></i></span><span class="ct-title">Changes since last release</span></div></div>
+                  <div class="row"><div class="ri ri-red"><i data-lucide="flame"></i></div><div class="row-info"><div class="row-title">PR #1482 — payment-service/charge.ts</div><div class="row-sub">Risk score 93 · no tests added · high blast radius</div></div><span class="b b-red">High</span></div>
+                  <div class="row"><div class="ri ri-amb"><i data-lucide="git-pull-request"></i></div><div class="row-info"><div class="row-title">PR #1479 — cart/coupon.ts</div><div class="row-sub">Risk score 72 · 3 new tests added</div></div><span class="b b-amber">Medium</span></div>
+                  <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">PR #1477 — search/filters.ts</div><div class="row-sub">Risk score 28 · full coverage</div></div><span class="b b-green">Low</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="grid-2">
+              <div class="card">
+                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="history"></i></span><span class="ct-title">Recent release history</span></div></div>
+                <div class="row"><div class="ri ri-grn"><i data-lucide="rocket"></i></div><div class="row-info"><div class="row-title">v2.4.1 — Nov 8</div><div class="row-sub">Confidence 82% · 0 incidents post-release</div></div><span class="b b-green">Clean</span></div>
+                <div class="row"><div class="ri ri-amb"><i data-lucide="alert-triangle"></i></div><div class="row-info"><div class="row-title">v2.4.0 — Oct 25</div><div class="row-sub">Confidence 67% · 1 hotfix within 4h</div></div><span class="b b-amber">Hotfix</span></div>
+                <div class="row"><div class="ri ri-red"><i data-lucide="rotate-ccw"></i></div><div class="row-info"><div class="row-title">v2.3.9 — Oct 11</div><div class="row-sub">Confidence 51% · rolled back in 2h</div></div><span class="b b-red">Rolled back</span></div>
+                <div class="row"><div class="ri ri-grn"><i data-lucide="rocket"></i></div><div class="row-info"><div class="row-title">v2.3.8 — Sep 27</div><div class="row-sub">Confidence 79% · clean deploy</div></div><span class="b b-green">Clean</span></div>
+              </div>
+              <div class="card">
+                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="send"></i></span><span class="ct-title">Rollout strategy — v2.5.0</span></div></div>
+                <div class="cov"><div class="cov-info"><div class="cov-name">Canary (1%)</div><div class="cov-sub">Internal + beta users</div></div><div class="cov-bar"><div class="bar-fill bf-grn" style="width:100%"></div></div><div class="row-pct">Ready</div><span class="b b-green">Set</span></div>
+                <div class="cov"><div class="cov-info"><div class="cov-name">10% rollout</div><div class="cov-sub">After 2h canary clean</div></div><div class="cov-bar"><div class="bar-fill bf-amb" style="width:60%"></div></div><div class="row-pct">Pending</div><span class="b b-amber">Gates</span></div>
+                <div class="cov"><div class="cov-info"><div class="cov-name">50% rollout</div><div class="cov-sub">Auto-promote if error rate &lt; 1%</div></div><div class="cov-bar"><div class="bar-fill bf-amb" style="width:30%"></div></div><div class="row-pct">Pending</div><span class="b b-amber">Gates</span></div>
+                <div class="cov"><div class="cov-info"><div class="cov-name">100% rollout</div><div class="cov-sub">Manual approve required</div></div><div class="cov-bar"><div class="bar-fill bf-red" style="width:5%"></div></div><div class="row-pct">Blocked</div><span class="b b-red">Blocked</span></div>
+                <div style="margin-top:10px;display:flex;gap:8px">
+                  <button class="btn btn-sm" onclick="toast('🚀 Starting 1% canary deploy to staging…')">Start canary</button>
+                  <button class="btn btn-sm" onclick="toast('📋 Opening deployment runbook v2.5.0…')">View runbook</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== EXECUTIVE VIEW ===== -->
+          <div class="role-view" id="sw-r-exec">
+            <div class="role-context"><i data-lucide="crown"></i><span><b>Executive view</b> · business-level signal: risk, customer impact, and value delivered</span></div>
+            <div class="rag-grid">
+              <div class="rag rag-r"><div class="rag-hdr"><div class="rag-ico"><i data-lucide="target"></i></div><div class="rag-t">Release confidence</div></div><div class="rag-s">62%</div><div class="rag-u">↓ 25 pts this week</div></div>
+              <div class="rag rag-a"><div class="rag-hdr"><div class="rag-ico"><i data-lucide="users"></i></div><div class="rag-t">Customer impact risk</div></div><div class="rag-s">Medium</div><div class="rag-u">3 prod incidents open</div></div>
+              <div class="rag rag-g"><div class="rag-hdr"><div class="rag-ico"><i data-lucide="trending-up"></i></div><div class="rag-t">QA efficiency gain</div></div><div class="rag-s">+18%</div><div class="rag-u">vs same quarter last year</div></div>
+            </div>
+            <div class="card">
+              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="siren"></i></span><span class="ct-title">Top 5 risks this week</span></div></div>
+              <div class="row"><div class="ri ri-red"><i data-lucide="shopping-cart"></i></div><div class="row-info"><div class="row-title">Checkout at 38% test coverage</div><div class="row-sub">72% of revenue sessions · 3 open P1 defects</div></div><span class="b b-red">Revenue</span></div>
+              <div class="row"><div class="ri ri-amb"><i data-lucide="gauge"></i></div><div class="row-info"><div class="row-title">Payment API latency degraded</div><div class="row-sub">+40ms since Wednesday · no rollback planned</div></div><span class="b b-amber">Perf</span></div>
+              <div class="row"><div class="ri ri-amb"><i data-lucide="rotate-ccw"></i></div><div class="row-info"><div class="row-title">Refund flow untested</div><div class="row-sub">4 customer support tickets this week</div></div><span class="b b-amber">CX</span></div>
+              <div class="row"><div class="ri ri-amb"><i data-lucide="key"></i></div><div class="row-info"><div class="row-title">Splunk auth expiring in 3 days</div><div class="row-sub">Risk signal visibility will go dark</div></div><span class="b b-amber">Ops</span></div>
+              <div class="row"><div class="ri ri-grn"><i data-lucide="trash-2"></i></div><div class="row-info"><div class="row-title">214 stale tests in CI pipeline</div><div class="row-sub">~28 min overhead per run · addressable</div></div><span class="b b-green">Efficiency</span></div>
+            </div>
+            <div class="grid-4">
+              <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="shield-off"></i></div><span class="mc-trend">Q3</span></div><div class="mc-label">Defects prevented</div><div class="mc-val">87</div></div>
+              <div class="mc mc-purple"><div class="mc-top"><div class="mc-ic"><i data-lucide="piggy-bank"></i></div><span class="mc-trend">saved</span></div><div class="mc-label">Cost avoided</div><div class="mc-val">$142k</div></div>
+              <div class="mc mc-cyan"><div class="mc-top"><div class="mc-ic"><i data-lucide="timer"></i></div><span class="mc-trend">from 3d</span></div><div class="mc-label">Regression time</div><div class="mc-val">2.1h</div></div>
+              <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="line-chart"></i></div><span class="mc-trend">6mo</span></div><div class="mc-label">Coverage trend</div><div class="mc-val">+12%</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---- SW RISKS ---- -->
+        <div class="page" id="sw-risks">
+          <div class="grid-4">
+            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="triangle-alert"></i></div><span class="mc-trend">active</span></div><div class="mc-label">Active risk signals</div><div class="mc-val">7</div></div>
+            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="flame"></i></div><span class="mc-trend">93/100</span></div><div class="mc-label">Highest risk flow</div><div class="mc-val" style="font-size:20px">Checkout</div></div>
+            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="octagon-alert"></i></div><span class="mc-trend">blocking</span></div><div class="mc-label">Unmitigated P1s</div><div class="mc-val" data-live="p1-open">3</div></div>
+            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="git-merge"></i></div><span class="mc-trend">unverified</span></div><div class="mc-label">Risky PRs merged</div><div class="mc-val">2</div></div>
+          </div>
+          <div class="card">
+            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="network"></i></span><span class="ct-title">Cross-correlated risk signals</span></div><span class="b b-red">Live</span></div>
+            <div class="row"><div class="ri ri-red"><i data-lucide="server-crash"></i></div><div class="row-info"><div class="row-title">PaymentService returning 502</div><div class="row-sub">Datadog · 6.2% error rate · checkout path</div></div><span class="b b-red">Live</span></div>
+            <div class="row"><div class="ri ri-red"><i data-lucide="git-pull-request"></i></div><div class="row-info"><div class="row-title">PR #1482 merged without tests</div><div class="row-sub">GitHub · payment-service/charge.ts</div></div><span class="b b-red">Unverified</span></div>
+            <div class="row"><div class="ri ri-amb"><i data-lucide="ticket"></i></div><div class="row-info"><div class="row-title">3 Jira P1s open in checkout</div><div class="row-sub">2 with no assignee</div></div><span class="b b-amber">Blocking</span></div>
+            <div class="row"><div class="ri ri-amb"><i data-lucide="gauge"></i></div><div class="row-info"><div class="row-title">API latency degraded</div><div class="row-sub">Datadog · P95 +40ms since Wed</div></div><span class="b b-amber">Degraded</span></div>
+            <div class="row"><div class="ri ri-amb"><i data-lucide="key-round"></i></div><div class="row-info"><div class="row-title">Splunk auth credential expiring</div><div class="row-sub">3 days remaining</div></div><span class="b b-amber">Warn</span></div>
+            <div class="row"><div class="ri ri-grn"><i data-lucide="shield-check"></i></div><div class="row-info"><div class="row-title">Auth service healthy</div><div class="row-sub">No anomalies detected</div></div><span class="b b-green">Healthy</span></div>
+          </div>
+        </div>
+
+        <!-- ---- SW COMPLIANCE ---- -->
+        <div class="page" id="sw-compliance">
+          <div class="qhero">
+            <div class="qh-score"><div class="qh-num">42</div><div class="qh-lbl">Quality score / 100</div></div>
+            <div class="qh-stats">
+              <div class="qh-stat"><div class="qh-stat-num" style="color:var(--red)">3</div><div class="qh-stat-lbl">Critical</div></div>
+              <div class="qh-stat"><div class="qh-stat-num" style="color:var(--amber)">2</div><div class="qh-stat-lbl">Medium</div></div>
+              <div class="qh-stat"><div class="qh-stat-num" style="color:var(--amber)">214</div><div class="qh-stat-lbl">Stale</div></div>
+              <div class="qh-stat"><div class="qh-stat-num" style="color:var(--green)">1</div><div class="qh-stat-lbl">Healthy</div></div>
+            </div>
+            <button class="btn btn-primary" onclick="toast('📄 Exporting quality report…')">Export Report</button>
+          </div>
+          <div class="card">
+            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="scale"></i></span><span class="ct-title">Coverage vs production weight</span></div></div>
+            <div class="cov"><div class="cov-info"><div class="cov-name">Checkout</div><div class="cov-sub">72% of revenue</div></div><div class="cov-bar"><div class="bar-fill bf-red" style="width:38%"></div></div><div class="row-pct">38%</div><span class="b b-red">Critical</span></div>
+            <div class="cov"><div class="cov-info"><div class="cov-name">Guest checkout</div><div class="cov-sub">High traffic</div></div><div class="cov-bar"><div class="bar-fill bf-red" style="width:4%"></div></div><div class="row-pct">0%</div><span class="b b-red">Missing</span></div>
+            <div class="cov"><div class="cov-info"><div class="cov-name">Search</div><div class="cov-sub">Frequent use</div></div><div class="cov-bar"><div class="bar-fill bf-grn" style="width:88%"></div></div><div class="row-pct">88%</div><span class="b b-green">Strong</span></div>
+            <div class="cov"><div class="cov-info"><div class="cov-name">Account settings</div><div class="cov-sub">Moderate</div></div><div class="cov-bar"><div class="bar-fill bf-grn" style="width:74%"></div></div><div class="row-pct">74%</div><span class="b b-green">Good</span></div>
+            <div class="cov"><div class="cov-info"><div class="cov-name">Admin billing</div><div class="cov-sub">Revenue-impacting</div></div><div class="cov-bar"><div class="bar-fill bf-red" style="width:29%"></div></div><div class="row-pct">29%</div><span class="b b-red">Critical</span></div>
+            <div class="cov"><div class="cov-info"><div class="cov-name">Refund flow</div><div class="cov-sub">Compliance-relevant</div></div><div class="cov-bar"><div class="bar-fill bf-red" style="width:4%"></div></div><div class="row-pct">0%</div><span class="b b-red">Missing</span></div>
+          </div>
+          <div class="grid-2">
+            <div class="card">
+              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="octagon-alert"></i></span><span class="ct-title">Critical gaps</span></div><span class="b b-red">3</span></div>
+              <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Coupon validation</div><div class="row-sub">No tests · revenue path</div></div></div>
+              <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Refund flow</div><div class="row-sub">No tests · compliance</div></div></div>
+              <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Payment error handling</div><div class="row-sub">PR #1482 uncovered</div></div></div>
+            </div>
+            <div class="card">
+              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="sparkles"></i></span><span class="ct-title">Optimization opportunities</span></div></div>
+              <div class="row"><div class="ri ri-amb"><i data-lucide="copy"></i></div><div class="row-info"><div class="row-title">67 duplicate tests</div><div class="row-sub">Redundant assertions</div></div></div>
+              <div class="row"><div class="ri ri-amb"><i data-lucide="clock"></i></div><div class="row-info"><div class="row-title">214 stale tests</div><div class="row-sub">Not run in 90+ days</div></div></div>
+              <div class="row"><div class="ri ri-amb"><i data-lucide="trending-down"></i></div><div class="row-info"><div class="row-title">27% over-invested</div><div class="row-sub">Low-risk areas over-tested</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---- SW LIVE ---- -->
+        <div class="page" id="sw-live">
+          <div class="grid-4">
+            <div class="mc mc-cyan"><div class="mc-top"><div class="mc-ic"><i data-lucide="users"></i></div><span class="mc-trend">live</span></div><div class="mc-label">Active sessions</div><div class="mc-val" id="sw-sess">14,382</div></div>
+            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="trending-up"></i></div><span class="mc-trend">spike</span></div><div class="mc-label">Payment error rate</div><div class="mc-val" data-live="payment-error">0.8%</div></div>
+            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="gauge"></i></div><span class="mc-trend">+40ms</span></div><div class="mc-label">API latency P95</div><div class="mc-val" data-live="api-latency">298ms</div></div>
+            <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="route"></i></div><span class="mc-trend">tracked</span></div><div class="mc-label">Unique paths</div><div class="mc-val">1,247</div></div>
+          </div>
+          <div class="card">
+            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="git-fork"></i></span><span class="ct-title">Checkout flow — live funnel</span></div><span class="b b-red">Drop-off alert</span></div>
+            <div class="flow">
+              <div class="flow-node"><div class="fn-box fn-ok">Cart</div><div class="fn-pct" style="color:var(--green)">100%</div></div>
+              <span class="fn-arrow">→</span>
+              <div class="flow-node"><div class="fn-box fn-ok">Login</div><div class="fn-pct" style="color:var(--green)">91%</div></div>
+              <span class="fn-arrow">→</span>
+              <div class="flow-node"><div class="fn-box fn-ok">Shipping</div><div class="fn-pct" style="color:var(--green)">78%</div></div>
+              <span class="fn-arrow">→</span>
+              <div class="flow-node" id="fn-payment"><div class="fn-box fn-ok">Payment</div><div class="fn-pct" style="color:var(--green)">76%</div></div>
+              <span class="fn-arrow">→</span>
+              <div class="flow-node" id="fn-review"><div class="fn-box fn-ok">Review</div><div class="fn-pct" style="color:var(--green)">73%</div></div>
+              <span class="fn-arrow">→</span>
+              <div class="flow-node" id="fn-confirm"><div class="fn-box fn-ok">Confirm</div><div class="fn-pct" style="color:var(--green)">71%</div></div>
+            </div>
+            <div class="flow-note"><i data-lucide="trending-down" style="width:15px"></i> Payment drop-off spiked: 22% → 48%</div>
+          </div>
+          <div class="card">
+            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="rss"></i></span><span class="ct-title">Real-time error feed</span></div><span class="b b-red">Live</span></div>
+            <div class="efeed-row"><span class="ef-time">2m</span><span class="ef-dot ef-red"></span><div class="ef-info"><div class="ef-title">PaymentService 502 Bad Gateway</div><div class="ef-meta">checkout · 847 events</div></div><button class="btn btn-sm" onclick="toast('➕ Added PaymentService 502 to regression suite')">Add to regression</button></div>
+            <div class="efeed-row"><span class="ef-time">8m</span><span class="ef-dot ef-red"></span><div class="ef-info"><div class="ef-title">Stripe webhook timeout</div><div class="ef-meta">payments · 112 events</div></div><button class="btn btn-sm" onclick="toast('➕ Added Stripe webhook timeout to regression suite')">Add to regression</button></div>
+            <div class="efeed-row"><span class="ef-time">34m</span><span class="ef-dot ef-amb"></span><div class="ef-info"><div class="ef-title">Coupon null reference</div><div class="ef-meta">cart · 23 events</div></div><button class="btn btn-sm" onclick="toast('➕ Added coupon null ref to regression suite')">Add to regression</button></div>
+            <div class="efeed-row"><span class="ef-time">58m</span><span class="ef-dot ef-amb"></span><div class="ef-info"><div class="ef-title">Guest token expiry</div><div class="ef-meta">auth · 9 events</div></div></div>
+            <div class="efeed-row"><span class="ef-time">2h</span><span class="ef-dot ef-grn"></span><div class="ef-info"><div class="ef-title">Search timeout — resolved</div><div class="ef-meta">search · auto-recovered</div></div></div>
+          </div>
+        </div>
+
+        <!-- ---- SW SIGNALS ---- -->
+        <div class="page" id="sw-signals">
+          <div class="sig-header">
+            <div class="sub-label" style="margin-bottom:0"><i data-lucide="radar" style="width:14px"></i> Connected signal sources — 7 active</div>
+            <button class="btn btn-primary btn-sm" onclick="openWizard()"><i data-lucide="plus" style="width:14px;vertical-align:-2px"></i> Connect new source</button>
+          </div>
+          <div class="sig-grid">
+            <div class="sig-card live"><div class="sig-name">Jira</div><div class="sig-type">Issue tracking</div><div class="sig-val">3 P1s · 47 open</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+            <div class="sig-card live"><div class="sig-name">GitHub</div><div class="sig-type">Source control</div><div class="sig-val">PR #1482 flagged</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+            <div class="sig-card live"><div class="sig-name">Datadog</div><div class="sig-type">Observability</div><div class="sig-val">6.2% error rate</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+            <div class="sig-card live"><div class="sig-name">TestRail</div><div class="sig-type">Test management</div><div class="sig-val">1,847 tests</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+            <div class="sig-card live"><div class="sig-name">Playwright</div><div class="sig-type">E2E automation</div><div class="sig-val">CI green · 94%</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+            <div class="sig-card live"><div class="sig-name">Amplitude</div><div class="sig-type">Product analytics</div><div class="sig-val">14.3k sessions</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
+            <div class="sig-card warn"><div class="sig-name">Splunk</div><div class="sig-type">Log aggregation</div><div class="sig-val">Auth expiring 3 days</div><div class="sig-status"><span class="sig-sdot"></span>Warning</div></div>
+            <div class="sig-card off"><div class="sig-name">New Relic</div><div class="sig-type">APM</div><div class="sig-val">—</div><div class="sig-status"><span class="sig-sdot"></span>Not connected</div></div>
+          </div>
+        </div>
+
+        <!-- ---- SW REPORTS ---- -->
+        <div class="page" id="sw-reports">
+          <div class="card">
+            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="file-text"></i></span><span class="ct-title">Audit reports</span></div><button class="btn btn-primary btn-sm" onclick="toast('📝 Creating new audit report…')">New report</button></div>
+            <div class="rep-row"><div class="rep-ic" style="background:var(--red-bg);color:var(--red)"><i data-lucide="file-warning"></i></div><div class="row-info"><div class="row-title">Quality Audit — Sprint 42</div><div class="row-sub">Score 42/100 · Generated today</div></div><span class="b b-red">42/100</span><button class="btn btn-sm" onclick="toast('👁 Opening Quality Audit — Sprint 42')">View</button></div>
+            <div class="rep-row"><div class="rep-ic" style="background:var(--amber-bg);color:var(--amber)"><i data-lucide="file-check"></i></div><div class="row-info"><div class="row-title">Release Readiness — v2.4.1</div><div class="row-sub">62% confidence · 3 days ago</div></div><span class="b b-amber">62%</span><button class="btn btn-sm" onclick="toast('👁 Opening Release Readiness — v2.4.1')">View</button></div>
+            <div class="rep-row"><div class="rep-ic" style="background:var(--green-bg);color:var(--green)"><i data-lucide="file-check-2"></i></div><div class="row-info"><div class="row-title">Monthly Quality Review — Oct</div><div class="row-sub">Improved 38 → 54 · 14 days ago</div></div><span class="b b-green">Improved</span><button class="btn btn-sm" onclick="toast('👁 Opening Monthly Quality Review — Oct')">View</button></div>
+          </div>
+        </div>
+      </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ===== DEMO CONTROLLER ===== -->
+<div id="demoBar" style="position:fixed;top:0;left:0;right:0;z-index:500;background:linear-gradient(90deg,#0D1117,#1C2333);border-bottom:1px solid #30363D;padding:8px 20px;display:flex;align-items:center;gap:12px;font-family:var(--f);font-size:12px;transform:translateY(-100%);transition:transform .3s">
+  <div style="display:flex;align-items:center;gap:7px;font-weight:700;color:#7C6FE0;flex-shrink:0">
+    <svg width="16" height="16" viewBox="0 0 40 40" fill="none"><defs><linearGradient id="lg2" x1="0" y1="0" x2="40" y2="40"><stop offset="0" stop-color="#7C6FE0"/><stop offset="1" stop-color="#22D3EE"/></linearGradient></defs><ellipse cx="20" cy="20" rx="17" ry="11" stroke="url(#lg2)" stroke-width="2.2" fill="none"/><circle cx="20" cy="20" r="5.5" fill="url(#lg2)"/><circle cx="20" cy="20" r="2.2" fill="#0D1117"/></svg>
+    Demo Mode
+  </div>
+  <div style="width:1px;height:20px;background:#30363D"></div>
+  <div style="color:#8B949E;flex-shrink:0">Fire scenario:</div>
+  <button onclick="triggerScenario('payment-error-spike')" style="font-family:var(--f);font-size:11px;font-weight:600;padding:5px 12px;border-radius:7px;border:1px solid rgba(248,113,113,0.4);background:rgba(248,113,113,0.1);color:#F87171;cursor:pointer">⚡ Payment error spike</button>
+  <button onclick="triggerScenario('pr-merged-no-tests')" style="font-family:var(--f);font-size:11px;font-weight:600;padding:5px 12px;border-radius:7px;border:1px solid rgba(251,191,36,0.4);background:rgba(251,191,36,0.1);color:#FBBF24;cursor:pointer">⚠️ PR merged no tests</button>
+  <button onclick="triggerScenario('generate-tests')" style="font-family:var(--f);font-size:11px;font-weight:600;padding:5px 12px;border-radius:7px;border:1px solid rgba(52,211,153,0.4);background:rgba(52,211,153,0.1);color:#34D399;cursor:pointer">🧪 AI generates tests</button>
+  <button onclick="triggerScenario('release-blocked')" style="font-family:var(--f);font-size:11px;font-weight:600;padding:5px 12px;border-radius:7px;border:1px solid rgba(239,68,68,0.5);background:rgba(239,68,68,0.12);color:#EF4444;cursor:pointer">🚫 Release blocked</button>
+  <button onclick="triggerScenario('reset')" style="font-family:var(--f);font-size:11px;font-weight:600;padding:5px 12px;border-radius:7px;border:1px solid #30363D;background:#1C2333;color:#8B949E;cursor:pointer">↺ Reset</button>
+  <div style="flex:1"></div>
+  <div id="demoWsStatus" style="display:flex;align-items:center;gap:6px;color:#6E7681;font-size:11px">
+    <span id="demoWsDot" style="width:7px;height:7px;border-radius:50%;background:#6E7681;display:inline-block"></span>
+    <span id="demoWsLabel">Connecting…</span>
+  </div>
+  <button onclick="hideDemoBar()" style="font-family:var(--f);font-size:11px;padding:4px 10px;border-radius:7px;border:1px solid #30363D;background:transparent;color:#6E7681;cursor:pointer">Hide</button>
+</div>
+<button id="demoBarToggle" onclick="showDemoBar()" style="position:fixed;top:8px;left:50%;transform:translateX(-50%);z-index:499;font-family:var(--f);font-size:11px;font-weight:700;padding:5px 14px;border-radius:0 0 9px 9px;border:1px solid #30363D;border-top:none;background:#161B22;color:#7C6FE0;cursor:pointer;display:none">▼ Demo controls</button>
+
+<!-- ===== AI CHAT ===== -->
+<button class="ai-toggle" onclick="toggleAI()" title="Hielios AI"><i data-lucide="message-square"></i></button>
+<div class="ai-panel" id="aiPanel">
+  <div class="ai-head">
+    <div class="ai-head-ic"><i data-lucide="brain"></i></div>
+    <div class="ai-head-info"><div class="ai-head-title">Hielios AI</div><div class="ai-head-status"><span class="live-dot"></span> Analyzing your stack</div></div>
+    <button class="ai-x" onclick="toggleAI()"><i data-lucide="x"></i></button>
+  </div>
+  <div class="ai-msgs" id="aiMsgs"></div>
+  <div class="ai-chips" id="aiChips"></div>
+  <div class="ai-input-row">
+    <input class="ai-input" id="aiInput" placeholder="Ask about your risks…" onkeydown="if(event.key==='Enter')aiSend()">
+    <button class="ai-send" onclick="aiSend()"><i data-lucide="send"></i></button>
+  </div>
+</div>
+
+<!-- ===== CONNECT SOURCE WIZARD ===== -->
+<div class="wiz-overlay" id="wizOverlay" onclick="if(event.target===this)closeWizard()">
+  <div class="wiz">
+    <div class="wiz-head">
+      <div class="wiz-head-ic"><i data-lucide="radar"></i></div>
+      <div class="wiz-head-info">
+        <div class="wiz-head-title">Connect a signal source</div>
+        <div class="wiz-head-sub" id="wizSub">Software / QE · integrate a new data source</div>
+      </div>
+      <button class="wiz-x" onclick="closeWizard()"><i data-lucide="x"></i></button>
+    </div>
+    <div class="wiz-steps" id="wizSteps">
+      <div class="wiz-step active"><span class="wiz-step-dot">1</span><span class="wiz-step-lbl">Source</span></div>
+      <span class="wiz-step-line"></span>
+      <div class="wiz-step"><span class="wiz-step-dot">2</span><span class="wiz-step-lbl">Connect</span></div>
+      <span class="wiz-step-line"></span>
+      <div class="wiz-step"><span class="wiz-step-dot">3</span><span class="wiz-step-lbl">Signals</span></div>
+      <span class="wiz-step-line"></span>
+      <div class="wiz-step"><span class="wiz-step-dot">4</span><span class="wiz-step-lbl">Review</span></div>
+    </div>
+    <div class="wiz-body" id="wizBody"></div>
+    <div class="wiz-foot">
+      <button class="btn" id="wizBack" onclick="wizardBack()">Back</button>
+      <div class="wiz-foot-spacer"></div>
+      <button class="btn btn-primary" id="wizNext" onclick="wizardNext()">Continue</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+/* ===================== STATE ===================== */
+var curInd = 'sw';
+var pageTitles = {overview:'Overview',risks:'Risk Intelligence',compliance:'Compliance & Gaps',live:'Live Monitoring',signals:'Signal Sources',reports:'Audit Reports'};
+var pageEmojis = {overview:'📊',risks:'⚠️',compliance:'🛡️',live:'⚡',signals:'📡',reports:'📋'};
+
+var INDUSTRY = {
+  sw:{name:'Software / QE', sub:'Software / QE', live:'12 integrations live', badge:'3',
+      roles:['QA Manager','Eng Manager','VP Eng','Executive','Product Manager','Release Manager'], initials:['QM','EM','VP','EX','PM','RM']},
+};
+
+var curRoleIdx = 0;
+
+/* ===================== INDUSTRY / NAV ===================== */
+function switchIndustry(ind, btn){
+  curInd = ind;
+  document.querySelectorAll('.ind-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  document.querySelectorAll('.industry-view').forEach(function(v){v.classList.remove('active')});
+  document.getElementById('ind-'+ind).classList.add('active');
+  // reset to overview page
+  var view = document.getElementById('ind-'+ind);
+  view.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+  document.getElementById(ind+'-overview').classList.add('active');
+  // reset nav
+  document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active')});
+  document.querySelector('.nav-item[data-page="overview"]').classList.add('active');
+  // topbar
+  document.getElementById('tb-emoji').textContent = pageEmojis.overview;
+  document.getElementById('tb-title').textContent = pageTitles.overview;
+  updateSub();
+  // foot + badge
+  document.getElementById('foot-live').textContent = INDUSTRY[ind].live;
+  document.getElementById('nav-alert-badge').textContent = INDUSTRY[ind].badge;
+  curRoleIdx = 0;
+  renderRoles();
+  applyRoleView();
+  initAI();
+  lucide.createIcons();
+  if(ind==='sw') setTimeout(drawSWChart,200);
+}
+
+function navTo(page, btn){
+  var view = document.getElementById('ind-'+curInd);
+  view.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+  var target = document.getElementById(curInd+'-'+page);
+  if(target) target.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active')});
+  btn.classList.add('active');
+  document.getElementById('tb-emoji').textContent = pageEmojis[page];
+  document.getElementById('tb-title').textContent = pageTitles[page];
+  updateSub();
+  lucide.createIcons();
+  if(curInd==='sw' && page==='overview') applyRoleView();
+}
+
+function updateSub(){
+  document.getElementById('tb-sub').textContent = INDUSTRY[curInd].sub + ' · Last sync 12s ago';
+}
+
+/* ===================== ROLES ===================== */
+// Per-industry role view keys, aligned to INDUSTRY[ind].roles order.
+var ROLE_VIEWS = {
+  sw:['qa','em','vp','exec','pm','rm']
+};
+var ROLE_CHARTS = {
+  'sw-qa':function(){drawSWChart()},
+  'sw-em':function(){drawDefChart()},
+  'sw-pm':function(){drawPmVelChart()},
+  'sw-rm':function(){drawRmConfChart()}
+};
+
+function switchRole(idx, btn){
+  curRoleIdx = idx;
+  document.querySelectorAll('#role-sw .role-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  document.getElementById('avatar').textContent = INDUSTRY[curInd].initials[idx];
+  applyRoleView();
+}
+
+// Toggle the role-specific Overview layout for the active industry.
+function applyRoleView(){
+  var keys = ROLE_VIEWS[curInd];
+  if(!keys) return;
+  var key = keys[curRoleIdx] || keys[0];
+  keys.forEach(function(k){
+    var el = document.getElementById(curInd+'-r-'+k);
+    if(el) el.classList.toggle('active', k===key);
+  });
+  var draw = ROLE_CHARTS[curInd+'-'+key];
+  if(draw) setTimeout(draw, 80);
+}
+
+function renderRoles(){
+  var cont = document.getElementById('role-sw');
+  cont.innerHTML = '';
+  INDUSTRY[curInd].roles.forEach(function(r, i){
+    var b = document.createElement('button');
+    b.className = 'role-btn' + (i===curRoleIdx?' active':'');
+    b.textContent = r;
+    b.onclick = function(){ switchRole(i, b); };
+    cont.appendChild(b);
+  });
+  document.getElementById('avatar').textContent = INDUSTRY[curInd].initials[curRoleIdx];
+}
+
+/* ===================== AI CHAT ===================== */
+var AI = {
+  sw:{
+    greeting:"Hi 👋 I'm watching your engineering stack in real time. Your biggest risk right now is checkout — 72% of revenue sessions, only 38% test coverage, and a live 502 error from PR #1482. What would you like to investigate?",
+    chips:["Why did release confidence drop?","Generate tests for checkout","What is PR #1482 blast radius?","Am I ready to release Friday?"],
+    name:"engineering",
+    responses:{
+      "Why did release confidence drop?":"Release confidence fell from **87% → 62%** this week. Root causes:\n1. PR #1482 merged Thursday — payment service changed with no test updates.\n2. API latency on checkout up 40ms since Wednesday.\n3. 3 open P1s in Jira, all in checkout, no assignee on 2.\n\n**Recommendation:** Block Friday release. 4 tests needed to reach minimum 65% coverage.",
+      "Generate tests for checkout":"Generating 6 Playwright tests from production error patterns:\n✅ **TC-001**: PaymentService 502 retry + fallback.\n✅ **TC-002**: Stripe webhook timeout handling.\n✅ **TC-003**: Guest checkout token expiry.\n✅ **TC-004**: Coupon null reference.\n✅ **TC-005**: Mobile checkout happy path.\n✅ **TC-006**: Concurrent session conflict.\n\nReady to push to `/tests/checkout/`",
+      "What is PR #1482 blast radius?":"PR #1482 modified `payment-service/charge.ts`. Blast radius:\n⚠️ 6 downstream services affected.\n❌ 3 of 6 have zero coverage for changed paths.\n💰 Checkout (72% of sessions) is highest risk.\n\nSpecific gaps:\n• PaymentService.charge() — 0 tests.\n• StripeWebhook handler — 0 tests.\n• OrderConfirmation state — 2 tests (partial).\n\n**Severity: Critical.** Recommend rollback or hotfix before Friday.",
+      "Am I ready to release Friday?":"Not yet. Release confidence: **62%**. Blockers:\n🚫 Checkout coverage at 38% (minimum: 65%).\n🚫 3 unresolved P1s in Jira.\n🚫 PaymentService 502 active in production.\n\nIf team resolves these by Thursday EOD, you could reach ~75% confidence and ship safely."
+    }
+  }
+};
+
+function toggleAI(){
+  document.getElementById('aiPanel').classList.toggle('open');
+}
+
+function initAI(){
+  var data = AI[curInd];
+  var msgs = document.getElementById('aiMsgs');
+  msgs.innerHTML = '';
+  addAIMsg(data.greeting, 'ai');
+  var chipBox = document.getElementById('aiChips');
+  chipBox.innerHTML = '';
+  data.chips.forEach(function(c){
+    var b = document.createElement('button');
+    b.className = 'ai-chip';
+    b.textContent = c;
+    b.onclick = function(){ aiAsk(c); };
+    chipBox.appendChild(b);
+  });
+}
+
+function addAIMsg(text, role){
+  var msgs = document.getElementById('aiMsgs');
+  var wrap = document.createElement('div');
+  wrap.className = 'ai-msg ' + role;
+  var av = document.createElement('div');
+  av.className = 'ai-av';
+  av.textContent = role==='ai' ? 'AI' : 'You';
+  var bub = document.createElement('div');
+  bub.className = 'ai-bubble';
+  var html = text
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*(.+?)\*\*/g,'<b>$1</b>')
+    .replace(/`(.+?)`/g,'<code>$1</code>');
+  bub.innerHTML = html;
+  if(role==='ai'){ wrap.appendChild(av); wrap.appendChild(bub); }
+  else { wrap.appendChild(av); wrap.appendChild(bub); }
+  msgs.appendChild(wrap);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function addTyping(){
+  var msgs = document.getElementById('aiMsgs');
+  var wrap = document.createElement('div');
+  wrap.className = 'ai-msg ai';
+  wrap.id = 'typingMsg';
+  var av = document.createElement('div'); av.className='ai-av'; av.textContent='AI';
+  var t = document.createElement('div'); t.className='typing';
+  t.innerHTML = '<span></span><span></span><span></span>';
+  wrap.appendChild(av); wrap.appendChild(t);
+  msgs.appendChild(wrap);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+function removeTyping(){
+  var t = document.getElementById('typingMsg');
+  if(t) t.remove();
+}
+
+function aiAsk(question){
+  addAIMsg(question, 'user');
+  addTyping();
+  var data = AI[curInd];
+  var resp = data.responses[question];
+  if(!resp){
+    resp = "Analyzing your " + data.name + " data for that query. Cross-referencing all connected sources. Compiling risk assessment...";
+  }
+  setTimeout(function(){
+    removeTyping();
+    addAIMsg(resp, 'ai');
+  }, 950);
+}
+
+function aiSend(){
+  var inp = document.getElementById('aiInput');
+  var v = inp.value.trim();
+  if(!v) return;
+  inp.value = '';
+  aiAsk(v);
+}
+
+/* ===================== CHART ===================== */
+function drawSWChart(){
+  var cv = document.getElementById('ch-sw-trend');
+  if(!cv || cv._done) return;
+  cv._done = true;
+  var ctx = cv.getContext('2d');
+  var grad = ctx.createLinearGradient(0,0,0,230);
+  grad.addColorStop(0,'rgba(124,111,224,0.35)');
+  grad.addColorStop(1,'rgba(124,111,224,0.02)');
+  new Chart(ctx,{
+    type:'line',
+    data:{
+      labels:['W1','W2','W3','W4','W5','W6','W7','W8','W9','W10','W11','W12'],
+      datasets:[
+        {label:'Coverage %',data:[46,47,49,48,51,53,52,55,56,57,59,58],
+         borderColor:'#7C6FE0',backgroundColor:grad,fill:true,tension:.35,
+         pointRadius:3,pointBackgroundColor:'#A599F0',borderWidth:2.5},
+        {label:'Target',data:[60,60,60,60,60,60,60,60,60,60,60,60],
+         borderColor:'#34D399',borderDash:[6,5],fill:false,pointRadius:0,borderWidth:1.5}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:true,labels:{boxWidth:12,font:{size:11}}}},
+      scales:{
+        y:{min:40,max:65,grid:{color:'#30363D'},ticks:{callback:function(v){return v+'%'}}},
+        x:{grid:{display:false}}
+      }
+    }
+  });
+}
+
+function drawDefChart(){
+  var cv = document.getElementById('ch-sw-def');
+  if(!cv || cv._done) return;
+  cv._done = true;
+  var ctx = cv.getContext('2d');
+  new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels:['Checkout','Billing','Auth','Search','Mobile','Admin'],
+      datasets:[{
+        label:'Open defects',
+        data:[17,9,4,3,7,3],
+        backgroundColor:['#F87171','#FBBF24','#34D399','#34D399','#FBBF24','#FBBF24'],
+        borderRadius:5,barThickness:26
+      }]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{
+        y:{beginAtZero:true,grid:{color:'#30363D'},ticks:{precision:0}},
+        x:{grid:{display:false}}
+      }
+    }
+  });
+}
+
+function drawPmVelChart(){
+  var cv = document.getElementById('ch-pm-vel');
+  if(!cv || cv._done) return;
+  cv._done = true;
+  var ctx = cv.getContext('2d');
+  new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels:['Sp35','Sp36','Sp37','Sp38','Sp39','Sp40','Sp41','Sp42'],
+      datasets:[
+        {label:'Shipped',data:[62,71,68,74,79,72,81,56],backgroundColor:'#7C6FE0',borderRadius:5,barThickness:18},
+        {label:'Planned',data:[70,70,75,75,80,80,80,90],backgroundColor:'rgba(124,111,224,0.15)',borderRadius:5,barThickness:18}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:true,labels:{boxWidth:10,font:{size:11}}}},
+      scales:{
+        y:{beginAtZero:true,grid:{color:'#30363D'},ticks:{precision:0,callback:function(v){return v+' pts'}}},
+        x:{grid:{display:false}}
+      }
+    }
+  });
+}
+
+function drawRmConfChart(){
+  var cv = document.getElementById('ch-rm-conf');
+  if(!cv || cv._done) return;
+  cv._done = true;
+  var ctx = cv.getContext('2d');
+  var grad = ctx.createLinearGradient(0,0,0,200);
+  grad.addColorStop(0,'rgba(124,111,224,0.28)');
+  grad.addColorStop(1,'rgba(124,111,224,0.02)');
+  new Chart(ctx,{
+    type:'line',
+    data:{
+      labels:['v2.3.8','v2.3.9','v2.4.0','v2.4.1','v2.5.0 now'],
+      datasets:[
+        {label:'Release confidence %',data:[79,51,67,82,62],
+         borderColor:'#7C6FE0',backgroundColor:grad,fill:true,tension:.35,
+         pointRadius:5,pointBackgroundColor:['#34D399','#F87171','#FBBF24','#34D399','#F87171'],
+         pointBorderColor:'#0D1117',pointBorderWidth:2,borderWidth:2.5},
+        {label:'Go threshold (75%)',data:[75,75,75,75,75],
+         borderColor:'#34D399',borderDash:[6,5],fill:false,pointRadius:0,borderWidth:1.5}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:true,labels:{boxWidth:10,font:{size:11}}}},
+      scales:{
+        y:{min:40,max:100,grid:{color:'#30363D'},ticks:{callback:function(v){return v+'%'}}},
+        x:{grid:{display:false}}
+      }
+    }
+  });
+}
+
+/* ===== Release gate toggle ===== */
+var rmGateState = {
+  'rm-g1':false,'rm-g2':false,'rm-g3':false,'rm-g4':false,
+  'rm-g5':true,'rm-g6':true,'rm-g7':true,'rm-g8':true,'rm-g9':true
+};
+function rmToggleGate(id, label){
+  rmGateState[id] = !rmGateState[id];
+  var passed = rmGateState[id];
+  var icEl = document.getElementById(id+'-ic');
+  var bEl  = document.getElementById(id+'-b');
+  if(icEl) icEl.className = passed ? 'ri ri-grn' : 'ri ri-red';
+  if(icEl) icEl.innerHTML = passed ? '<i data-lucide="check"></i>' : '<i data-lucide="x"></i>';
+  if(bEl)  { bEl.textContent = passed ? 'Passed' : 'Failing'; bEl.className = passed ? 'b b-green' : 'b b-red'; }
+  var total = Object.keys(rmGateState).length;
+  var passedCount = Object.values(rmGateState).filter(Boolean).length;
+  var cnt = document.getElementById('rm-gate-count');
+  if(cnt){ cnt.textContent = passedCount+' / '+total+' passed'; cnt.className = passedCount===total ? 'b b-green' : (passedCount>=6 ? 'b b-amber' : 'b b-red'); }
+  lucide.createIcons();
+  toast((passed ? '✅ Gate passed: ' : '❌ Gate failed: ') + label);
+}
+
+/* ===== Live tick for PM conversion ===== */
+setInterval(function(){
+  var base = 71, delta = (Math.random()-0.5)*2;
+  var val = Math.round((base+delta)*10)/10;
+  document.querySelectorAll('[data-live="pm-conv"]').forEach(function(el){ el.textContent = val+'%'; });
+}, 4100);
+
+/* ===================== CONNECT SOURCE WIZARD ===================== */
+var WIZ_SOURCES = {
+  sw:[
+    {id:'newrelic',name:'New Relic',type:'APM / observability',icon:'gauge'},
+    {id:'sentry',name:'Sentry',type:'Error tracking',icon:'bug'},
+    {id:'pagerduty',name:'PagerDuty',type:'Incident response',icon:'siren'},
+    {id:'snyk',name:'Snyk',type:'Security scanning',icon:'shield'},
+    {id:'circleci',name:'CircleCI',type:'CI / CD pipeline',icon:'git-branch'},
+    {id:'launchdarkly',name:'LaunchDarkly',type:'Feature flags',icon:'flag'}
+  ]
+};
+var WIZ_SIGNALS = {
+  sw:[
+    {n:'Error & exception events',d:'Stream runtime errors into risk scoring'},
+    {n:'Performance / latency metrics',d:'P95/P99 traces per endpoint'},
+    {n:'Deployment & release events',d:'Correlate changes with incidents'},
+    {n:'Alert / incident webhooks',d:'Real-time paging signals'}
+  ]
+};
+
+var wizStep = 1;
+var wizSel = null;      // selected source id
+var wizSigSel = {};     // signal index -> bool
+
+function openWizard(){
+  wizStep = 1; wizSel = null; wizSigSel = {};
+  document.getElementById('wizSub').textContent = INDUSTRY[curInd].name + ' · integrate a new data source';
+  document.getElementById('wizOverlay').classList.add('open');
+  renderWizard();
+}
+function closeWizard(){
+  document.getElementById('wizOverlay').classList.remove('open');
+}
+
+function wizSelectSource(id, el){
+  wizSel = id;
+  document.querySelectorAll('#wizBody .wiz-src').forEach(function(s){s.classList.remove('sel')});
+  el.classList.add('sel');
+}
+function wizToggleSignal(i, el){
+  wizSigSel[i] = !wizSigSel[i];
+  el.classList.toggle('on', !!wizSigSel[i]);
+}
+
+function wizardBack(){
+  if(wizStep>1){ wizStep--; renderWizard(); }
+}
+function wizardNext(){
+  if(wizStep===1 && !wizSel){ toast('⚠️ Select a source to continue'); return; }
+  if(wizStep===4){ wizardFinish(); return; }
+  if(wizStep===5){ closeWizard(); return; }
+  wizStep++;
+  renderWizard();
+}
+
+function wizardFinish(){
+  wizStep = 5;
+  renderWizard();
+  var name = WIZ_SOURCES[curInd].find(function(s){return s.id===wizSel}).name;
+  toast('🔌 ' + name + ' connected — ingesting signals');
+}
+
+function wizName(){
+  var s = WIZ_SOURCES[curInd].find(function(x){return x.id===wizSel});
+  return s ? s.name : '—';
+}
+
+function renderWizard(){
+  // stepper state
+  var steps = document.querySelectorAll('#wizSteps .wiz-step');
+  steps.forEach(function(st, i){
+    st.classList.remove('active','done');
+    var dot = st.querySelector('.wiz-step-dot');
+    var n = i+1;
+    var shown = wizStep===5 ? 5 : wizStep;
+    if(n < shown){ st.classList.add('done'); dot.innerHTML='<i data-lucide="check"></i>'; }
+    else if(n === shown){ st.classList.add('active'); dot.textContent = n; }
+    else { dot.textContent = n; }
+  });
+
+  var body = document.getElementById('wizBody');
+  var back = document.getElementById('wizBack');
+  var next = document.getElementById('wizNext');
+  back.style.visibility = (wizStep>1 && wizStep<5) ? 'visible' : 'hidden';
+  next.style.display = '';
+
+  if(wizStep===1){
+    var grid = WIZ_SOURCES[curInd].map(function(s){
+      var sel = wizSel===s.id ? ' sel' : '';
+      return '<div class="wiz-src'+sel+'" onclick="wizSelectSource(\''+s.id+'\',this)">'+
+             '<div class="wiz-src-ic"><i data-lucide="'+s.icon+'"></i></div>'+
+             '<div class="wiz-src-info"><div class="wiz-src-name">'+s.name+'</div><div class="wiz-src-type">'+s.type+'</div></div>'+
+             '<div class="wiz-src-check"><i data-lucide="check-circle-2"></i></div></div>';
+    }).join('');
+    body.innerHTML = '<div class="wiz-section-title">Choose a source to connect</div>'+
+      '<div class="wiz-section-desc">Hielios will correlate this source against your existing risk signals.</div>'+
+      '<div class="wiz-src-grid">'+grid+'</div>';
+    next.textContent = 'Continue';
+  }
+  else if(wizStep===2){
+    body.innerHTML = '<div class="wiz-section-title">Connect to '+wizName()+'</div>'+
+      '<div class="wiz-section-desc">Credentials are encrypted at rest and never written to logs.</div>'+
+      '<div class="wiz-field"><label class="wiz-label">Instance / endpoint URL</label>'+
+      '<input class="wiz-input" placeholder="https://api.'+wizSel+'.com/v2" value="https://api.'+wizSel+'.com/v2"></div>'+
+      '<div class="wiz-field"><label class="wiz-label">Authentication method</label>'+
+      '<select class="wiz-select"><option>API key</option><option>OAuth 2.0</option><option>Service account</option></select></div>'+
+      '<div class="wiz-field"><label class="wiz-label">API key / token</label>'+
+      '<input class="wiz-input" type="password" placeholder="••••••••••••••••" value="sk_live_4f9c2a7e">'+
+      '<div class="wiz-hint">Read-only scope is sufficient for signal ingestion.</div></div>';
+    next.textContent = 'Test & continue';
+  }
+  else if(wizStep===3){
+    var rows = WIZ_SIGNALS[curInd].map(function(sg, i){
+      var on = wizSigSel[i] ? ' on' : '';
+      return '<div class="wiz-check-row'+on+'" onclick="wizToggleSignal('+i+',this)">'+
+             '<div class="wiz-cb"><i data-lucide="check"></i></div>'+
+             '<div class="wiz-check-info"><div class="wiz-check-name">'+sg.n+'</div><div class="wiz-check-desc">'+sg.d+'</div></div></div>';
+    }).join('');
+    body.innerHTML = '<div class="wiz-section-title">Select signals to ingest</div>'+
+      '<div class="wiz-section-desc">Pick which data streams from '+wizName()+' feed into risk scoring.</div>'+rows;
+    next.textContent = 'Continue';
+  }
+  else if(wizStep===4){
+    var cnt = Object.keys(wizSigSel).filter(function(k){return wizSigSel[k]}).length;
+    if(cnt===0) cnt = 'All';
+    body.innerHTML = '<div class="wiz-section-title">Review &amp; confirm</div>'+
+      '<div class="wiz-section-desc">Hielios will begin ingesting within ~30 seconds of connection.</div>'+
+      '<div class="wiz-review">'+
+      '<div class="wiz-rev-row"><span class="wiz-rev-k">Source</span><span class="wiz-rev-v">'+wizName()+'</span></div>'+
+      '<div class="wiz-rev-row"><span class="wiz-rev-k">Industry workspace</span><span class="wiz-rev-v">'+INDUSTRY[curInd].name+'</span></div>'+
+      '<div class="wiz-rev-row"><span class="wiz-rev-k">Auth method</span><span class="wiz-rev-v">API key</span></div>'+
+      '<div class="wiz-rev-row"><span class="wiz-rev-k">Signals enabled</span><span class="wiz-rev-v">'+cnt+'</span></div>'+
+      '<div class="wiz-rev-row"><span class="wiz-rev-k">Scope</span><span class="wiz-rev-v">read-only</span></div>'+
+      '</div>';
+    next.textContent = 'Connect source';
+  }
+  else if(wizStep===5){
+    body.innerHTML = '<div class="wiz-success">'+
+      '<div class="wiz-succ-ic"><i data-lucide="check"></i></div>'+
+      '<div class="wiz-succ-title">'+wizName()+' connected</div>'+
+      '<div class="wiz-succ-sub">Hielios is now ingesting signals and cross-correlating them with your existing sources. New risk insights will appear within a few minutes.</div></div>';
+    back.style.visibility = 'hidden';
+    next.textContent = 'Done';
+  }
+  lucide.createIcons();
+}
+
+/* ===================== TOAST ===================== */
+function toast(msg){
+  var wrap = document.getElementById('toastWrap');
+  var t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = msg;
+  wrap.appendChild(t);
+  setTimeout(function(){
+    t.style.transition='opacity .3s,transform .3s';
+    t.style.opacity='0'; t.style.transform='translateX(20px)';
+    setTimeout(function(){t.remove();},300);
+  }, 3400);
+}
+
+/* ===================== DEMO CONTROLLER ===================== */
+var demoWs = null;
+var demoConnected = false;
+var BACKEND = 'http://localhost:3001';
+var BACKEND_WS = 'ws://localhost:3001';
+
+function showDemoBar(){
+  document.getElementById('demoBar').style.transform = 'translateY(0)';
+  document.getElementById('demoBarToggle').style.display = 'none';
+  document.querySelector('.main-wrap').style.marginTop = '44px';
+  connectDemoWs();
+}
+function hideDemoBar(){
+  document.getElementById('demoBar').style.transform = 'translateY(-100%)';
+  document.getElementById('demoBarToggle').style.display = 'block';
+  document.querySelector('.main-wrap').style.marginTop = '0';
+}
+
+function setWsStatus(connected){
+  demoConnected = connected;
+  var dot   = document.getElementById('demoWsDot');
+  var label = document.getElementById('demoWsLabel');
+  if(connected){
+    dot.style.background = '#34D399';
+    dot.style.boxShadow  = '0 0 6px #34D399';
+    label.textContent    = 'Backend connected';
+  } else {
+    dot.style.background = '#F87171';
+    dot.style.boxShadow  = 'none';
+    label.textContent    = 'Backend offline — run npm start in mock-backend/';
+  }
+}
+
+function connectDemoWs(){
+  try {
+    demoWs = new WebSocket(BACKEND_WS);
+    demoWs.onopen    = function(){ setWsStatus(true); };
+    demoWs.onclose   = function(){ setWsStatus(false); demoWs = null; };
+    demoWs.onerror   = function(){ setWsStatus(false); };
+    demoWs.onmessage = function(evt){
+      try { handleDemoMessage(JSON.parse(evt.data)); }
+      catch(e){ console.warn('[demo ws] bad msg', e); }
+    };
+  } catch(e){ setWsStatus(false); }
+}
+
+function handleDemoMessage(msg){
+  if(msg.type === 'snapshot') applySnapshot(msg.data);
+  if(msg.type === 'alert' || msg.type === 'risk' || msg.type === 'success' || msg.type === 'info'){
+    toast(msg.title + (msg.detail ? ' — ' + msg.detail : ''));
+  }
+}
+
+function applySnapshot(d){
+  // Coverage
+  setMetricText('sw-r-qa',   '[data-live="coverage"]',       d.coverage + '%');
+  setMetricText('sw-r-exec', '[data-live="coverage-trend"]', '+' + (d.coverage - 46) + '%');
+  setMetricText('sw-r-em',   '[data-live="release"]',        d.coverage > 60 ? '78%' : '62%');
+  // Total tests
+  setMetricText('sw-r-qa',   '[data-live="total-tests"]',    d.total_tests.toLocaleString());
+  // Payment error rate
+  setMetricText('sw-live',   '[data-live="payment-error"]',  d.payment_error_rate + '%');
+  // API latency
+  setMetricText('sw-live',   '[data-live="api-latency"]',    d.api_latency_p95 + 'ms');
+  // P1s
+  setMetricText('sw-risks',  '[data-live="p1-open"]',        d.p1_open);
+  // Session counter
+  if(d.active_sessions) {
+    var el = document.getElementById('sw-sess');
+    if(el) el.textContent = d.active_sessions.toLocaleString();
+  }
+  // Alert banner — show if payment error rate is critical
+  var banner = document.querySelector('#sw-overview .alert');
+  if(banner) banner.style.display = d.payment_error_rate >= 3 ? '' : '';
+  // Checkout funnel nodes
+  if(d.checkout_funnel){
+    var f = d.checkout_funnel;
+    updateFunnelNode('fn-payment', f.payment, f.payment < 60);
+    updateFunnelNode('fn-review',  f.review,  f.review  < 55);
+    updateFunnelNode('fn-confirm', f.confirm, f.confirm < 55);
+  }
+}
+
+function setMetricText(parentId, selector, value){
+  var parent = document.getElementById(parentId);
+  if(!parent) return;
+  var el = parent.querySelector(selector);
+  if(el) el.textContent = value;
+}
+
+function updateFunnelNode(id, pct, isCrit){
+  var node = document.getElementById(id);
+  if(!node) return;
+  var box = node.querySelector('.fn-box');
+  var pctEl = node.querySelector('.fn-pct');
+  if(box){
+    box.className = 'fn-box ' + (isCrit ? 'fn-crit' : 'fn-ok');
+  }
+  if(pctEl){
+    pctEl.textContent = pct + '%';
+    pctEl.style.color = isCrit ? 'var(--red)' : 'var(--green)';
+  }
+}
+
+function triggerScenario(scenario){
+  if(!demoConnected){
+    toast('⚠️ Backend not connected — run: cd mock-backend && npm start');
+    return;
+  }
+  fetch(BACKEND + '/api/trigger', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({scenario})
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    if(data.snapshot) applySnapshot(data.snapshot);
+    console.log('[demo] triggered', scenario, data);
+  })
+  .catch(function(e){
+    toast('⚠️ Trigger failed — is the backend running?');
+    setWsStatus(false);
+  });
+}
+
+// Auto-show demo bar if backend is reachable
+fetch(BACKEND + '/api/health')
+  .then(function(r){ return r.json(); })
+  .then(function(){ showDemoBar(); })
+  .catch(function(){ /* backend not running — bar stays hidden */ });
+
+/* ===================== LIVE COUNTER ===================== */
+setInterval(function(){
+  var el = document.getElementById('sw-sess');
+  if(el){
+    var base = 14382 + Math.floor(Math.random()*420 - 180);
+    el.textContent = base.toLocaleString();
+  }
+}, 2800);
+
+/* ===================== INIT ===================== */
+Chart.defaults.color = '#8B949E';
+Chart.defaults.borderColor = '#30363D';
+renderRoles();
+initAI();
+lucide.createIcons();
+setTimeout(drawSWChart, 200);
+</script>
+</body>
+</html>
