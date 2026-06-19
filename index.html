@@ -610,6 +610,109 @@ box-shadow:0 0 0 1px transparent}
             </div>
           </div>
 
+          <!-- ===== PRODUCT MANAGER VIEW ===== -->
+          <div class="role-view" id="sw-r-pm">
+            <div class="role-context"><i data-lucide="layout-dashboard"></i><span><b>Product Manager view</b> · feature delivery, user impact, and quality signals that affect your roadmap</span></div>
+            <div class="grid-4">
+              <div class="mc mc-cyan"><div class="mc-top"><div class="mc-ic"><i data-lucide="package-check"></i></div><span class="mc-trend">sprint 42</span></div><div class="mc-label">Features shipped</div><div class="mc-val">7 / 9</div></div>
+              <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="trending-down"></i></div><span class="mc-trend">−4pt</span></div><div class="mc-label">Checkout conversion</div><div class="mc-val" data-live="pm-conv">71%</div></div>
+              <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="smile"></i></div><span class="mc-trend">−3</span></div><div class="mc-label">NPS score</div><div class="mc-val">42</div></div>
+              <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="bug"></i></div><span class="mc-trend">↑ high</span></div><div class="mc-label">Bugs blocking features</div><div class="mc-val">5</div></div>
+            </div>
+            <div class="grid-2">
+              <div class="card">
+                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="list-checks"></i></span><span class="ct-title">Sprint 42 feature status</span></div><span class="b b-amber">2 at risk</span></div>
+                <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Guest checkout flow</div><div class="row-sub">Shipped · 0 P1 defects</div></div><span class="b b-green">Done</span></div>
+                <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Search filters v2</div><div class="row-sub">Shipped · 88% test coverage</div></div><span class="b b-green">Done</span></div>
+                <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Account dashboard redesign</div><div class="row-sub">Shipped · QA signed off</div></div><span class="b b-green">Done</span></div>
+                <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Coupon code UX</div><div class="row-sub">Blocked · null-ref bug in cart · P1</div></div><span class="b b-red">Blocked</span></div>
+                <div class="row"><div class="ri ri-amb"><i data-lucide="clock"></i></div><div class="row-info"><div class="row-title">Refund self-service</div><div class="row-sub">In QA · 0% test coverage · at risk</div></div><span class="b b-amber">At risk</span></div>
+                <div class="row"><div class="ri ri-amb"><i data-lucide="git-pull-request"></i></div><div class="row-info"><div class="row-title">Payment method save</div><div class="row-sub">PR #1482 in review · untested</div></div><span class="b b-amber">In review</span></div>
+                <div style="margin-top:10px;display:flex;gap:8px">
+                  <button class="btn btn-sm" onclick="toast('📊 Opening sprint 42 delivery report…')">Sprint report</button>
+                  <button class="btn btn-sm" onclick="toast('⚠️ Escalating coupon block to Eng Manager…')">Escalate blocker</button>
+                </div>
+              </div>
+              <div class="card">
+                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="heart-handshake"></i></span><span class="ct-title">Quality → user metrics correlation</span></div></div>
+                <div class="cov"><div class="cov-info"><div class="cov-name">Checkout conversion</div><div class="cov-sub">Drops when error rate &gt; 1%</div></div><div class="cov-bar"><div class="bar-fill bf-red" style="width:71%"></div></div><div class="row-pct">71%</div><span class="b b-red">↓ 4pt</span></div>
+                <div class="cov"><div class="cov-info"><div class="cov-name">Payment success rate</div><div class="cov-sub">Correlated with PR #1482</div></div><div class="cov-bar"><div class="bar-fill bf-red" style="width:61%"></div></div><div class="row-pct">61%</div><span class="b b-red">Critical</span></div>
+                <div class="cov"><div class="cov-info"><div class="cov-name">Search engagement</div><div class="cov-sub">Stable · filters v2 positive</div></div><div class="cov-bar"><div class="bar-fill bf-grn" style="width:83%"></div></div><div class="row-pct">83%</div><span class="b b-green">Up 2pt</span></div>
+                <div class="cov"><div class="cov-info"><div class="cov-name">Guest checkout adopted</div><div class="cov-sub">New feature · 34% trial → complete</div></div><div class="cov-bar"><div class="bar-fill bf-amb" style="width:34%"></div></div><div class="row-pct">34%</div><span class="b b-amber">Growing</span></div>
+                <div style="margin-top:10px"><button class="btn btn-sm" onclick="toast('📈 Opening Amplitude dashboard for checkout funnel…')">Open Amplitude</button></div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="bar-chart-2"></i></span><span class="ct-title">Feature delivery velocity — last 8 sprints</span></div><span class="b b-purple">Story points</span></div>
+              <div class="chart-wrap"><canvas id="ch-pm-vel"></canvas></div>
+            </div>
+            <div class="card">
+              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="triangle-alert"></i></span><span class="ct-title">Quality risks to your Q4 roadmap</span></div><span class="b b-red">Action needed</span></div>
+              <div class="row"><div class="ri ri-red"><i data-lucide="package-x"></i></div><div class="row-info"><div class="row-title">v2.5.0 release confidence at 62%</div><div class="row-sub">Checkout must reach 65% coverage to ship — currently 38%</div></div><button class="btn btn-sm" onclick="toast('🛡 Requesting AI test generation for checkout…')">Generate tests</button></div>
+              <div class="row"><div class="ri ri-amb"><i data-lucide="calendar-x"></i></div><div class="row-info"><div class="row-title">Refund self-service may slip sprint</div><div class="row-sub">0% coverage · QA cannot sign off without tests</div></div><button class="btn btn-sm" onclick="toast('📋 Adding refund flow to QA backlog…')">Add to QA queue</button></div>
+              <div class="row"><div class="ri ri-amb"><i data-lucide="users"></i></div><div class="row-info"><div class="row-title">847 users hit payment errors today</div><div class="row-sub">NPS risk: each incident historically costs −2 NPS pts</div></div><button class="btn btn-sm" onclick="toast('📧 Drafting customer impact summary…')">Draft summary</button></div>
+            </div>
+          </div>
+
+          <!-- ===== RELEASE MANAGER VIEW ===== -->
+          <div class="role-view" id="sw-r-rm">
+            <div class="role-context"><i data-lucide="rocket"></i><span><b>Release Manager view</b> · gate status, deployment risk, and go/no-go decision for every release</span></div>
+            <div class="grid-4">
+              <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="target"></i></div><span class="mc-trend">−25%</span></div><div class="mc-label">Release confidence</div><div class="mc-val" data-live="release">62%</div></div>
+              <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="shield-x"></i></div><span class="mc-trend">blocking</span></div><div class="mc-label">Open blockers</div><div class="mc-val">3</div></div>
+              <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="calendar-clock"></i></div><span class="mc-trend">Friday</span></div><div class="mc-label">Days to release</div><div class="mc-val">3d</div></div>
+              <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="git-merge"></i></div><span class="mc-trend">high risk</span></div><div class="mc-label">Change risk score</div><div class="mc-val">74 / 100</div></div>
+            </div>
+            <div class="grid-2">
+              <div class="card">
+                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="check-square"></i></span><span class="ct-title">Release v2.5.0 — gate checklist</span></div><span class="b b-red" id="rm-gate-count">5 / 9 passed</span></div>
+                <div class="row" id="rm-g1" onclick="rmToggleGate('rm-g1','Test coverage ≥ 65%')" style="cursor:pointer"><div class="ri ri-red" id="rm-g1-ic"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Test coverage ≥ 65%</div><div class="row-sub">Current: 58% · Checkout: 38%</div></div><span class="b b-red" id="rm-g1-b">Failing</span></div>
+                <div class="row" id="rm-g2" onclick="rmToggleGate('rm-g2','Zero P1 defects')" style="cursor:pointer"><div class="ri ri-red" id="rm-g2-ic"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Zero P1 defects</div><div class="row-sub">3 open P1s in checkout</div></div><span class="b b-red" id="rm-g2-b">Failing</span></div>
+                <div class="row" id="rm-g3" onclick="rmToggleGate('rm-g3','All PRs reviewed')" style="cursor:pointer"><div class="ri ri-red" id="rm-g3-ic"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">All PRs reviewed</div><div class="row-sub">PR #1482 unreviewed · high risk score</div></div><span class="b b-red" id="rm-g3-b">Failing</span></div>
+                <div class="row" id="rm-g4" onclick="rmToggleGate('rm-g4','CI pipeline green')" style="cursor:pointer"><div class="ri ri-amb" id="rm-g4-ic"><i data-lucide="minus"></i></div><div class="row-info"><div class="row-title">CI pipeline green</div><div class="row-sub">2 flaky suites · intermittent failures</div></div><span class="b b-amber" id="rm-g4-b">Warning</span></div>
+                <div class="row" id="rm-g5" onclick="rmToggleGate('rm-g5','Regression suite passed')" style="cursor:pointer"><div class="ri ri-grn" id="rm-g5-ic"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Regression suite passed</div><div class="row-sub">Auth, Search, Cart · all green</div></div><span class="b b-green" id="rm-g5-b">Passed</span></div>
+                <div class="row" id="rm-g6" onclick="rmToggleGate('rm-g6','Security scan clean')" style="cursor:pointer"><div class="ri ri-grn" id="rm-g6-ic"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Security scan clean</div><div class="row-sub">Snyk · 0 critical vulnerabilities</div></div><span class="b b-green" id="rm-g6-b">Passed</span></div>
+                <div class="row" id="rm-g7" onclick="rmToggleGate('rm-g7','Staging smoke tests')" style="cursor:pointer"><div class="ri ri-grn" id="rm-g7-ic"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Staging smoke tests</div><div class="row-sub">47 / 47 passing on staging-v2.5.0</div></div><span class="b b-green" id="rm-g7-b">Passed</span></div>
+                <div class="row" id="rm-g8" onclick="rmToggleGate('rm-g8','Feature flags configured')" style="cursor:pointer"><div class="ri ri-grn" id="rm-g8-ic"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Feature flags configured</div><div class="row-sub">LaunchDarkly · 3 flags set for gradual rollout</div></div><span class="b b-green" id="rm-g8-b">Passed</span></div>
+                <div class="row" id="rm-g9" onclick="rmToggleGate('rm-g9','Rollback plan documented')" style="cursor:pointer"><div class="ri ri-grn" id="rm-g9-ic"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Rollback plan documented</div><div class="row-sub">Runbook updated · oncall briefed</div></div><span class="b b-green" id="rm-g9-b">Passed</span></div>
+                <div style="margin-top:12px;display:flex;gap:8px">
+                  <button class="btn" style="background:rgba(248,113,113,0.12);border-color:rgba(248,113,113,0.4);color:#F87171;font-weight:700" onclick="toast('🚫 Release v2.5.0 BLOCKED — 3 failing gates. Team notified.')">🚫 Block release</button>
+                  <button class="btn btn-primary" onclick="toast('✅ Release v2.5.0 GO decision submitted for approval')">Request go approval</button>
+                </div>
+              </div>
+              <div class="card">
+                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="activity"></i></span><span class="ct-title">Release confidence — trend</span></div><span class="b b-red">v2.5.0</span></div>
+                <div class="chart-wrap"><canvas id="ch-rm-conf"></canvas></div>
+                <div style="margin-top:14px">
+                  <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="git-merge"></i></span><span class="ct-title">Changes since last release</span></div></div>
+                  <div class="row"><div class="ri ri-red"><i data-lucide="flame"></i></div><div class="row-info"><div class="row-title">PR #1482 — payment-service/charge.ts</div><div class="row-sub">Risk score 93 · no tests added · high blast radius</div></div><span class="b b-red">High</span></div>
+                  <div class="row"><div class="ri ri-amb"><i data-lucide="git-pull-request"></i></div><div class="row-info"><div class="row-title">PR #1479 — cart/coupon.ts</div><div class="row-sub">Risk score 72 · 3 new tests added</div></div><span class="b b-amber">Medium</span></div>
+                  <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">PR #1477 — search/filters.ts</div><div class="row-sub">Risk score 28 · full coverage</div></div><span class="b b-green">Low</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="grid-2">
+              <div class="card">
+                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="history"></i></span><span class="ct-title">Recent release history</span></div></div>
+                <div class="row"><div class="ri ri-grn"><i data-lucide="rocket"></i></div><div class="row-info"><div class="row-title">v2.4.1 — Nov 8</div><div class="row-sub">Confidence 82% · 0 incidents post-release</div></div><span class="b b-green">Clean</span></div>
+                <div class="row"><div class="ri ri-amb"><i data-lucide="alert-triangle"></i></div><div class="row-info"><div class="row-title">v2.4.0 — Oct 25</div><div class="row-sub">Confidence 67% · 1 hotfix within 4h</div></div><span class="b b-amber">Hotfix</span></div>
+                <div class="row"><div class="ri ri-red"><i data-lucide="rotate-ccw"></i></div><div class="row-info"><div class="row-title">v2.3.9 — Oct 11</div><div class="row-sub">Confidence 51% · rolled back in 2h</div></div><span class="b b-red">Rolled back</span></div>
+                <div class="row"><div class="ri ri-grn"><i data-lucide="rocket"></i></div><div class="row-info"><div class="row-title">v2.3.8 — Sep 27</div><div class="row-sub">Confidence 79% · clean deploy</div></div><span class="b b-green">Clean</span></div>
+              </div>
+              <div class="card">
+                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="send"></i></span><span class="ct-title">Rollout strategy — v2.5.0</span></div></div>
+                <div class="cov"><div class="cov-info"><div class="cov-name">Canary (1%)</div><div class="cov-sub">Internal + beta users</div></div><div class="cov-bar"><div class="bar-fill bf-grn" style="width:100%"></div></div><div class="row-pct">Ready</div><span class="b b-green">Set</span></div>
+                <div class="cov"><div class="cov-info"><div class="cov-name">10% rollout</div><div class="cov-sub">After 2h canary clean</div></div><div class="cov-bar"><div class="bar-fill bf-amb" style="width:60%"></div></div><div class="row-pct">Pending</div><span class="b b-amber">Gates</span></div>
+                <div class="cov"><div class="cov-info"><div class="cov-name">50% rollout</div><div class="cov-sub">Auto-promote if error rate &lt; 1%</div></div><div class="cov-bar"><div class="bar-fill bf-amb" style="width:30%"></div></div><div class="row-pct">Pending</div><span class="b b-amber">Gates</span></div>
+                <div class="cov"><div class="cov-info"><div class="cov-name">100% rollout</div><div class="cov-sub">Manual approve required</div></div><div class="cov-bar"><div class="bar-fill bf-red" style="width:5%"></div></div><div class="row-pct">Blocked</div><span class="b b-red">Blocked</span></div>
+                <div style="margin-top:10px;display:flex;gap:8px">
+                  <button class="btn btn-sm" onclick="toast('🚀 Starting 1% canary deploy to staging…')">Start canary</button>
+                  <button class="btn btn-sm" onclick="toast('📋 Opening deployment runbook v2.5.0…')">View runbook</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- ===== EXECUTIVE VIEW ===== -->
           <div class="role-view" id="sw-r-exec">
             <div class="role-context"><i data-lucide="crown"></i><span><b>Executive view</b> · business-level signal: risk, customer impact, and value delivered</span></div>
@@ -837,7 +940,7 @@ var pageEmojis = {overview:'📊',risks:'⚠️',compliance:'🛡️',live:'⚡'
 
 var INDUSTRY = {
   sw:{name:'Software / QE', sub:'Software / QE', live:'12 integrations live', badge:'3',
-      roles:['QA Manager','Eng Manager','VP Eng','Executive'], initials:['QM','EM','VP','EX']},
+      roles:['QA Manager','Eng Manager','VP Eng','Executive','Product Manager','Release Manager'], initials:['QM','EM','VP','EX','PM','RM']},
 };
 
 var curRoleIdx = 0;
@@ -892,11 +995,13 @@ function updateSub(){
 /* ===================== ROLES ===================== */
 // Per-industry role view keys, aligned to INDUSTRY[ind].roles order.
 var ROLE_VIEWS = {
-  sw:['qa','em','vp','exec']
+  sw:['qa','em','vp','exec','pm','rm']
 };
 var ROLE_CHARTS = {
   'sw-qa':function(){drawSWChart()},
-  'sw-em':function(){drawDefChart()}
+  'sw-em':function(){drawDefChart()},
+  'sw-pm':function(){drawPmVelChart()},
+  'sw-rm':function(){drawRmConfChart()}
 };
 
 function switchRole(idx, btn){
@@ -1085,6 +1190,91 @@ function drawDefChart(){
     }
   });
 }
+
+function drawPmVelChart(){
+  var cv = document.getElementById('ch-pm-vel');
+  if(!cv || cv._done) return;
+  cv._done = true;
+  var ctx = cv.getContext('2d');
+  new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels:['Sp35','Sp36','Sp37','Sp38','Sp39','Sp40','Sp41','Sp42'],
+      datasets:[
+        {label:'Shipped',data:[62,71,68,74,79,72,81,56],backgroundColor:'#7C6FE0',borderRadius:5,barThickness:18},
+        {label:'Planned',data:[70,70,75,75,80,80,80,90],backgroundColor:'rgba(124,111,224,0.15)',borderRadius:5,barThickness:18}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:true,labels:{boxWidth:10,font:{size:11}}}},
+      scales:{
+        y:{beginAtZero:true,grid:{color:'#30363D'},ticks:{precision:0,callback:function(v){return v+' pts'}}},
+        x:{grid:{display:false}}
+      }
+    }
+  });
+}
+
+function drawRmConfChart(){
+  var cv = document.getElementById('ch-rm-conf');
+  if(!cv || cv._done) return;
+  cv._done = true;
+  var ctx = cv.getContext('2d');
+  var grad = ctx.createLinearGradient(0,0,0,200);
+  grad.addColorStop(0,'rgba(124,111,224,0.28)');
+  grad.addColorStop(1,'rgba(124,111,224,0.02)');
+  new Chart(ctx,{
+    type:'line',
+    data:{
+      labels:['v2.3.8','v2.3.9','v2.4.0','v2.4.1','v2.5.0 now'],
+      datasets:[
+        {label:'Release confidence %',data:[79,51,67,82,62],
+         borderColor:'#7C6FE0',backgroundColor:grad,fill:true,tension:.35,
+         pointRadius:5,pointBackgroundColor:['#34D399','#F87171','#FBBF24','#34D399','#F87171'],
+         pointBorderColor:'#0D1117',pointBorderWidth:2,borderWidth:2.5},
+        {label:'Go threshold (75%)',data:[75,75,75,75,75],
+         borderColor:'#34D399',borderDash:[6,5],fill:false,pointRadius:0,borderWidth:1.5}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:true,labels:{boxWidth:10,font:{size:11}}}},
+      scales:{
+        y:{min:40,max:100,grid:{color:'#30363D'},ticks:{callback:function(v){return v+'%'}}},
+        x:{grid:{display:false}}
+      }
+    }
+  });
+}
+
+/* ===== Release gate toggle ===== */
+var rmGateState = {
+  'rm-g1':false,'rm-g2':false,'rm-g3':false,'rm-g4':false,
+  'rm-g5':true,'rm-g6':true,'rm-g7':true,'rm-g8':true,'rm-g9':true
+};
+function rmToggleGate(id, label){
+  rmGateState[id] = !rmGateState[id];
+  var passed = rmGateState[id];
+  var icEl = document.getElementById(id+'-ic');
+  var bEl  = document.getElementById(id+'-b');
+  if(icEl) icEl.className = passed ? 'ri ri-grn' : 'ri ri-red';
+  if(icEl) icEl.innerHTML = passed ? '<i data-lucide="check"></i>' : '<i data-lucide="x"></i>';
+  if(bEl)  { bEl.textContent = passed ? 'Passed' : 'Failing'; bEl.className = passed ? 'b b-green' : 'b b-red'; }
+  var total = Object.keys(rmGateState).length;
+  var passedCount = Object.values(rmGateState).filter(Boolean).length;
+  var cnt = document.getElementById('rm-gate-count');
+  if(cnt){ cnt.textContent = passedCount+' / '+total+' passed'; cnt.className = passedCount===total ? 'b b-green' : (passedCount>=6 ? 'b b-amber' : 'b b-red'); }
+  lucide.createIcons();
+  toast((passed ? '✅ Gate passed: ' : '❌ Gate failed: ') + label);
+}
+
+/* ===== Live tick for PM conversion ===== */
+setInterval(function(){
+  var base = 71, delta = (Math.random()-0.5)*2;
+  var val = Math.round((base+delta)*10)/10;
+  document.querySelectorAll('[data-live="pm-conv"]').forEach(function(el){ el.textContent = val+'%'; });
+}, 4100);
 
 /* ===================== CONNECT SOURCE WIZARD ===================== */
 var WIZ_SOURCES = {
