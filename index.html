@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -454,8 +454,6 @@ box-shadow:0 0 0 1px transparent}
 
     <div class="ind-switch">
       <button class="ind-btn active" data-ind="sw" onclick="switchIndustry('sw',this)"><span class="ind-emoji">💻</span> Software / QE</button>
-      <button class="ind-btn" data-ind="fin" onclick="switchIndustry('fin',this)"><span class="ind-emoji">🏦</span> Financial Services</button>
-      <button class="ind-btn" data-ind="hc" onclick="switchIndustry('hc',this)"><span class="ind-emoji">🏥</span> Healthcare</button>
     </div>
 
     <nav class="nav">
@@ -757,471 +755,6 @@ box-shadow:0 0 0 1px transparent}
         </div>
       </div>
 
-      <!-- ============================================================= -->
-      <!-- ===================== FINANCIAL ============================= -->
-      <!-- ============================================================= -->
-      <div class="industry-view" id="ind-fin">
-
-        <!-- ---- FIN OVERVIEW ---- -->
-        <div class="page active" id="fin-overview">
-          <div class="sh sh-blue">
-            <div class="sh-l"><span class="sh-emoji">🏦</span><div><div class="sh-title">Financial Services Intelligence</div><div class="sh-desc">Connecting trading systems, compliance frameworks, risk models, and regulatory reporting into one AI-powered risk picture.</div></div></div>
-            <div class="sh-kpi"><div class="sh-kpi-num" style="color:var(--red)">5</div><div class="sh-kpi-lbl">active risk signals</div></div>
-          </div>
-          <div class="alert">
-            <div class="alert-ic"><i data-lucide="triangle-alert"></i></div>
-            <div class="alert-body">
-              <div class="alert-title">Trading algorithm change deployed without regression validation</div>
-              <div class="alert-sub"><b>6 hours ago.</b> PR #887 modified <code>order-routing.py</code>. No test coverage for changed execution paths. <b>$2.4M</b> avg daily volume. SOX change management control violated.</div>
-              <div class="alert-btns"><button class="btn btn-primary" onclick="toast('📊 Assessing financial exposure for PR #887…')">Assess exposure</button><button class="btn" onclick="toast('🛡 Building SOX remediation plan…')">SOX remediation</button></div>
-            </div>
-          </div>
-          <!-- ===== RISK ANALYST VIEW ===== -->
-          <div class="role-view active" id="fin-r-ra">
-            <div class="role-context"><i data-lucide="search"></i><span><b>Risk Analyst view</b> · granular regulatory signals and control gaps across the book</span></div>
-            <div class="grid-4">
-              <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="shield-x"></i></div><span class="mc-trend">+2</span></div><div class="mc-label">SOX control gaps</div><div class="mc-val">3</div></div>
-              <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="calendar-clock"></i></div><span class="mc-trend">soon</span></div><div class="mc-label">Days to audit</div><div class="mc-val">14</div></div>
-              <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="git-merge"></i></div><span class="mc-trend">live</span></div><div class="mc-label">Unvalidated algo changes</div><div class="mc-val">2</div></div>
-              <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="check-check"></i></div><span class="mc-trend">passing</span></div><div class="mc-label">FINRA compliance</div><div class="mc-val">98%</div></div>
-            </div>
-            <div class="grid-2">
-              <div class="card">
-                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="gavel"></i></span><span class="ct-title">Regulatory risk signals</span></div><span class="b b-red">Live</span></div>
-                <div class="row"><div class="ri ri-red"><i data-lucide="git-merge"></i></div><div class="row-info"><div class="row-title">Algo change unvalidated</div><div class="row-sub">PR #887 · order routing</div></div><span class="b b-red">Critical</span></div>
-                <div class="row"><div class="ri ri-red"><i data-lucide="timer"></i></div><div class="row-info"><div class="row-title">MiFID II latency</div><div class="row-sub">4.2s vs 1s limit</div></div><span class="b b-red">Breach</span></div>
-                <div class="row"><div class="ri ri-red"><i data-lucide="key-round"></i></div><div class="row-info"><div class="row-title">Privileged accounts</div><div class="row-sub">4 not reviewed 90+ days</div></div><span class="b b-red">SOX gap</span></div>
-                <div class="row"><div class="ri ri-amb"><i data-lucide="file-clock"></i></div><div class="row-info"><div class="row-title">Audit log gap</div><div class="row-sub">6h reconciliation gap</div></div><span class="b b-amber">Warn</span></div>
-                <div class="row"><div class="ri ri-grn"><i data-lucide="mail-check"></i></div><div class="row-info"><div class="row-title">Customer comms</div><div class="row-sub">All logs current</div></div><span class="b b-green">Compliant</span></div>
-              </div>
-              <div class="card">
-                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="shield-check"></i></span><span class="ct-title">Regulatory coverage</span></div></div>
-                <div class="cbar"><div class="cbar-label">SOX ITGC</div><div class="cbar-track"><div class="bar-fill bf-red" style="width:61%"></div></div><div class="cbar-pct">61%</div></div>
-                <div class="cbar"><div class="cbar-label">MiFID II</div><div class="cbar-track"><div class="bar-fill bf-amb" style="width:74%"></div></div><div class="cbar-pct">74%</div></div>
-                <div class="cbar"><div class="cbar-label">Basel III</div><div class="cbar-track"><div class="bar-fill bf-amb" style="width:82%"></div></div><div class="cbar-pct">82%</div></div>
-                <div class="cbar"><div class="cbar-label">FINRA</div><div class="cbar-track"><div class="bar-fill bf-grn" style="width:98%"></div></div><div class="cbar-pct">98%</div></div>
-                <div class="cbar"><div class="cbar-label">GDPR</div><div class="cbar-track"><div class="bar-fill bf-grn" style="width:88%"></div></div><div class="cbar-pct">88%</div></div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="sub-label"><i data-lucide="plug" style="width:14px"></i> Connected tools</div>
-              <div class="chips">
-                <span class="chip chip-live"><span class="chip-dot"></span>Bloomberg Terminal</span>
-                <span class="chip chip-live"><span class="chip-dot"></span>Trading Platform API</span>
-                <span class="chip chip-live"><span class="chip-dot"></span>GitHub</span>
-                <span class="chip chip-live"><span class="chip-dot"></span>Splunk/SIEM</span>
-                <span class="chip chip-live"><span class="chip-dot"></span>Compliance Manager</span>
-                <span class="chip chip-warn"><span class="chip-dot"></span>Identity Manager · review overdue</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- ===== COMPLIANCE OFFICER VIEW ===== -->
-          <div class="role-view" id="fin-r-co">
-            <div class="role-context"><i data-lucide="clipboard-check"></i><span><b>Compliance Officer view</b> · framework adherence, open findings, and audit readiness</span></div>
-            <div class="grid-4">
-              <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="file-warning"></i></div><span class="mc-trend">+3</span></div><div class="mc-label">Open findings</div><div class="mc-val">7</div></div>
-              <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="shield-check"></i></div><span class="mc-trend">passing</span></div><div class="mc-label">Controls passing</div><div class="mc-val">34/37</div></div>
-              <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="calendar-clock"></i></div><span class="mc-trend">soon</span></div><div class="mc-label">Days to external audit</div><div class="mc-val">14</div></div>
-              <div class="mc mc-purple"><div class="mc-top"><div class="mc-ic"><i data-lucide="layers"></i></div><span class="mc-trend">tracked</span></div><div class="mc-label">Frameworks tracked</div><div class="mc-val">5</div></div>
-            </div>
-            <div class="grid-2">
-              <div class="card">
-                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="shield-x"></i></span><span class="ct-title">Failing controls</span></div><span class="b b-red">3</span></div>
-                <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">SOX — Change management</div><div class="row-sub">No dual approval on PR #887</div></div><span class="b b-red">Failing</span></div>
-                <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">SOX — Access review</div><div class="row-sub">4 privileged accounts stale</div></div><span class="b b-red">Failing</span></div>
-                <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">MiFID II — Reporting latency</div><div class="row-sub">4.2s on 3 instruments</div></div><span class="b b-red">Breach</span></div>
-                <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">FINRA — Recordkeeping</div><div class="row-sub">98% complete · current</div></div><span class="b b-green">Passing</span></div>
-              </div>
-              <div class="card">
-                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="badge-check"></i></span><span class="ct-title">Attestation status</span></div></div>
-                <div class="row"><div class="ri ri-red"><i data-lucide="file-clock"></i></div><div class="row-info"><div class="row-title">Q4 SOX attestation</div><div class="row-sub">Due in 14 days · 3 controls open</div></div><span class="b b-red">At risk</span></div>
-                <div class="row"><div class="ri ri-amb"><i data-lucide="file-pen"></i></div><div class="row-info"><div class="row-title">MiFID II self-certification</div><div class="row-sub">Latency remediation pending</div></div><span class="b b-amber">In progress</span></div>
-                <div class="row"><div class="ri ri-grn"><i data-lucide="file-check"></i></div><div class="row-info"><div class="row-title">Basel III capital filing</div><div class="row-sub">Submitted · awaiting review</div></div><span class="b b-green">Filed</span></div>
-                <div class="row"><div class="ri ri-grn"><i data-lucide="file-check"></i></div><div class="row-info"><div class="row-title">GDPR data inventory</div><div class="row-sub">88% complete · on track</div></div><span class="b b-green">On track</span></div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="shield-check"></i></span><span class="ct-title">Framework compliance</span></div></div>
-              <div class="cbar"><div class="cbar-label">SOX<small>IT general controls</small></div><div class="cbar-track"><div class="bar-fill bf-red" style="width:61%"></div></div><div class="cbar-pct">61%</div></div>
-              <div class="cbar"><div class="cbar-label">MiFID II<small>Transaction reporting</small></div><div class="cbar-track"><div class="bar-fill bf-amb" style="width:74%"></div></div><div class="cbar-pct">74%</div></div>
-              <div class="cbar"><div class="cbar-label">Basel III<small>Capital adequacy</small></div><div class="cbar-track"><div class="bar-fill bf-amb" style="width:82%"></div></div><div class="cbar-pct">82%</div></div>
-              <div class="cbar"><div class="cbar-label">FINRA<small>Recordkeeping</small></div><div class="cbar-track"><div class="bar-fill bf-grn" style="width:98%"></div></div><div class="cbar-pct">98%</div></div>
-              <div class="cbar"><div class="cbar-label">GDPR<small>Data protection</small></div><div class="cbar-track"><div class="bar-fill bf-grn" style="width:88%"></div></div><div class="cbar-pct">88%</div></div>
-            </div>
-          </div>
-
-          <!-- ===== CTO VIEW ===== -->
-          <div class="role-view" id="fin-r-cto">
-            <div class="role-context"><i data-lucide="server"></i><span><b>CTO view</b> · trading-system reliability, change risk, and reporting infrastructure</span></div>
-            <div class="grid-4">
-              <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="activity"></i></div><span class="mc-trend">99.97%</span></div><div class="mc-label">Systems uptime</div><div class="mc-val">99.97%</div></div>
-              <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="git-merge"></i></div><span class="mc-trend">live</span></div><div class="mc-label">Unvalidated algo changes</div><div class="mc-val">2</div></div>
-              <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="timer"></i></div><span class="mc-trend">breach</span></div><div class="mc-label">Reporting latency</div><div class="mc-val">4.2s</div></div>
-              <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="git-pull-request"></i></div><span class="mc-trend">+6%</span></div><div class="mc-label">Change failure rate</div><div class="mc-val">18%</div></div>
-            </div>
-            <div class="card">
-              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="trending-up"></i></span><span class="ct-title">MiFID II reporting latency — 14 days</span></div><span class="b b-red">Limit 1.0s</span></div>
-              <div class="chart-wrap"><canvas id="ch-fin-lat"></canvas></div>
-            </div>
-            <div class="grid-2">
-              <div class="card">
-                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="git-branch"></i></span><span class="ct-title">Recent high-risk deployments</span></div></div>
-                <div class="row"><div class="ri ri-red"><i data-lucide="git-merge"></i></div><div class="row-info"><div class="row-title">PR #887 — order routing</div><div class="row-sub">No regression · live 6h</div></div><span class="b b-red">High</span></div>
-                <div class="row"><div class="ri ri-amb"><i data-lucide="calculator"></i></div><div class="row-info"><div class="row-title">Capital model update</div><div class="row-sub">Unvalidated · last week</div></div><span class="b b-amber">Medium</span></div>
-                <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Settlement service patch</div><div class="row-sub">Tested · 0 incidents</div></div><span class="b b-green">Low</span></div>
-              </div>
-              <div class="card">
-                <div class="sub-label"><i data-lucide="plug" style="width:14px"></i> Integration health</div>
-                <div class="sig-grid">
-                  <div class="sig-card live"><div class="sig-name">Bloomberg</div><div class="sig-type">Market data</div><div class="sig-val">Real-time</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
-                  <div class="sig-card live"><div class="sig-name">Trading Platform</div><div class="sig-type">Execution</div><div class="sig-val">$847k active</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
-                  <div class="sig-card live"><div class="sig-name">Splunk/SIEM</div><div class="sig-type">Security</div><div class="sig-val">Monitoring</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
-                  <div class="sig-card warn"><div class="sig-name">Identity Mgr</div><div class="sig-type">IAM</div><div class="sig-val">Review overdue</div><div class="sig-status"><span class="sig-sdot"></span>Warning</div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- ===== CHIEF RISK OFFICER VIEW ===== -->
-          <div class="role-view" id="fin-r-cro">
-            <div class="role-context"><i data-lucide="crown"></i><span><b>Chief Risk Officer view</b> · enterprise risk posture, regulatory exposure, and capital impact</span></div>
-            <div class="rag-grid">
-              <div class="rag rag-r"><div class="rag-hdr"><div class="rag-ico"><i data-lucide="gavel"></i></div><div class="rag-t">Regulatory exposure</div></div><div class="rag-s">High</div><div class="rag-u">MiFID II breach + 3 SOX gaps</div></div>
-              <div class="rag rag-a"><div class="rag-hdr"><div class="rag-ico"><i data-lucide="calendar-clock"></i></div><div class="rag-t">Audit readiness</div></div><div class="rag-s">Medium</div><div class="rag-u">External audit in 14 days</div></div>
-              <div class="rag rag-g"><div class="rag-hdr"><div class="rag-ico"><i data-lucide="landmark"></i></div><div class="rag-t">Capital adequacy</div></div><div class="rag-s">Strong</div><div class="rag-u">Basel III at 82%</div></div>
-            </div>
-            <div class="card">
-              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="siren"></i></span><span class="ct-title">Top enterprise risks this week</span></div></div>
-              <div class="row"><div class="ri ri-red"><i data-lucide="git-merge"></i></div><div class="row-info"><div class="row-title">Unvalidated trading algorithm live</div><div class="row-sub">$2.4M daily volume · no regression · SOX violation</div></div><span class="b b-red">Critical</span></div>
-              <div class="row"><div class="ri ri-red"><i data-lucide="timer"></i></div><div class="row-info"><div class="row-title">MiFID II reporting breach</div><div class="row-sub">4.2s latency · regulatory fine risk</div></div><span class="b b-red">Fine risk</span></div>
-              <div class="row"><div class="ri ri-amb"><i data-lucide="key-round"></i></div><div class="row-info"><div class="row-title">Privileged access not reviewed</div><div class="row-sub">4 accounts · 90+ days · SOX gap</div></div><span class="b b-amber">SOX</span></div>
-              <div class="row"><div class="ri ri-amb"><i data-lucide="calculator"></i></div><div class="row-info"><div class="row-title">Basel III capital model unvalidated</div><div class="row-sub">Update from last week pending review</div></div><span class="b b-amber">Regulatory</span></div>
-              <div class="row"><div class="ri ri-amb"><i data-lucide="user-x"></i></div><div class="row-info"><div class="row-title">GDPR requests overdue</div><div class="row-sub">2 past 30-day deadline</div></div><span class="b b-amber">GDPR</span></div>
-            </div>
-            <div class="grid-4">
-              <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="banknote"></i></div><span class="mc-trend">protected</span></div><div class="mc-label">Daily volume protected</div><div class="mc-val">$2.4M</div></div>
-              <div class="mc mc-purple"><div class="mc-top"><div class="mc-ic"><i data-lucide="alert-octagon"></i></div><span class="mc-trend">exposure</span></div><div class="mc-label">Potential fine exposure</div><div class="mc-val">$4.1M</div></div>
-              <div class="mc mc-cyan"><div class="mc-top"><div class="mc-ic"><i data-lucide="cpu"></i></div><span class="mc-trend">auto</span></div><div class="mc-label">Controls automated</div><div class="mc-val">34</div></div>
-              <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="trending-down"></i></div><span class="mc-trend">YoY</span></div><div class="mc-label">Risk reduction</div><div class="mc-val">+22%</div></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ---- FIN RISKS ---- -->
-        <div class="page" id="fin-risks">
-          <div class="grid-4">
-            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="triangle-alert"></i></div><span class="mc-trend">active</span></div><div class="mc-label">Active risk signals</div><div class="mc-val">5</div></div>
-            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="calendar-clock"></i></div><span class="mc-trend">↓</span></div><div class="mc-label">Days to audit</div><div class="mc-val">14</div></div>
-            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="banknote"></i></div><span class="mc-trend">at risk</span></div><div class="mc-label">Volume at risk / daily</div><div class="mc-val">$2.4M</div></div>
-            <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="shield-check"></i></div><span class="mc-trend">passing</span></div><div class="mc-label">Controls passing</div><div class="mc-val">34/37</div></div>
-          </div>
-          <div class="card">
-            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="trending-up"></i></span><span class="ct-title">Top risks — by financial exposure</span></div><span class="b b-red">Ranked</span></div>
-            <div class="row"><div class="rnum">1</div><div class="row-info"><div class="row-title">Unvalidated trading algo</div><div class="row-sub">PR #887 · order routing live 6h</div></div><span class="b b-red">$$$</span></div>
-            <div class="row"><div class="rnum">2</div><div class="row-info"><div class="row-title">MiFID II latency breach</div><div class="row-sub">4.2s reporting on 3 instruments</div></div><span class="b b-red">Fine risk</span></div>
-            <div class="row"><div class="rnum">3</div><div class="row-info"><div class="row-title">Privileged access 90 days</div><div class="row-sub">4 accounts not reviewed</div></div><span class="b b-amber">SOX</span></div>
-            <div class="row"><div class="rnum">4</div><div class="row-info"><div class="row-title">Basel III capital model</div><div class="row-sub">Unvalidated update last week</div></div><span class="b b-amber">Regulatory</span></div>
-            <div class="row"><div class="rnum">5</div><div class="row-info"><div class="row-title">GDPR requests overdue</div><div class="row-sub">2 past 30-day deadline</div></div><span class="b b-amber">GDPR</span></div>
-          </div>
-        </div>
-
-        <!-- ---- FIN COMPLIANCE ---- -->
-        <div class="page" id="fin-compliance">
-          <div class="sh sh-blue">
-            <div class="sh-l"><span class="sh-emoji">📋</span><div><div class="sh-title">Regulatory Compliance Posture</div><div class="sh-desc">Live mapping of controls against SOX, MiFID II, Basel III, FINRA, and GDPR frameworks.</div></div></div>
-            <div class="sh-kpi"><div class="sh-kpi-num" style="color:var(--amber)">82%</div><div class="sh-kpi-lbl">overall</div></div>
-          </div>
-          <div class="grid-2">
-            <div class="card">
-              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="shield-x"></i></span><span class="ct-title">SOX — failing controls</span></div><span class="b b-red">3 failing</span></div>
-              <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Change management</div><div class="row-sub">No dual approval on PR #887</div></div><span class="b b-red">Failing</span></div>
-              <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Access review</div><div class="row-sub">4 privileged accounts stale</div></div><span class="b b-red">Failing</span></div>
-              <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Audit trail</div><div class="row-sub">6h reconciliation gap</div></div><span class="b b-red">Failing</span></div>
-              <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Financial reporting</div><div class="row-sub">Controls operating</div></div><span class="b b-green">Passing</span></div>
-            </div>
-            <div class="card">
-              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="file-spreadsheet"></i></span><span class="ct-title">MiFID II — transaction reporting</span></div></div>
-              <div class="row"><div class="ri ri-red"><i data-lucide="timer"></i></div><div class="row-info"><div class="row-title">Equities</div><div class="row-sub">4.2s latency vs 1s limit</div></div><span class="b b-red">Breach</span></div>
-              <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Fixed income</div><div class="row-sub">0.6s reporting</div></div><span class="b b-green">Compliant</span></div>
-              <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Trade completeness</div><div class="row-sub">99.8% reported</div></div><span class="b b-green">Compliant</span></div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="layers"></i></span><span class="ct-title">Full regulatory coverage</span></div></div>
-            <div class="cbar"><div class="cbar-label">SOX<small>IT general controls</small></div><div class="cbar-track"><div class="bar-fill bf-red" style="width:61%"></div></div><div class="cbar-pct">61%</div></div>
-            <div class="cbar"><div class="cbar-label">MiFID II<small>Transaction reporting</small></div><div class="cbar-track"><div class="bar-fill bf-amb" style="width:74%"></div></div><div class="cbar-pct">74%</div></div>
-            <div class="cbar"><div class="cbar-label">Basel III<small>Capital adequacy</small></div><div class="cbar-track"><div class="bar-fill bf-amb" style="width:82%"></div></div><div class="cbar-pct">82%</div></div>
-            <div class="cbar"><div class="cbar-label">FINRA<small>Recordkeeping</small></div><div class="cbar-track"><div class="bar-fill bf-grn" style="width:98%"></div></div><div class="cbar-pct">98%</div></div>
-            <div class="cbar"><div class="cbar-label">GDPR<small>Data protection</small></div><div class="cbar-track"><div class="bar-fill bf-grn" style="width:88%"></div></div><div class="cbar-pct">88%</div></div>
-          </div>
-        </div>
-
-        <!-- ---- FIN LIVE ---- -->
-        <div class="page" id="fin-live">
-          <div class="grid-4">
-            <div class="mc mc-cyan"><div class="mc-top"><div class="mc-ic"><i data-lucide="activity"></i></div><span class="mc-trend">live</span></div><div class="mc-label">Active trade volume</div><div class="mc-val">$847k</div></div>
-            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="timer"></i></div><span class="mc-trend">breach</span></div><div class="mc-label">Reporting latency</div><div class="mc-val">4.2s</div></div>
-            <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="check-check"></i></div><span class="mc-trend">ok</span></div><div class="mc-label">Trades reported</div><div class="mc-val">14,847</div></div>
-            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="alert-triangle"></i></div><span class="mc-trend">+2</span></div><div class="mc-label">Anomalies</div><div class="mc-val">3</div></div>
-          </div>
-          <div class="card">
-            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="rss"></i></span><span class="ct-title">Live system alerts</span></div><span class="b b-red">Live</span></div>
-            <div class="efeed-row"><span class="ef-time">now</span><span class="ef-dot ef-red"></span><div class="ef-info"><div class="ef-title">MiFID II latency breach</div><div class="ef-meta">equities · 4.2s reporting</div></div><span class="b b-red">Live</span></div>
-            <div class="efeed-row"><span class="ef-time">6h</span><span class="ef-dot ef-red"></span><div class="ef-info"><div class="ef-title">Order routing anomaly</div><div class="ef-meta">PR #887 · order-routing.py</div></div><span class="b b-red">Critical</span></div>
-            <div class="efeed-row"><span class="ef-time">6h</span><span class="ef-dot ef-amb"></span><div class="ef-info"><div class="ef-title">Trade reconciliation log gap</div><div class="ef-meta">audit trail · 6h window</div></div><span class="b b-amber">Warn</span></div>
-            <div class="efeed-row"><span class="ef-time">1d</span><span class="ef-dot ef-grn"></span><div class="ef-info"><div class="ef-title">Fixed income reporting normal</div><div class="ef-meta">0.6s latency</div></div><span class="b b-green">Normal</span></div>
-          </div>
-        </div>
-
-        <!-- ---- FIN SIGNALS ---- -->
-        <div class="page" id="fin-signals">
-          <div class="sig-header">
-            <div class="sub-label" style="margin-bottom:0"><i data-lucide="radar" style="width:14px"></i> Connected signal sources — 6 active</div>
-            <button class="btn btn-primary btn-sm" onclick="openWizard()"><i data-lucide="plus" style="width:14px;vertical-align:-2px"></i> Connect new source</button>
-          </div>
-          <div class="sig-grid">
-            <div class="sig-card live"><div class="sig-name">Bloomberg Terminal</div><div class="sig-type">Market data</div><div class="sig-val">Real-time feed</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
-            <div class="sig-card live"><div class="sig-name">Trading Platform</div><div class="sig-type">Execution</div><div class="sig-val">$847k active</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
-            <div class="sig-card live"><div class="sig-name">GitHub</div><div class="sig-type">Source control</div><div class="sig-val">PR #887 flagged</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
-            <div class="sig-card live"><div class="sig-name">Splunk/SIEM</div><div class="sig-type">Security logs</div><div class="sig-val">Monitoring</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
-            <div class="sig-card live"><div class="sig-name">Compliance Manager</div><div class="sig-type">GRC platform</div><div class="sig-val">37 controls</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
-            <div class="sig-card warn"><div class="sig-name">Audit Trail System</div><div class="sig-type">Recordkeeping</div><div class="sig-val">6h gap detected</div><div class="sig-status"><span class="sig-sdot"></span>Warning</div></div>
-            <div class="sig-card warn"><div class="sig-name">Identity Manager</div><div class="sig-type">IAM</div><div class="sig-val">Review overdue</div><div class="sig-status"><span class="sig-sdot"></span>Warning</div></div>
-            <div class="sig-card live"><div class="sig-name">RegTech Platform</div><div class="sig-type">Reg reporting</div><div class="sig-val">MiFID + FINRA</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
-          </div>
-        </div>
-
-        <!-- ---- FIN REPORTS ---- -->
-        <div class="page" id="fin-reports">
-          <div class="card">
-            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="file-text"></i></span><span class="ct-title">Audit reports</span></div><button class="btn btn-primary btn-sm" onclick="toast('📝 Creating new audit report…')">New report</button></div>
-            <div class="rep-row"><div class="rep-ic" style="background:var(--red-bg);color:var(--red)"><i data-lucide="file-warning"></i></div><div class="row-info"><div class="row-title">SOX ITGC Assessment — Q4</div><div class="row-sub">3 failing controls · today</div></div><span class="b b-red">Critical</span><button class="btn btn-sm" onclick="toast('👁 Opening SOX ITGC Assessment — Q4')">View</button></div>
-            <div class="rep-row"><div class="rep-ic" style="background:var(--amber-bg);color:var(--amber)"><i data-lucide="file-check"></i></div><div class="row-info"><div class="row-title">MiFID II Trade Reporting — Nov</div><div class="row-sub">1 breach · 3 days ago</div></div><span class="b b-amber">Review</span><button class="btn btn-sm" onclick="toast('👁 Opening MiFID II Trade Reporting — Nov')">View</button></div>
-            <div class="rep-row"><div class="rep-ic" style="background:var(--green-bg);color:var(--green)"><i data-lucide="file-check-2"></i></div><div class="row-info"><div class="row-title">FINRA Recordkeeping — Oct</div><div class="row-sub">98% compliant · 2 weeks ago</div></div><span class="b b-green">Passing</span><button class="btn btn-sm" onclick="toast('👁 Opening FINRA Recordkeeping — Oct')">View</button></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ============================================================= -->
-      <!-- ===================== HEALTHCARE ============================ -->
-      <!-- ============================================================= -->
-      <div class="industry-view" id="ind-hc">
-
-        <!-- ---- HC OVERVIEW ---- -->
-        <div class="page active" id="hc-overview">
-          <div class="sh sh-green">
-            <div class="sh-l"><span class="sh-emoji">🏥</span><div><div class="sh-title">Healthcare Intelligence</div><div class="sh-desc">Connecting clinical systems, EHR, medication platforms, and compliance frameworks to protect patient safety and regulatory readiness.</div></div></div>
-            <div class="sh-kpi"><div class="sh-kpi-num" style="color:var(--red)">2</div><div class="sh-kpi-lbl">patient safety alerts</div></div>
-          </div>
-          <div class="alert">
-            <div class="alert-ic"><i data-lucide="triangle-alert"></i></div>
-            <div class="alert-body">
-              <div class="alert-title">Medication dispensing system — error rate spike</div>
-              <div class="alert-sub">Error rate: <b>0.3% → 4.1%</b> since 02:14am update. System update v8.4.2 deployed without regression testing. IV dosing path has zero automated validation. <b>23 error events in 4 hours.</b></div>
-              <div class="alert-btns"><button class="btn btn-primary" onclick="toast('🚨 Escalating to clinical pharmacy…')">Escalate now</button><button class="btn" onclick="toast('↩️ Assessing rollback of v8.4.2…')">Assess rollback</button></div>
-            </div>
-          </div>
-          <!-- ===== IT MANAGER VIEW ===== -->
-          <div class="role-view active" id="hc-r-it">
-            <div class="role-context"><i data-lucide="server"></i><span><b>IT Manager view</b> · clinical system uptime, integrations, and security operations</span></div>
-            <div class="grid-4">
-              <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="heart-pulse"></i></div><span class="mc-trend">live</span></div><div class="mc-label">Clinical systems online</div><div class="mc-val">8/8</div></div>
-              <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="pill"></i></div><span class="mc-trend">spike</span></div><div class="mc-label">Medication error rate</div><div class="mc-val">4.1%</div></div>
-              <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="shield-x"></i></div><span class="mc-trend">+1</span></div><div class="mc-label">HIPAA security gaps</div><div class="mc-val">3</div></div>
-              <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="timer"></i></div><span class="mc-trend">elevated</span></div><div class="mc-label">Avg system latency</div><div class="mc-val">4.2s</div></div>
-            </div>
-            <div class="card">
-              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="trending-up"></i></span><span class="ct-title">Medication system error rate — 24h</span></div><span class="b b-red">Spike at 02:14</span></div>
-              <div class="chart-wrap"><canvas id="ch-hc-err"></canvas></div>
-            </div>
-            <div class="grid-2">
-              <div class="card">
-                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="server-cog"></i></span><span class="ct-title">System health</span></div></div>
-                <div class="row"><div class="ri ri-red"><i data-lucide="pill"></i></div><div class="row-info"><div class="row-title">Medication Dispensing</div><div class="row-sub">v8.4.2 · 4.1% error rate</div></div><span class="b b-red">Degraded</span></div>
-                <div class="row"><div class="ri ri-red"><i data-lucide="file-clock"></i></div><div class="row-info"><div class="row-title">Audit Log System</div><div class="row-sub">Export failing 11 days</div></div><span class="b b-red">Failing</span></div>
-                <div class="row"><div class="ri ri-amb"><i data-lucide="flask-conical"></i></div><div class="row-info"><div class="row-title">Lab Info System</div><div class="row-sub">Latency elevated · 4.2s</div></div><span class="b b-amber">Warn</span></div>
-                <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Epic EHR</div><div class="row-sub">99.99% uptime</div></div><span class="b b-green">Operational</span></div>
-              </div>
-              <div class="card">
-                <div class="sub-label"><i data-lucide="plug" style="width:14px"></i> Integration health</div>
-                <div class="sig-grid">
-                  <div class="sig-card live"><div class="sig-name">Epic EHR</div><div class="sig-type">EHR</div><div class="sig-val">99.99% up</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
-                  <div class="sig-card warn"><div class="sig-name">Med Dispensing</div><div class="sig-type">Pharmacy</div><div class="sig-val">4.1% errors</div><div class="sig-status"><span class="sig-sdot"></span>Warning</div></div>
-                  <div class="sig-card warn"><div class="sig-name">Audit Log</div><div class="sig-type">Compliance</div><div class="sig-val">Failing 11d</div><div class="sig-status"><span class="sig-sdot"></span>Warning</div></div>
-                  <div class="sig-card live"><div class="sig-name">Radiology PACS</div><div class="sig-type">Imaging</div><div class="sig-val">Routing ok</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- ===== CLINICAL INFORMATICS VIEW ===== -->
-          <div class="role-view" id="hc-r-ci">
-            <div class="role-context"><i data-lucide="clipboard-list"></i><span><b>Clinical Informatics view</b> · EHR data quality, clinical workflows, and decision support</span></div>
-            <div class="grid-4">
-              <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="pill"></i></div><span class="mc-trend">spike</span></div><div class="mc-label">Medication error rate</div><div class="mc-val">4.1%</div></div>
-              <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="file-text"></i></div><span class="mc-trend">below</span></div><div class="mc-label">Documentation complete</div><div class="mc-val">73%</div></div>
-              <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="bell-off"></i></div><span class="mc-trend">high</span></div><div class="mc-label">Alert override rate</div><div class="mc-val">38%</div></div>
-              <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="list-checks"></i></div><span class="mc-trend">+5%</span></div><div class="mc-label">Order-set adoption</div><div class="mc-val">82%</div></div>
-            </div>
-            <div class="grid-2">
-              <div class="card">
-                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="workflow"></i></span><span class="ct-title">Workflow risk signals</span></div><span class="b b-red">Live</span></div>
-                <div class="row"><div class="ri ri-red"><i data-lucide="syringe"></i></div><div class="row-info"><div class="row-title">IV dosing calculation</div><div class="row-sub">23 error events · no validation</div></div><span class="b b-red">Critical</span></div>
-                <div class="row"><div class="ri ri-amb"><i data-lucide="alert-triangle"></i></div><div class="row-info"><div class="row-title">Allergy cross-reference</div><div class="row-sub">14 timeouts since update</div></div><span class="b b-amber">High</span></div>
-                <div class="row"><div class="ri ri-amb"><i data-lucide="clipboard-list"></i></div><div class="row-info"><div class="row-title">Med reconciliation</div><div class="row-sub">Gaps in 18% of admissions</div></div><span class="b b-amber">Medium</span></div>
-                <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">CPOE order entry</div><div class="row-sub">82% adoption · stable</div></div><span class="b b-green">Good</span></div>
-              </div>
-              <div class="card">
-                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="brain-circuit"></i></span><span class="ct-title">Clinical decision support</span></div></div>
-                <div class="row"><div class="ri ri-grn"><i data-lucide="shield-check"></i></div><div class="row-info"><div class="row-title">Drug-interaction alerts</div><div class="row-sub">Active · firing normally</div></div><span class="b b-green">Active</span></div>
-                <div class="row"><div class="ri ri-amb"><i data-lucide="minus"></i></div><div class="row-info"><div class="row-title">Dosing guardrails</div><div class="row-sub">IV path bypassed in v8.4.2</div></div><span class="b b-amber">Partial</span></div>
-                <div class="row"><div class="ri ri-amb"><i data-lucide="bell-off"></i></div><div class="row-info"><div class="row-title">Alert fatigue</div><div class="row-sub">38% override rate · tune rules</div></div><span class="b b-amber">Review</span></div>
-                <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Sepsis early warning</div><div class="row-sub">Validated · 94% sensitivity</div></div><span class="b b-green">Active</span></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- ===== VP CLINICAL OPS VIEW ===== -->
-          <div class="role-view" id="hc-r-vp">
-            <div class="role-context"><i data-lucide="briefcase"></i><span><b>VP Clinical Ops view</b> · patient throughput, safety events, and survey readiness</span></div>
-            <div class="grid-4">
-              <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="bed"></i></div><span class="mc-trend">census</span></div><div class="mc-label">Active inpatients</div><div class="mc-val">847</div></div>
-              <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="alert-triangle"></i></div><span class="mc-trend">+1</span></div><div class="mc-label">Patient safety events</div><div class="mc-val">3</div></div>
-              <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="calendar-clock"></i></div><span class="mc-trend">survey</span></div><div class="mc-label">Days to JC survey</div><div class="mc-val">31</div></div>
-              <div class="mc mc-purple"><div class="mc-top"><div class="mc-ic"><i data-lucide="bed-double"></i></div><span class="mc-trend">utilization</span></div><div class="mc-label">Bed utilization</div><div class="mc-val">91%</div></div>
-            </div>
-            <div class="grid-2">
-              <div class="card">
-                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="heart-pulse"></i></span><span class="ct-title">Patient safety signals</span></div><span class="b b-red">Live</span></div>
-                <div class="row"><div class="ri ri-red"><i data-lucide="pill"></i></div><div class="row-info"><div class="row-title">Medication spike</div><div class="row-sub">IV dosing · 23 events</div></div><span class="b b-red">Critical</span></div>
-                <div class="row"><div class="ri ri-red"><i data-lucide="file-clock"></i></div><div class="row-info"><div class="row-title">EHR audit log</div><div class="row-sub">Failing 11 days</div></div><span class="b b-red">Critical</span></div>
-                <div class="row"><div class="ri ri-amb"><i data-lucide="clipboard-list"></i></div><div class="row-info"><div class="row-title">Med reconciliation</div><div class="row-sub">18% of admissions</div></div><span class="b b-amber">Medium</span></div>
-                <div class="row"><div class="ri ri-grn"><i data-lucide="flame-kindling"></i></div><div class="row-info"><div class="row-title">Fire safety</div><div class="row-sub">Inspections current</div></div><span class="b b-green">Compliant</span></div>
-              </div>
-              <div class="card">
-                <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="clipboard-check"></i></span><span class="ct-title">Joint Commission readiness</span></div><span class="b b-amber">31 days</span></div>
-                <div class="cov"><div class="cov-info"><div class="cov-name">Medical records</div><div class="cov-sub">RC.02.01.01 · target 90%</div></div><div class="cov-bar"><div class="bar-fill bf-red" style="width:73%"></div></div><div class="row-pct">73%</div><span class="b b-red">Gap</span></div>
-                <div class="cov"><div class="cov-info"><div class="cov-name">Med reconciliation</div><div class="cov-sub">MM.04.01.01</div></div><div class="cov-bar"><div class="bar-fill bf-red" style="width:82%"></div></div><div class="row-pct">82%</div><span class="b b-red">Gap</span></div>
-                <div class="cov"><div class="cov-info"><div class="cov-name">Hand hygiene</div><div class="cov-sub">IC.02.02.01 · target 90%</div></div><div class="cov-bar"><div class="bar-fill bf-amb" style="width:84%"></div></div><div class="row-pct">84%</div><span class="b b-amber">Below</span></div>
-                <div class="cov"><div class="cov-info"><div class="cov-name">Fire safety</div><div class="cov-sub">LS.03.01.10</div></div><div class="cov-bar"><div class="bar-fill bf-grn" style="width:100%"></div></div><div class="row-pct">100%</div><span class="b b-green">Pass</span></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- ===== CMIO VIEW ===== -->
-          <div class="role-view" id="hc-r-cmio">
-            <div class="role-context"><i data-lucide="crown"></i><span><b>CMIO view</b> · enterprise patient-safety posture, compliance, and quality outcomes</span></div>
-            <div class="rag-grid">
-              <div class="rag rag-r"><div class="rag-hdr"><div class="rag-ico"><i data-lucide="heart-pulse"></i></div><div class="rag-t">Patient safety risk</div></div><div class="rag-s">High</div><div class="rag-u">Medication error spike active</div></div>
-              <div class="rag rag-a"><div class="rag-hdr"><div class="rag-ico"><i data-lucide="clipboard-check"></i></div><div class="rag-t">Regulatory readiness</div></div><div class="rag-s">Medium</div><div class="rag-u">JC survey 31d · 3 HIPAA gaps</div></div>
-              <div class="rag rag-g"><div class="rag-hdr"><div class="rag-ico"><i data-lucide="award"></i></div><div class="rag-t">Quality outcomes</div></div><div class="rag-s">Strong</div><div class="rag-u">CMS Conditions at 91%</div></div>
-            </div>
-            <div class="card">
-              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="siren"></i></span><span class="ct-title">Top clinical risks this week</span></div></div>
-              <div class="row"><div class="ri ri-red"><i data-lucide="pill"></i></div><div class="row-info"><div class="row-title">Medication dispensing error spike</div><div class="row-sub">IV dosing · 23 events · v8.4.2 untested</div></div><span class="b b-red">Patient safety</span></div>
-              <div class="row"><div class="ri ri-red"><i data-lucide="file-clock"></i></div><div class="row-info"><div class="row-title">EHR audit log failing 11 days</div><div class="row-sub">Silent export failure · HIPAA</div></div><span class="b b-red">HIPAA</span></div>
-              <div class="row"><div class="ri ri-amb"><i data-lucide="user-x"></i></div><div class="row-info"><div class="row-title">7 inactive PHI accounts</div><div class="row-sub">Not reviewed 90 days</div></div><span class="b b-amber">HIPAA</span></div>
-              <div class="row"><div class="ri ri-amb"><i data-lucide="file-text"></i></div><div class="row-info"><div class="row-title">Medical records at 73%</div><div class="row-sub">Standard 90% · JC survey risk</div></div><span class="b b-amber">JC survey</span></div>
-              <div class="row"><div class="ri ri-amb"><i data-lucide="hand"></i></div><div class="row-info"><div class="row-title">Hand hygiene at 84%</div><div class="row-sub">Benchmark 90%</div></div><span class="b b-amber">JC survey</span></div>
-            </div>
-            <div class="grid-4">
-              <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="shield-off"></i></div><span class="mc-trend">YTD</span></div><div class="mc-label">Adverse events prevented</div><div class="mc-val">142</div></div>
-              <div class="mc mc-cyan"><div class="mc-top"><div class="mc-ic"><i data-lucide="cpu"></i></div><span class="mc-trend">auto</span></div><div class="mc-label">HIPAA controls automated</div><div class="mc-val">24</div></div>
-              <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="trending-up"></i></div><span class="mc-trend">6mo</span></div><div class="mc-label">Compliance trend</div><div class="mc-val">+9%</div></div>
-              <div class="mc mc-purple"><div class="mc-top"><div class="mc-ic"><i data-lucide="clipboard-check"></i></div><span class="mc-trend">survey</span></div><div class="mc-label">Survey readiness</div><div class="mc-val">76%</div></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ---- HC RISKS ---- -->
-        <div class="page" id="hc-risks">
-          <div class="grid-4">
-            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="triangle-alert"></i></div><span class="mc-trend">active</span></div><div class="mc-label">Active risk signals</div><div class="mc-val">6</div></div>
-            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="flame"></i></div><span class="mc-trend">4.1%</span></div><div class="mc-label">Highest risk system</div><div class="mc-val" style="font-size:17px">Med Dispensing</div></div>
-            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="calendar-clock"></i></div><span class="mc-trend">survey</span></div><div class="mc-label">JC survey countdown</div><div class="mc-val">31d</div></div>
-            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="search-check"></i></div><span class="mc-trend">audit</span></div><div class="mc-label">OIG audit countdown</div><div class="mc-val">21d</div></div>
-          </div>
-          <div class="card">
-            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="trending-up"></i></span><span class="ct-title">Top risks — by patient safety &amp; regulatory impact</span></div><span class="b b-red">Ranked</span></div>
-            <div class="row"><div class="rnum">1</div><div class="row-info"><div class="row-title">Medication dispensing error spike</div><div class="row-sub">IV dosing · 23 events · v8.4.2</div></div><span class="b b-red">Patient safety</span></div>
-            <div class="row"><div class="rnum">2</div><div class="row-info"><div class="row-title">EHR audit log failing 11 days</div><div class="row-sub">Silent export failure</div></div><span class="b b-red">HIPAA</span></div>
-            <div class="row"><div class="rnum">3</div><div class="row-info"><div class="row-title">7 inactive PHI accounts</div><div class="row-sub">Not reviewed 90 days</div></div><span class="b b-amber">HIPAA</span></div>
-            <div class="row"><div class="rnum">4</div><div class="row-info"><div class="row-title">Medical records 73% vs 90% standard</div><div class="row-sub">Completion rate gap</div></div><span class="b b-amber">JC survey</span></div>
-            <div class="row"><div class="rnum">5</div><div class="row-info"><div class="row-title">ED backup untested 14 months</div><div class="row-sub">Downtime procedure</div></div><span class="b b-amber">Readiness</span></div>
-            <div class="row"><div class="rnum">6</div><div class="row-info"><div class="row-title">Hand hygiene 84% vs 90%</div><div class="row-sub">Below benchmark</div></div><span class="b b-amber">JC survey</span></div>
-          </div>
-        </div>
-
-        <!-- ---- HC COMPLIANCE ---- -->
-        <div class="page" id="hc-compliance">
-          <div class="sh sh-green">
-            <div class="sh-l"><span class="sh-emoji">🛡️</span><div><div class="sh-title">HIPAA &amp; Joint Commission Posture</div><div class="sh-desc">Live control mapping against HIPAA Privacy/Security rules and Joint Commission survey standards.</div></div></div>
-            <div class="sh-kpi"><div class="sh-kpi-num" style="color:var(--amber)">76%</div><div class="sh-kpi-lbl">overall</div></div>
-          </div>
-          <div class="grid-2">
-            <div class="card">
-              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="shield-x"></i></span><span class="ct-title">HIPAA — failing controls</span></div><span class="b b-red">2 failing</span></div>
-              <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Audit log</div><div class="row-sub">§164.312b · failing 11 days</div></div><span class="b b-red">Failing</span></div>
-              <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Access controls</div><div class="row-sub">§164.312a · 7 stale accounts</div></div><span class="b b-red">Failing</span></div>
-              <div class="row"><div class="ri ri-amb"><i data-lucide="minus"></i></div><div class="row-info"><div class="row-title">Device encryption</div><div class="row-sub">§164.312e · 2 workstations</div></div><span class="b b-amber">Partial</span></div>
-              <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Breach notification</div><div class="row-sub">Process current</div></div><span class="b b-green">Passing</span></div>
-            </div>
-            <div class="card">
-              <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="clipboard-check"></i></span><span class="ct-title">Joint Commission — 31 days to survey</span></div></div>
-              <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Medical records</div><div class="row-sub">RC.02.01.01 · 73% vs 90%</div></div><span class="b b-red">Gap</span></div>
-              <div class="row"><div class="ri ri-red"><i data-lucide="x"></i></div><div class="row-info"><div class="row-title">Med reconciliation</div><div class="row-sub">MM.04.01.01 · 18% gap</div></div><span class="b b-red">Gap</span></div>
-              <div class="row"><div class="ri ri-amb"><i data-lucide="minus"></i></div><div class="row-info"><div class="row-title">Hand hygiene</div><div class="row-sub">IC.02.02.01 · 84% vs 90%</div></div><span class="b b-amber">Below target</span></div>
-              <div class="row"><div class="ri ri-grn"><i data-lucide="check"></i></div><div class="row-info"><div class="row-title">Fire safety</div><div class="row-sub">LS.03.01.10 · current</div></div><span class="b b-green">Passing</span></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ---- HC LIVE ---- -->
-        <div class="page" id="hc-live">
-          <div class="grid-4">
-            <div class="mc mc-red"><div class="mc-top"><div class="mc-ic"><i data-lucide="pill"></i></div><span class="mc-trend">spike</span></div><div class="mc-label">Medication error rate</div><div class="mc-val">4.1%</div></div>
-            <div class="mc mc-green"><div class="mc-top"><div class="mc-ic"><i data-lucide="heart-pulse"></i></div><span class="mc-trend">live</span></div><div class="mc-label">Clinical systems</div><div class="mc-val">8/8</div></div>
-            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="bed"></i></div><span class="mc-trend">census</span></div><div class="mc-label">Active inpatients</div><div class="mc-val">847</div></div>
-            <div class="mc mc-amber"><div class="mc-top"><div class="mc-ic"><i data-lucide="alert-triangle"></i></div><span class="mc-trend">+1</span></div><div class="mc-label">Incidents today</div><div class="mc-val">3</div></div>
-          </div>
-          <div class="card">
-            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="rss"></i></span><span class="ct-title">Live clinical system alerts</span></div><span class="b b-red">Live</span></div>
-            <div class="efeed-row"><span class="ef-time">now</span><span class="ef-dot ef-red"></span><div class="ef-info"><div class="ef-title">Medication IV dosing errors</div><div class="ef-meta">dispensing · 23 events</div></div><span class="b b-red">Patient safety</span></div>
-            <div class="efeed-row"><span class="ef-time">11d</span><span class="ef-dot ef-red"></span><div class="ef-info"><div class="ef-title">EHR audit log still failing</div><div class="ef-meta">§164.312b · silent</div></div><span class="b b-red">HIPAA</span></div>
-            <div class="efeed-row"><span class="ef-time">2h</span><span class="ef-dot ef-amb"></span><div class="ef-info"><div class="ef-title">Lab result latency elevated</div><div class="ef-meta">LIS → EHR · 4.2s</div></div><span class="b b-amber">Warn</span></div>
-            <div class="efeed-row"><span class="ef-time">live</span><span class="ef-dot ef-grn"></span><div class="ef-info"><div class="ef-title">Epic EHR operational</div><div class="ef-meta">99.99% uptime</div></div><span class="b b-green">Normal</span></div>
-            <div class="efeed-row"><span class="ef-time">live</span><span class="ef-dot ef-grn"></span><div class="ef-info"><div class="ef-title">Radiology PACS operational</div><div class="ef-meta">imaging routing ok</div></div><span class="b b-green">Normal</span></div>
-          </div>
-        </div>
-
-        <!-- ---- HC SIGNALS ---- -->
-        <div class="page" id="hc-signals">
-          <div class="sig-header">
-            <div class="sub-label" style="margin-bottom:0"><i data-lucide="radar" style="width:14px"></i> Connected signal sources — 4 active</div>
-            <button class="btn btn-primary btn-sm" onclick="openWizard()"><i data-lucide="plus" style="width:14px;vertical-align:-2px"></i> Connect new source</button>
-          </div>
-          <div class="sig-grid">
-            <div class="sig-card live"><div class="sig-name">Epic EHR</div><div class="sig-type">Electronic health records</div><div class="sig-val">99.99% uptime</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
-            <div class="sig-card warn"><div class="sig-name">Med Dispensing</div><div class="sig-type">Pharmacy automation</div><div class="sig-val">Error rate 4.1%</div><div class="sig-status"><span class="sig-sdot"></span>Warning</div></div>
-            <div class="sig-card warn"><div class="sig-name">Lab Info System</div><div class="sig-type">LIS</div><div class="sig-val">Latency elevated</div><div class="sig-status"><span class="sig-sdot"></span>Warning</div></div>
-            <div class="sig-card live"><div class="sig-name">Radiology PACS</div><div class="sig-type">Imaging</div><div class="sig-val">Routing ok</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
-            <div class="sig-card live"><div class="sig-name">Scheduling</div><div class="sig-type">Patient access</div><div class="sig-val">Operational</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
-            <div class="sig-card warn"><div class="sig-name">Audit Log System</div><div class="sig-type">Compliance logging</div><div class="sig-val">FAILING 11 days</div><div class="sig-status"><span class="sig-sdot"></span>Warning</div></div>
-            <div class="sig-card warn"><div class="sig-name">Identity Manager</div><div class="sig-type">IAM</div><div class="sig-val">7 accounts flagged</div><div class="sig-status"><span class="sig-sdot"></span>Warning</div></div>
-            <div class="sig-card live"><div class="sig-name">Incident Reporting</div><div class="sig-type">Safety events</div><div class="sig-val">3 today</div><div class="sig-status"><span class="sig-sdot"></span>Live</div></div>
-          </div>
-        </div>
-
-        <!-- ---- HC REPORTS ---- -->
-        <div class="page" id="hc-reports">
-          <div class="card">
-            <div class="ct"><div class="ct-left"><span class="ct-ic"><i data-lucide="file-text"></i></span><span class="ct-title">Audit reports</span></div><button class="btn btn-primary btn-sm" onclick="toast('📝 Creating new audit report…')">New report</button></div>
-            <div class="rep-row"><div class="rep-ic" style="background:var(--red-bg);color:var(--red)"><i data-lucide="file-warning"></i></div><div class="row-info"><div class="row-title">HIPAA Security Risk Assessment — Q4</div><div class="row-sub">2 failing controls · today</div></div><span class="b b-red">Critical</span><button class="btn btn-sm" onclick="toast('👁 Opening HIPAA Security Risk Assessment — Q4')">View</button></div>
-            <div class="rep-row"><div class="rep-ic" style="background:var(--amber-bg);color:var(--amber)"><i data-lucide="file-check"></i></div><div class="row-info"><div class="row-title">Joint Commission Readiness — Nov</div><div class="row-sub">31 days to survey · 4 gaps</div></div><span class="b b-amber">Review</span><button class="btn btn-sm" onclick="toast('👁 Opening Joint Commission Readiness — Nov')">View</button></div>
-            <div class="rep-row"><div class="rep-ic" style="background:var(--green-bg);color:var(--green)"><i data-lucide="file-check-2"></i></div><div class="row-info"><div class="row-title">CMS Conditions of Participation — Oct</div><div class="row-sub">91% compliant · 2 weeks ago</div></div><span class="b b-green">Passing</span><button class="btn btn-sm" onclick="toast('👁 Opening CMS Conditions of Participation — Oct')">View</button></div>
-          </div>
-        </div>
       </div>
     </main>
   </div>
@@ -1239,10 +772,6 @@ box-shadow:0 0 0 1px transparent}
   <button onclick="triggerScenario('pr-merged-no-tests')" style="font-family:var(--f);font-size:11px;font-weight:600;padding:5px 12px;border-radius:7px;border:1px solid rgba(251,191,36,0.4);background:rgba(251,191,36,0.1);color:#FBBF24;cursor:pointer">⚠️ PR merged no tests</button>
   <button onclick="triggerScenario('generate-tests')" style="font-family:var(--f);font-size:11px;font-weight:600;padding:5px 12px;border-radius:7px;border:1px solid rgba(52,211,153,0.4);background:rgba(52,211,153,0.1);color:#34D399;cursor:pointer">🧪 AI generates tests</button>
   <button onclick="triggerScenario('release-blocked')" style="font-family:var(--f);font-size:11px;font-weight:600;padding:5px 12px;border-radius:7px;border:1px solid rgba(239,68,68,0.5);background:rgba(239,68,68,0.12);color:#EF4444;cursor:pointer">🚫 Release blocked</button>
-  <div style="width:1px;height:20px;background:#30363D;flex-shrink:0"></div>
-  <div style="color:#8B949E;flex-shrink:0;font-size:10px">Healthcare:</div>
-  <button onclick="triggerScenario('med-system-spike')" style="font-family:var(--f);font-size:11px;font-weight:600;padding:5px 12px;border-radius:7px;border:1px solid rgba(248,113,113,0.4);background:rgba(248,113,113,0.1);color:#F87171;cursor:pointer">🚨 Med error spike</button>
-  <button onclick="triggerScenario('med-system-rollback')" style="font-family:var(--f);font-size:11px;font-weight:600;padding:5px 12px;border-radius:7px;border:1px solid rgba(52,211,153,0.4);background:rgba(52,211,153,0.1);color:#34D399;cursor:pointer">✅ Med rollback</button>
   <button onclick="triggerScenario('reset')" style="font-family:var(--f);font-size:11px;font-weight:600;padding:5px 12px;border-radius:7px;border:1px solid #30363D;background:#1C2333;color:#8B949E;cursor:pointer">↺ Reset</button>
   <div style="flex:1"></div>
   <div id="demoWsStatus" style="display:flex;align-items:center;gap:6px;color:#6E7681;font-size:11px">
@@ -1309,10 +838,6 @@ var pageEmojis = {overview:'📊',risks:'⚠️',compliance:'🛡️',live:'⚡'
 var INDUSTRY = {
   sw:{name:'Software / QE', sub:'Software / QE', live:'12 integrations live', badge:'3',
       roles:['QA Manager','Eng Manager','VP Eng','Executive'], initials:['QM','EM','VP','EX']},
-  fin:{name:'Financial Services', sub:'Financial Services', live:'8 integrations live', badge:'2',
-      roles:['Risk Analyst','Compliance Officer','CTO','Chief Risk Officer'], initials:['RA','CO','CT','CR']},
-  hc:{name:'Healthcare', sub:'Healthcare', live:'8 integrations live', badge:'2',
-      roles:['IT Manager','Clinical Informatics','VP Clinical Ops','CMIO'], initials:['IT','CI','VP','CM']}
 };
 
 var curRoleIdx = 0;
@@ -1367,16 +892,11 @@ function updateSub(){
 /* ===================== ROLES ===================== */
 // Per-industry role view keys, aligned to INDUSTRY[ind].roles order.
 var ROLE_VIEWS = {
-  sw:['qa','em','vp','exec'],
-  fin:['ra','co','cto','cro'],
-  hc:['it','ci','vp','cmio']
+  sw:['qa','em','vp','exec']
 };
-// Charts to (re)draw when a given industry+role view becomes visible.
 var ROLE_CHARTS = {
   'sw-qa':function(){drawSWChart()},
-  'sw-em':function(){drawDefChart()},
-  'fin-cto':function(){drawFinLatChart()},
-  'hc-it':function(){drawHcErrChart()}
+  'sw-em':function(){drawDefChart()}
 };
 
 function switchRole(idx, btn){
@@ -1424,28 +944,6 @@ var AI = {
       "Generate tests for checkout":"Generating 6 Playwright tests from production error patterns:\n✅ **TC-001**: PaymentService 502 retry + fallback.\n✅ **TC-002**: Stripe webhook timeout handling.\n✅ **TC-003**: Guest checkout token expiry.\n✅ **TC-004**: Coupon null reference.\n✅ **TC-005**: Mobile checkout happy path.\n✅ **TC-006**: Concurrent session conflict.\n\nReady to push to `/tests/checkout/`",
       "What is PR #1482 blast radius?":"PR #1482 modified `payment-service/charge.ts`. Blast radius:\n⚠️ 6 downstream services affected.\n❌ 3 of 6 have zero coverage for changed paths.\n💰 Checkout (72% of sessions) is highest risk.\n\nSpecific gaps:\n• PaymentService.charge() — 0 tests.\n• StripeWebhook handler — 0 tests.\n• OrderConfirmation state — 2 tests (partial).\n\n**Severity: Critical.** Recommend rollback or hotfix before Friday.",
       "Am I ready to release Friday?":"Not yet. Release confidence: **62%**. Blockers:\n🚫 Checkout coverage at 38% (minimum: 65%).\n🚫 3 unresolved P1s in Jira.\n🚫 PaymentService 502 active in production.\n\nIf team resolves these by Thursday EOD, you could reach ~75% confidence and ship safely."
-    }
-  },
-  fin:{
-    greeting:"Good morning 👋 I'm monitoring your trading systems, compliance posture, and regulatory exposure in real time. Critical: A code change to the trading algorithm went live 6 hours ago with no regression validation. 3 SOX controls are showing gaps.",
-    chips:["What SOX controls are failing?","Assess trading algorithm change risk","Show me our regulatory exposure","What is our audit trail coverage?"],
-    name:"financial",
-    responses:{
-      "What SOX controls are failing?":"3 SOX controls showing gaps:\n🚫 **ITGC Change Management** — PR #887 deployed without dual approval.\n🚫 **Access Controls** — 4 privileged accounts not reviewed in 90+ days.\n⚠️ **Audit Trail** — 6-hour log gap in trade reconciliation.\n\n**Risk:** External auditor review in 14 days. Immediate remediation required.",
-      "Assess trading algorithm change risk":"Algorithm change PR #887 modified `algo/execution/order-routing.py` — core order routing logic. No regression testing performed.\n💰 $2.4M average daily volume through this path.\n📊 0 test cases cover the modified execution logic.\n⚡ Live 6 hours — no anomalies detected yet.\n\n**Recommend:** Immediate rollback pending full validation.",
-      "Show me our regulatory exposure":"Current regulatory exposure:\n🚫 **MiFID II** — Trade reporting latency 4.2s (limit: 1s) on 3 instrument types.\n⚠️ **Basel III** — Capital model has unvalidated update from last week.\n✅ **FINRA** — All customer communication logs current.\n⚠️ **GDPR** — 2 data subject requests past 30-day deadline.\n\n**Highest urgency:** MiFID II latency breach — regulatory fine risk.",
-      "What is our audit trail coverage?":"Audit trail completeness:\n✅ Trade execution logs: 99.8% complete.\n✅ Customer order history: 100% complete.\n⚠️ Algorithm change history: 73% — 4 recent changes undocumented.\n🚫 Privileged access logs: 61% — maintenance window gaps.\n\nUpcoming audit in 14 days — privileged access logs are highest risk."
-    }
-  },
-  hc:{
-    greeting:"Good morning 👋 I'm monitoring your clinical systems, patient safety controls, and HIPAA compliance posture in real time. Alert: The medication dispensing system has a 4% error rate spike since last night's update.",
-    chips:["What caused the medication system spike?","Show HIPAA compliance gaps","Which clinical workflows lack redundancy?","Upcoming Joint Commission risks?"],
-    name:"healthcare",
-    responses:{
-      "What caused the medication system spike?":"Medication dispensing error spike root cause:\nError rate jumped 0.3% → 4.1% at 02:14am after system update v8.4.2. Affected flows:\n⚠️ IV dosing calculation — 23 error events.\n⚠️ Allergy cross-reference — 14 timeouts.\n✅ Standard oral dispensing — unaffected.\n\nNo regression testing was performed before the update.\n**Recommendation:** Escalate to clinical pharmacy immediately. Consider rollback of v8.4.2.",
-      "Show HIPAA compliance gaps":"HIPAA compliance gaps:\n🚫 **Access Controls (§164.312a)** — 7 inactive accounts with PHI access not reviewed in 90 days.\n🚫 **Audit Logs (§164.312b)** — EHR audit log export failing silently for 11 days.\n⚠️ **Encryption (§164.312e)** — 2 radiology workstations not encrypted.\n✅ **Breach Notification** — Process current.\n\n**Risk:** OIG audit in 3 weeks. Audit log gap is highest severity finding.",
-      "Which clinical workflows lack redundancy?":"Clinical workflows with single points of failure:\n🚫 **Medication dispensing** — No manual fallback for system outage.\n🚫 **Lab result routing** — Single integration path from LIS to EHR.\n⚠️ **ED triage** — Backup process exists but last tested 14 months ago.\n⚠️ **Scheduling** — Staff training last updated Q1 2023.\n\nJoint Commission EC.02.01.01 requires documented, tested downtime procedures.",
-      "Upcoming Joint Commission risks?":"Joint Commission survey — 31 days out:\n🚫 **RC.02.01.01** — Medical record completion at 73% (standard: 90%).\n🚫 **MM.04.01.01** — Medication reconciliation gaps in 18% of admissions.\n⚠️ **IC.02.02.01** — Hand hygiene compliance at 84% (benchmark: 90%).\n✅ **LS.03.01.10** — Fire safety inspections current.\n\n**Highest risk:** Medication reconciliation — recommend immediate admission process audit."
     }
   }
 };
@@ -1588,68 +1086,6 @@ function drawDefChart(){
   });
 }
 
-function drawFinLatChart(){
-  var cv = document.getElementById('ch-fin-lat');
-  if(!cv || cv._done) return;
-  cv._done = true;
-  var ctx = cv.getContext('2d');
-  var grad = ctx.createLinearGradient(0,0,0,230);
-  grad.addColorStop(0,'rgba(248,113,113,0.30)');
-  grad.addColorStop(1,'rgba(248,113,113,0.02)');
-  new Chart(ctx,{
-    type:'line',
-    data:{
-      labels:['D1','D2','D3','D4','D5','D6','D7','D8','D9','D10','D11','D12','D13','D14'],
-      datasets:[
-        {label:'Reporting latency (s)',data:[0.6,0.7,0.6,0.8,0.9,1.1,1.4,1.8,2.3,2.9,3.4,3.8,4.0,4.2],
-         borderColor:'#F87171',backgroundColor:grad,fill:true,tension:.35,
-         pointRadius:2,pointBackgroundColor:'#F87171',borderWidth:2.5},
-        {label:'MiFID II limit',data:[1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-         borderColor:'#FBBF24',borderDash:[6,5],fill:false,pointRadius:0,borderWidth:1.5}
-      ]
-    },
-    options:{
-      responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:true,labels:{boxWidth:12,font:{size:11}}}},
-      scales:{
-        y:{min:0,max:5,grid:{color:'#30363D'},ticks:{callback:function(v){return v+'s'}}},
-        x:{grid:{display:false}}
-      }
-    }
-  });
-}
-
-function drawHcErrChart(){
-  var cv = document.getElementById('ch-hc-err');
-  if(!cv || cv._done) return;
-  cv._done = true;
-  var ctx = cv.getContext('2d');
-  var grad = ctx.createLinearGradient(0,0,0,230);
-  grad.addColorStop(0,'rgba(248,113,113,0.30)');
-  grad.addColorStop(1,'rgba(248,113,113,0.02)');
-  new Chart(ctx,{
-    type:'line',
-    data:{
-      labels:['20:00','22:00','00:00','02:00','02:14','04:00','06:00','08:00','10:00','12:00'],
-      datasets:[
-        {label:'Error rate %',data:[0.3,0.3,0.3,0.3,2.6,4.1,4.0,4.1,3.9,4.1],
-         borderColor:'#F87171',backgroundColor:grad,fill:true,tension:.3,
-         pointRadius:2,pointBackgroundColor:'#F87171',borderWidth:2.5},
-        {label:'Baseline',data:[0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3],
-         borderColor:'#34D399',borderDash:[6,5],fill:false,pointRadius:0,borderWidth:1.5}
-      ]
-    },
-    options:{
-      responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:true,labels:{boxWidth:12,font:{size:11}}}},
-      scales:{
-        y:{min:0,max:5,grid:{color:'#30363D'},ticks:{callback:function(v){return v+'%'}}},
-        x:{grid:{display:false}}
-      }
-    }
-  });
-}
-
 /* ===================== CONNECT SOURCE WIZARD ===================== */
 var WIZ_SOURCES = {
   sw:[
@@ -1659,22 +1095,6 @@ var WIZ_SOURCES = {
     {id:'snyk',name:'Snyk',type:'Security scanning',icon:'shield'},
     {id:'circleci',name:'CircleCI',type:'CI / CD pipeline',icon:'git-branch'},
     {id:'launchdarkly',name:'LaunchDarkly',type:'Feature flags',icon:'flag'}
-  ],
-  fin:[
-    {id:'reuters',name:'Refinitiv',type:'Market data feed',icon:'line-chart'},
-    {id:'murex',name:'Murex',type:'Trading & risk',icon:'candlestick-chart'},
-    {id:'archer',name:'Archer GRC',type:'Risk & compliance',icon:'shield'},
-    {id:'servicenow',name:'ServiceNow GRC',type:'Controls workflow',icon:'workflow'},
-    {id:'nice',name:'NICE Actimize',type:'Surveillance / AML',icon:'scan-eye'},
-    {id:'moodys',name:"Moody's Analytics",type:'Credit risk models',icon:'calculator'}
-  ],
-  hc:[
-    {id:'cerner',name:'Oracle Cerner',type:'EHR system',icon:'stethoscope'},
-    {id:'surescripts',name:'Surescripts',type:'E-prescribing',icon:'pill'},
-    {id:'qualtrics',name:'Qualtrics',type:'Patient experience',icon:'clipboard-list'},
-    {id:'vocera',name:'Vocera',type:'Clinical comms',icon:'radio'},
-    {id:'changehc',name:'Change Healthcare',type:'Claims / revenue',icon:'receipt'},
-    {id:'caradigm',name:'Caradigm',type:'Population health',icon:'users'}
   ]
 };
 var WIZ_SIGNALS = {
@@ -1683,18 +1103,6 @@ var WIZ_SIGNALS = {
     {n:'Performance / latency metrics',d:'P95/P99 traces per endpoint'},
     {n:'Deployment & release events',d:'Correlate changes with incidents'},
     {n:'Alert / incident webhooks',d:'Real-time paging signals'}
-  ],
-  fin:[
-    {n:'Trade & order events',d:'Execution and routing activity'},
-    {n:'Control test results',d:'GRC control pass/fail status'},
-    {n:'Surveillance alerts',d:'AML and market-abuse flags'},
-    {n:'Reference & market data',d:'Pricing and instrument feeds'}
-  ],
-  hc:[
-    {n:'Clinical event stream',d:'Orders, results, encounters'},
-    {n:'Medication / dispensing logs',d:'Pharmacy automation events'},
-    {n:'Audit & access logs',d:'HIPAA §164.312 audit trail'},
-    {n:'Incident & safety reports',d:'Patient-safety event feed'}
   ]
 };
 
